@@ -1,0 +1,25 @@
+{
+  "name": "craftercms-sdk-js",
+  "version": "3.0.11-SNAPSHOT",
+  "description": "Crafter CMS SDK for Javascript",
+  "main": "craftercms.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/craftercms/craftercms-sdk-js.git"
+  },
+  "keywords": [
+    "content",
+    "mananagement",
+    "crafter",
+    "craftercms"
+  ],
+  "author": "Crafter Software",
+  "license": "LGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/craftercms/craftercms/issues"
+  },
+  "homepage": "https://github.com/craftercms/craftercms-sdk-js#readme"
+}
