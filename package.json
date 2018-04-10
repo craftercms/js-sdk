@@ -2,7 +2,7 @@
   "name": "craftercms-sdk-js",
   "version": "3.0.11-SNAPSHOT",
   "description": "Crafter CMS SDK for JavaScript",
-  "main": "craftercms.js",
+  "main": "./src/craftercms.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
