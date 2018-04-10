@@ -1,7 +1,7 @@
 {
   "name": "craftercms-sdk-js",
   "version": "3.0.11-SNAPSHOT",
-  "description": "Crafter CMS SDK for Javascript",
+  "description": "Crafter CMS SDK for JavaScript",
   "main": "craftercms.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -21,5 +21,8 @@
   "bugs": {
     "url": "https://github.com/craftercms/craftercms/issues"
   },
-  "homepage": "https://github.com/craftercms/craftercms-sdk-js#readme"
+  "homepage": "https://github.com/craftercms/craftercms-sdk-js#readme",
+  "dependencies": {
+    "axios": "^0.18.0"
+  }
 }
