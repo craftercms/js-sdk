@@ -17,7 +17,25 @@
 
 'use strict';
 
-import { EngineClient } from './engine.js'
-import { SearchClient } from './search.js'
+import { httpGet } from './utils.js'
 
-export { EngineClient, SearchClient }
+// Search Client classes
+
+class SearchService {
+
+    constructor(baseUrl) {
+        this.baseUrl = baseUrl;
+    }
+
+    search(params, callback) {
+        httpGet(this.baseUrl, '/crafter-search/api/2/search/search.json', params, callback);
+    }
+}
+
+export class SearchClient {
+
+    constructor(baseUrl) {
+        this.searchService = new SearchService(baseUrl);
+    }
+
+}

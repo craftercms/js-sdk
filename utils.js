@@ -17,7 +17,21 @@
 
 'use strict';
 
-import { EngineClient } from './engine.js'
-import { SearchClient } from './search.js'
+import { axios } from 'axios'
 
-export { EngineClient, SearchClient }
+// Utility functions
+
+export function httpGet(baseUrl, url, params, callback) {
+    var opts = {
+        method: 'get',
+        baseUrl: baseUrl,
+        url: url,
+        params: params
+    };
+
+    axios(opts).then(function(response) {
+        callback(null, response.data);
+    }).catch(function(error) {
+        callback({ status: error.response.status, data: error.response.data }, null);
+    });
+};
