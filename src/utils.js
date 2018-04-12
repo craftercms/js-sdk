@@ -17,7 +17,7 @@
 
 'use strict';
 
-import { axios } from 'axios'
+import axios from 'axios';
 
 // Utility functions
 
