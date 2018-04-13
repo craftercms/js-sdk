@@ -24,7 +24,7 @@ import axios from 'axios';
 export function httpGet(baseUrl, url, params, callback) {
     var opts = {
         method: 'get',
-        baseUrl: baseUrl,
+        baseURL: baseUrl,
         url: url,
         params: params
     };
