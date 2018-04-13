@@ -52,6 +52,25 @@ class NavigationService {
         this.site = site;
     }
 
+    getNavTree(url, depth, currentPageUrl, callback) {
+        var params = { crafterSite: this.site, url: url };
+        if(depth) {
+            params.depth = depth;
+        }
+        if(currentPageUrl) {
+            params.currentPageUrl = currentPageUrl;
+        }
+        httpGet(this.baseUrl, '/api/1/site/navigation/tree.json', params, callback);
+    }
+
+    getNavBreadcrumb(url, root, callback) {
+        var params = { crafterSite: this.site, url: url };
+        if(root) {
+            params.root = root;
+        }
+        httpGet(this.baseUrl, '/api/1/site/navigation/breadcrumb.json', params, callback);
+    }
+
 }
 
 export class EngineClient {
