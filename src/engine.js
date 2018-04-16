@@ -73,11 +73,28 @@ class NavigationService {
 
 }
 
+class UrlTransformationService {
+
+    constructor(baseUrl, site) {
+        this.baseUrl = baseUrl;
+        this.site = site;
+    }
+
+    transform(transformerName, url, callback) {
+        httpGet(this.baseUrl, '/api/1/site/url/transform.json', {
+            crafterSite: this.site,
+            url: url,
+            transformerName: transformerName
+        }, callback);
+    }
+}
+
 export class EngineClient {
 
     constructor(baseUrl, site) {
         this.contentStoreService = new ContentStoreService(baseUrl, site);
         this.navigationService = new NavigationService(baseUrl, site);
+        this.urlTransformationService = new UrlTransformationService(baseUrl, site);
     }
 
 }
