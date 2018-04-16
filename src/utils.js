@@ -17,14 +17,14 @@
 
 'use strict';
 
-import { axios } from 'axios'
+import axios from 'axios';
 
 // Utility functions
 
 export function httpGet(baseUrl, url, params, callback) {
     var opts = {
         method: 'get',
-        baseUrl: baseUrl,
+        baseURL: baseUrl,
         url: url,
         params: params
     };
