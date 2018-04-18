@@ -18,18 +18,37 @@
 'use strict';
 
 import axios from 'axios';
+import qs from 'qs';
 
 // Utility functions
 
-export function httpGet(baseUrl, url, params) {
+function httpCall(method, baseUrl, url, params, data) {
     var opts = {
-        method: 'get',
+        method: method,
         baseURL: baseUrl,
         url: url,
-        params: params
+        paramsSerializer: function(params) {
+            return qs.stringify(params, {arrayFormat: 'repeat'})
+        }
     };
+
+    if(params) {
+        opts.params = params;
+    }
+
+    if(data) {
+        opts.data = qs.stringify(data);
+    }
 
     return new Promise((resolve, reject) => {
         axios(opts).then(response => { resolve(response.data); }, reject);
     });
+}
+
+export function httpGet(baseUrl, url, params) {
+    return httpCall('get', baseUrl, url, params, null);
+};
+
+export function httpPost(baseUrl, url, data) {
+    return httpCall('post', baseUrl, url, null, data);
 };

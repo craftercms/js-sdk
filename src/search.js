@@ -21,21 +21,101 @@ import { httpGet } from './utils.js'
 
 // Search Client classes
 
-class SearchService {
+class Query {
 
-    constructor(baseUrl) {
-        this.baseUrl = baseUrl;
+    constructor() {
+        this.params = {};
     }
 
-    search(params, callback) {
+    toString(value) {
+        return Array.isArray(value)? value.join(",") : value
+    }
+
+    addParam(name, value) {
+        if(this.params[name]) {
+            if(Array.isArray(this.params[name])) {
+                this.params[name].push(value);
+            } else {
+                this.params[name] = [ this.params[name], value ];
+            }
+        } else {
+            this.params[name] = value;
+        }
+    }
+
+}
+
+class SolrQuery extends Query {
+
+    setOffset(offset) {
+        super.addParam("start", offset);
+    }
+
+    setNumResults(numResults) {
+        super.addParam("rows", numResults);
+    }
+
+    setQuery(query) {
+        super.addParam("q", query);
+    }
+
+    setFieldsToReturn(fields) {
+        super.addParam("fl", super.toString(fields));
+    }
+
+    setHighlight(highlight) {
+        super.addParam("hl", highlight);
+    }
+
+    setHighlightFields(fields) {
+        super.addParam("hl.fl", super.toString(fields));
+    }
+
+    setHighlightSnippets(snippets) {
+        super.addParam("hl.snippets", snippets);
+    }
+
+    setHighlightSnippetSize(size) {
+        super.addParam("hl.fragsize", size);
+    }
+
+    setFilterQueries(queries) {
+        for(var query of queries) {
+            super.addParam("fq", query);
+        }
+    }
+
+}
+
+class SearchService {
+
+    constructor(baseUrl, site) {
+        this.baseUrl = baseUrl;
+        this.site = site;
+    }
+
+}
+
+class SolrSearchService extends SearchService {
+
+    createQuery() {
+        return new SolrQuery();
+    }
+
+    search(query, callback) {
+        var params = {};
+        params.index_id = this.site;
+        for(var param in query.params) {
+            params[param] = query.params[param];
+        }
         httpGet(this.baseUrl, '/crafter-search/api/2/search/search.json', params, callback);
     }
 }
 
 export class SearchClient {
 
-    constructor(baseUrl) {
-        this.searchService = new SearchService(baseUrl);
+    constructor(baseUrl, site) {
+        this.searchService = new SolrSearchService(baseUrl, site);
     }
 
 }
