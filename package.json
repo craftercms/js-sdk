@@ -5,6 +5,9 @@
   "private": true,
   "main": "./dist/craftercms.js",
   "scripts": {
+    "compile": "npx babel -d lib/ src/",
+    "pretest": "npm run compile",
+    "test": "npx mocha --require babel-core/register",
     "build": "npx webpack",
     "dev": "npx webpack -w --mode=development"
   },
@@ -31,6 +34,7 @@
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.4",
     "babel-preset-env": "^1.6.1",
+    "mocha": "^5.1.0",
     "webpack": "^4.5.0",
     "webpack-cli": "^2.0.14"
   }
