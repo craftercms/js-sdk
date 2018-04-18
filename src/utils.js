@@ -18,20 +18,39 @@
 'use strict';
 
 import axios from 'axios';
+import qs from 'qs';
 
 // Utility functions
 
-export function httpGet(baseUrl, url, params, callback) {
+function httpCall(method, baseUrl, url, params, data, callback) {
     var opts = {
-        method: 'get',
+        method: method,
         baseURL: baseUrl,
         url: url,
-        params: params
+        paramsSerializer: function(params) {
+            return qs.stringify(params, {arrayFormat: 'repeat'})
+        }
     };
 
-    axios(opts).then(function(response) {
-        callback(null, response.data);
-    }).catch(function(error) {
-        callback({ status: error.response.status, data: error.response.data }, null);
-    });
+    if(params) {
+        opts.params = params;
+    }
+
+    if(data) {
+        opts.data = qs.stringify(data);
+    }
+
+    axios(opts)
+        .then(response => { callback(null, response.data); })
+        .catch(error => {
+            callback({ status: error.response.status, data: error.response.data }, null);
+        });
+}
+
+export function httpGet(baseUrl, url, params, callback) {
+    httpCall('get', baseUrl, url, params, null, callback);
+};
+
+export function httpPost(baseUrl, url, data, callback) {
+    httpCall('post', baseUrl, url, null, data, callback);
 };
