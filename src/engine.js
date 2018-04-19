@@ -29,19 +29,19 @@ class ContentStoreService {
     }
 
     getItem(url, callback) {
-        httpGet(this.baseUrl, '/api/1/site/content_store/item.json', { crafterSite: this.site, url: url }, callback);
+        return httpGet(this.baseUrl, '/api/1/site/content_store/item.json', { crafterSite: this.site, url: url });
     }
 
     getDescriptor(url, callback) {
-        httpGet(this.baseUrl, '/api/1/site/content_store/descriptor.json', { crafterSite: this.site, url: url }, callback);
+        return httpGet(this.baseUrl, '/api/1/site/content_store/descriptor.json', { crafterSite: this.site, url: url });
     }
 
     getChildren(url, callback) {
-        httpGet(this.baseUrl, '/api/1/site/content_store/children.json', { crafterSite: this.site, url: url }, callback);
+        return httpGet(this.baseUrl, '/api/1/site/content_store/children.json', { crafterSite: this.site, url: url });
     }
 
     getTree(url, callback) {
-        httpGet(this.baseUrl, '/api/1/site/content_store/tree.json', { crafterSite: this.site, url: url }, callback);
+        return httpGet(this.baseUrl, '/api/1/site/content_store/tree.json', { crafterSite: this.site, url: url });
     }
 }
 
@@ -52,7 +52,7 @@ class NavigationService {
         this.site = site;
     }
 
-    getNavTree(url, depth, currentPageUrl, callback) {
+    getNavTree(url, depth, currentPageUrl) {
         var params = { crafterSite: this.site, url: url };
         if(depth) {
             params.depth = depth;
@@ -60,15 +60,15 @@ class NavigationService {
         if(currentPageUrl) {
             params.currentPageUrl = currentPageUrl;
         }
-        httpGet(this.baseUrl, '/api/1/site/navigation/tree.json', params, callback);
+        return httpGet(this.baseUrl, '/api/1/site/navigation/tree.json', params);
     }
 
-    getNavBreadcrumb(url, root, callback) {
+    getNavBreadcrumb(url, root) {
         var params = { crafterSite: this.site, url: url };
         if(root) {
             params.root = root;
         }
-        httpGet(this.baseUrl, '/api/1/site/navigation/breadcrumb.json', params, callback);
+        return httpGet(this.baseUrl, '/api/1/site/navigation/breadcrumb.json', params);
     }
 
 }
@@ -80,12 +80,12 @@ class UrlTransformationService {
         this.site = site;
     }
 
-    transform(transformerName, url, callback) {
-        httpGet(this.baseUrl, '/api/1/site/url/transform.json', {
+    transform(transformerName, url) {
+        return httpGet(this.baseUrl, '/api/1/site/url/transform.json', {
             crafterSite: this.site,
             url: url,
             transformerName: transformerName
-        }, callback);
+        });
     }
 }
 

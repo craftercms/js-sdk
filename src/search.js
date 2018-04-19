@@ -102,13 +102,13 @@ class SolrSearchService extends SearchService {
         return new SolrQuery();
     }
 
-    search(query, callback) {
+    search(query) {
         var params = {};
         params.index_id = this.site;
         for(var param in query.params) {
             params[param] = query.params[param];
         }
-        httpGet(this.baseUrl, '/crafter-search/api/2/search/search.json', params, callback);
+        return httpGet(this.baseUrl, '/crafter-search/api/2/search/search.json', params);
     }
 }
 
