@@ -27,7 +27,7 @@ describe('Search Client', () => {
 
         it('should find all documents', done => {
             var query = searchService.createQuery();
-            query.setQuery("*:*");
+            query.query = "*:*";
             searchService.search(query).then(result => {
                 assert.equal(result.response.numFound, 31);
                 done();
@@ -38,8 +38,8 @@ describe('Search Client', () => {
 
         it('should apply all filters', done => {
             var query = searchService.createQuery();
-            query.setQuery("*:*");
-            query.setFilterQueries(["content-type:/page/article", "featured_b:true"]);
+            query.query = "*:*";
+            query.filterQueries = ["content-type:/page/article", "featured_b:true"];
             searchService.search(query).then(result => {
                 assert.equal(result.response.numFound, 6);
                 done();
