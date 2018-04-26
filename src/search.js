@@ -27,8 +27,8 @@ class Query {
         this.params = {};
     }
 
-    toString(value) {
-        return Array.isArray(value)? value.join(",") : value
+    setParam(name, value) {
+        this.params[name] = value;
     }
 
     addParam(name, value) {
@@ -47,42 +47,60 @@ class Query {
 
 class SolrQuery extends Query {
 
-    setOffset(offset) {
-        super.addParam("start", offset);
+    // Synonym of start, added for consistency with Java Search Client
+    set offset(offset) {
+        this.start = offset;
     }
 
-    setNumResults(numResults) {
-        super.addParam("rows", numResults);
+    // Synonym of rows, added for consistency with Java Search Client
+    set numResults(numResults) {
+        this.rows = numResults;
     }
 
-    setQuery(query) {
-        super.addParam("q", query);
+    set start(start) {
+        super.setParam("start", start);
     }
 
-    setFieldsToReturn(fields) {
-        super.addParam("fl", super.toString(fields));
+    set rows(rows) {
+        super.setParam("rows", rows);
     }
 
-    setHighlight(highlight) {
-        super.addParam("hl", highlight);
+    set query(query) {
+        super.setParam("q", query);
     }
 
-    setHighlightFields(fields) {
-        super.addParam("hl.fl", super.toString(fields));
+    set sort(sort) {
+        super.setParam("sort", sort);
     }
 
-    setHighlightSnippets(snippets) {
-        super.addParam("hl.snippets", snippets);
+    set fieldsToReturn(fields) {
+        super.setParam("fl", fields);
     }
 
-    setHighlightSnippetSize(size) {
-        super.addParam("hl.fragsize", size);
+    set highlight(highlight) {
+        super.setParam("hl", highlight);
     }
 
-    setFilterQueries(queries) {
-        for(var query of queries) {
-            super.addParam("fq", query);
-        }
+    set highlightFields(fields) {
+        this.highlight = true;
+
+        super.setParam("hl.fl", fields);
+    }
+
+    set highlightSnippets(snippets) {
+        super.setParam("hl.snippets", snippets);
+    }
+
+    set highlightSnippetSize(size) {
+        super.setParam("hl.fragsize", size);
+    }
+
+    set filterQueries(queries) {
+        super.addParam("fq", queries);
+    }
+
+    set disableAdditionalFilters(disableAdditionalFilters) {
+        super.setParam("disable_additional_filters", disableAdditionalFilters)
     }
 
 }
