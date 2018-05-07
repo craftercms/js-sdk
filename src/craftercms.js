@@ -19,5 +19,6 @@
 
 import { EngineClient } from './engine.js'
 import { SearchClient } from './search.js'
+import { InContextEditing } from './ice.js'
 
-export { EngineClient, SearchClient }
+export { EngineClient, SearchClient, InContextEditing }
