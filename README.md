@@ -1,6 +1,41 @@
 # craftercms-sdk-js
 Crafter CMS SDK for JavaScript in the browser and Node JS
 
+## Examples
+
+- Add the module to your project by running `npm install --save @craftercms/sdk`
+
+- Connect Crafter Engine to get the index page from the site:
+
+```
+    import { EngineClient } from '@craftercms/sdk';
+
+    var engineClient = new EngineClient("http://localhost:8080", "editorial");
+
+    var contentStoreService = engineClient.contentStoreService;
+
+    contentStoreService.getItem("/site/website/index.xml").then(item => {
+        ...
+    });
+```
+
+- Connect to Crafter Search to query for content:
+
+```
+    import { SearchClient } from '@craftercms/sdk';
+
+    var searchClient = new SearchClient("http://localhost:8080", "editorial");
+
+    var searchService = searchClient.searchService;
+
+    var query = searchService.createQuery();
+    query.query = "*:*";
+    query.filterQueries = ["content-type:/page/article", "featured_b:true"];
+    searchService.search(query).then(result => {
+        ...
+    });
+```
+
 ## Project Structure
 
 - `src` contains the ES6 sources for developing
@@ -10,9 +45,11 @@ Crafter CMS SDK for JavaScript in the browser and Node JS
 
 ## Building
 
+- `npm install` will fetch all dependencies for development
 - `npm run compile` will use babel to generate ES5 sources in the `lib` folder
 - `npm run build` will use webpack to generate a production ES5 bundle under `dist` folder
 - `npm run dev` will use webpack to generate a development ES5 bundle under `dist` folder and watch for changes
+- `npm run doc` will generate the sdk documentation under `doc` folder
 
 ## Testing
 
