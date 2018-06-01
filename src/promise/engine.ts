@@ -1,6 +1,6 @@
 
-// This shows the option where we create a wrapper class that converts everything
-// observable response into a promise. All methods need to be re-declared & re-implemented
+// This shows the option where we create a wrapper class that converts every observable
+// response into a promise. All methods need to be re-declared & re-implemented
 // as shown by the sample `getItem` method.
 
 // Alternatively, the main observable based class could receive a constructor
