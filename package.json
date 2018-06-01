@@ -1,6 +1,6 @@
 {
   "name": "@craftercms/sdk",
-  "version": "3.0.10",
+  "version": "4.0.0",
   "description": "Crafter CMS SDK for JavaScript",
   "main": "./dist/craftercms.js",
   "scripts": {
