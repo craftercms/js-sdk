@@ -15,10 +15,11 @@
  * along with this program. If not, see http://www.gnu.org/licenses/.
  */
 
+import { Observable } from 'rxjs/internal/Observable';
+
 import { BaseService } from './base-service';
 import { StudioConfig } from './studio-config';
 import { composeUrl } from './utils';
-import { Observable } from 'rxjs/internal/Observable';
 
 export const GET_ITEM_URL = '/api/1/site/content_store/item.json';
 export const GET_DESCRIPTOR = '/api/1/site/content_store/descriptor.json';
