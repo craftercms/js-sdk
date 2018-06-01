@@ -21,16 +21,33 @@ import { httpGet } from './utils.js'
 
 // Search Client classes
 
+/**
+ * Query Object
+ */
 class Query {
 
+    /**
+     * Creates an empty query
+     * @constructor
+     */
     constructor() {
         this.params = {};
     }
 
-    toString(value) {
-        return Array.isArray(value)? value.join(",") : value
+    /**
+     * Sets a single value parameter in the query object
+     * @param {string} name - Name of the parameter
+     * @param {object} value - Value of the parameter
+     */
+    setParam(name, value) {
+        this.params[name] = value;
     }
 
+    /**
+     * Adds a value for a parameter in the query object
+     * @param {string} name - Name of the parameter
+     * @param {object} value - Value of the parameter
+     */
     addParam(name, value) {
         if(this.params[name]) {
             if(Array.isArray(this.params[name])) {
@@ -45,50 +62,131 @@ class Query {
 
 }
 
+/**
+ * Query implementation for Solr
+ */
 class SolrQuery extends Query {
 
-    setOffset(offset) {
-        super.addParam("start", offset);
+    // Synonym of start, added for consistency with Java Search Client
+    /**
+     * Sets the offset of the results.
+     * @param {int} offset - Number of results to skip
+     */
+    set offset(offset) {
+        this.start = offset;
     }
 
-    setNumResults(numResults) {
-        super.addParam("rows", numResults);
+    // Synonym of rows, added for consistency with Java Search Client
+    /**
+     * Sets the number of results to return.
+     * @param {int} numResults - Number of results to return
+     */
+    set numResults(numResults) {
+        this.rows = numResults;
     }
 
-    setQuery(query) {
-        super.addParam("q", query);
+    /**
+     * Sets the offset of the results.
+     * @param {int} start - Number of results to skip
+     */
+    set start(start) {
+        super.setParam("start", start);
     }
 
-    setFieldsToReturn(fields) {
-        super.addParam("fl", super.toString(fields));
+    /**
+     * Sets the number of results to return.
+     * @param {int} rows - Number of results to return
+     */
+    set rows(rows) {
+        super.setParam("rows", rows);
     }
 
-    setHighlight(highlight) {
-        super.addParam("hl", highlight);
+    /**
+     * Sets the actual query.
+     * @param {string} query - Solr query string
+     */
+    set query(query) {
+        super.setParam("q", query);
     }
 
-    setHighlightFields(fields) {
-        super.addParam("hl.fl", super.toString(fields));
+    /**
+     * Sets the sort order.
+     * @param {string} sort - Sort order
+     */
+    set sort(sort) {
+        super.setParam("sort", sort);
     }
 
-    setHighlightSnippets(snippets) {
-        super.addParam("hl.snippets", snippets);
+    /**
+     * Sets the fields that should be returned.
+     * @param {Array} fields - List of field names
+     */
+    set fieldsToReturn(fields) {
+        super.setParam("fl", fields);
     }
 
-    setHighlightSnippetSize(size) {
-        super.addParam("hl.fragsize", size);
+    /**
+     * Enables or disables highlighting in the results
+     * @param {string} highlight - Indicates if highlighting should be used
+     */
+    set highlight(highlight) {
+        super.setParam("hl", highlight);
     }
 
-    setFilterQueries(queries) {
-        for(var query of queries) {
-            super.addParam("fq", query);
-        }
+    /**
+     * Sets the field to apply highlighting in the results
+     * @param {string} fields - List of field names to use for highlighting
+     */
+    set highlightFields(fields) {
+        this.highlight = true;
+
+        super.setParam("hl.fl", fields);
+    }
+
+    /**
+     * Sets the number of snippets to generate per field in highlighting
+     * @param {int} snippets - Number of snippets
+     */
+    set highlightSnippets(snippets) {
+        super.setParam("hl.snippets", snippets);
+    }
+
+    /**
+     * Sets the size of snippets to generate per field in highlighting
+     * @param {int} size - Size of snippets
+     */
+    set highlightSnippetSize(size) {
+        super.setParam("hl.fragsize", size);
+    }
+
+    /**
+     * Sets the filter queries used to reduce the search results
+     * @param {Array} queries - List of filter queries
+     */
+    set filterQueries(queries) {
+        super.addParam("fq", queries);
+    }
+
+    /**
+     * Sets if the additional Crafter Search filters should be disabled on query execution.
+     * @param {bool} disableAdditionalFilters - Indicates if additional filters should be used
+     */
+    set disableAdditionalFilters(disableAdditionalFilters) {
+        super.setParam("disable_additional_filters", disableAdditionalFilters)
     }
 
 }
 
+/**
+ * Base class for Search Services
+ */
 class SearchService {
 
+    /**
+     * @constructor
+     * @param {string} baseUrl - Crafter Searcg URL
+     * @param {string} site - Site name used to resolve all API calls
+     */
     constructor(baseUrl, site) {
         this.baseUrl = baseUrl;
         this.site = site;
@@ -96,12 +194,22 @@ class SearchService {
 
 }
 
+/**
+ * Implementation of Search Service for Solr
+ */
 class SolrSearchService extends SearchService {
 
+    /**
+     * Returns a new Query object
+     */
     createQuery() {
         return new SolrQuery();
     }
 
+    /**
+     * Does a full-text search and returns a Map model.
+     * @param {Query} query - the query object
+     */
     search(query) {
         var params = {};
         params.index_id = this.site;
@@ -112,6 +220,9 @@ class SolrSearchService extends SearchService {
     }
 }
 
+/**
+ * Wrapper class for Search Service
+ */
 export class SearchClient {
 
     constructor(baseUrl, site) {
