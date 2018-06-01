@@ -28,7 +28,6 @@
   },
   "homepage": "https://github.com/craftercms/craftercms-sdk-js#readme",
   "dependencies": {
-    "qs": "^6.5.1",
     "rxjs": "^6.2.0"
   },
   "devDependencies": {
