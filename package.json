@@ -28,8 +28,8 @@
   },
   "homepage": "https://github.com/craftercms/craftercms-sdk-js#readme",
   "dependencies": {
-    "axios": "^0.18.0",
-    "qs": "^6.5.1"
+    "qs": "^6.5.1",
+    "rxjs": "^6.2.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
