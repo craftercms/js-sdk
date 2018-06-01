@@ -65,6 +65,13 @@ export class ContentStoreService extends BaseService {
     return BaseService.httpGet(requestURL, { url, depth, crafterSite: config.site });
   }
 
+  static getInstance(config: StudioConfig): ContentStoreService {
+    if (contentStoreService == null) {
+      contentStoreService = new ContentStoreService(config);
+    }
+    return contentStoreService;
+  }
+
   /**
    * Returns an Item from the content store.
    * @param {string} url - The item’s url
@@ -98,13 +105,6 @@ export class ContentStoreService extends BaseService {
     return ContentStoreService.getTree(url, this.config);
   }
 
-  static getInstance(config: StudioConfig): ContentStoreService {
-    if (contentStoreService == null) {
-      contentStoreService = new ContentStoreService(config);
-    }
-    return contentStoreService;
-  }
-
 }
 
 /**
@@ -126,6 +126,13 @@ export class NavigationService extends BaseService {
     });
   }
 
+  static getInstance(config: StudioConfig): NavigationService {
+    if (navigationService == null) {
+      navigationService = new NavigationService(config);
+    }
+    return navigationService;
+  }
+
   /**
    * Returns the navigation tree with the specified depth for the specified store URL.
    * @param {string} url - the root folder of the tree
@@ -145,13 +152,6 @@ export class NavigationService extends BaseService {
     return NavigationService.getNavBreadcrumb(url, this.config, root);
   }
 
-  static getInstance(config: StudioConfig): NavigationService {
-    if (navigationService == null) {
-      navigationService = new NavigationService(config);
-    }
-    return navigationService;
-  }
-
 }
 
 /**
@@ -168,6 +168,13 @@ export class UrlTransformationService extends BaseService {
     });
   }
 
+  static getInstance(config: StudioConfig): UrlTransformationService {
+    if (urlTransformService == null) {
+      urlTransformService = new UrlTransformationService(config);
+    }
+    return urlTransformService;
+  }
+
   /**
    * Transforms a URL, based on the current site's UrlTransformationEngine.
    * @param {string} transformerName - Name of the transformer to apply
@@ -175,13 +182,6 @@ export class UrlTransformationService extends BaseService {
    */
   transform(transformerName, url): Observable {
     return UrlTransformationService.transform(transformerName, url, this.config);
-  }
-
-  static getInstance(config: StudioConfig): UrlTransformationService {
-    if (urlTransformService == null) {
-      urlTransformService = new UrlTransformationService(config);
-    }
-    return urlTransformService;
   }
 
 }
