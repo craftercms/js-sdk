@@ -34,7 +34,11 @@ export interface Item {}
 export interface Descriptor {}
 
 // Singleton service instance keepers.
-let contentStoreService, navigationService, urlTransformService, engineClient, promiseEngineClient;
+let
+  contentStoreService: ContentStoreService,
+  navigationService: NavigationService,
+  urlTransformService: UrlTransformationService,
+  engineClient: EngineClient;
 
 /**
  * Content Store Service API
@@ -65,7 +69,7 @@ export class ContentStoreService extends BaseService {
    * Returns an Item from the content store.
    * @param {string} url - The item’s url
    */
-  getItem(url) {
+  getItem(url): Observable<Item> {
     return ContentStoreService.getItem(url, this.config);
   }
 
@@ -73,7 +77,7 @@ export class ContentStoreService extends BaseService {
    * Returns the descriptor data of an Item in the content store.
    * @param {string} url - The item’s url
    */
-  getDescriptor(url) {
+  getDescriptor(url): Observable<Descriptor> {
     return ContentStoreService.getDescriptor(url, this.config);
   }
 
@@ -81,7 +85,7 @@ export class ContentStoreService extends BaseService {
    * Returns the list of Items directly under a folder in the content store.
    * @param {string} url - the folder’s url
    */
-  getChildren(url) {
+  getChildren(url): Observable<Item[]> {
     return ContentStoreService.getChildren(url, this.config);
   }
 
@@ -90,11 +94,11 @@ export class ContentStoreService extends BaseService {
    * @param {string} url - the folder’s url
    * @param {int} depth - Amount of levels to include
    */
-  getTree(url, depth) {
+  getTree(url, depth): Observable<Item> {
     return ContentStoreService.getTree(url, this.config);
   }
 
-  static getInstance(config: StudioConfig) {
+  static getInstance(config: StudioConfig): ContentStoreService {
     if (contentStoreService == null) {
       contentStoreService = new ContentStoreService(config);
     }
@@ -108,14 +112,14 @@ export class ContentStoreService extends BaseService {
  */
 export class NavigationService extends BaseService {
 
-  static getNavTree(url: string, config: StudioConfig, depth: number = 1, currentPageUrl: string = '') {
+  static getNavTree(url: string, config: StudioConfig, depth: number = 1, currentPageUrl: string = ''): Observable {
     const requestURL = composeUrl(config, GET_NAV_TREE);
     return BaseService.httpGet(requestURL, {
       crafterSite: config.site, url, depth, currentPageUrl
     });
   }
 
-  static getNavBreadcrumb(url: string, config: StudioConfig, root: string = '') {
+  static getNavBreadcrumb(url: string, config: StudioConfig, root: string = ''): Observable {
     const requestURL = composeUrl(config, GET_BREADCRUMB);
     return BaseService.httpGet(requestURL, {
       crafterSite: config.site, url, root
@@ -128,7 +132,7 @@ export class NavigationService extends BaseService {
    * @param {int} depth - the depth of the tree
    * @param {string} currentPageUrl - the URL of the current page
    */
-  getNavTree(url: string, depth: number = 1, currentPageUrl: string = '') {
+  getNavTree(url: string, depth: number = 1, currentPageUrl: string = ''): Observable {
     return NavigationService.getNavTree(url, this.config, depth, currentPageUrl);
   }
 
@@ -137,11 +141,11 @@ export class NavigationService extends BaseService {
    * @param {string} url - the current URL used to build the breadcrumb
    * @param {string} root - the root URL, basically the starting point of the breadcrumb
    */
-  getNavBreadcrumb(url: string, root: string = '') {
+  getNavBreadcrumb(url: string, root: string = ''): Observable {
     return NavigationService.getNavBreadcrumb(url, this.config, root);
   }
 
-  static getInstance(config: StudioConfig) {
+  static getInstance(config: StudioConfig): NavigationService {
     if (navigationService == null) {
       navigationService = new NavigationService(config);
     }
@@ -155,7 +159,7 @@ export class NavigationService extends BaseService {
  */
 export class UrlTransformationService extends BaseService {
 
-  static transform(transformerName: string, url: string, config: StudioConfig) {
+  static transform(transformerName: string, url: string, config: StudioConfig): Observable {
     const requestURL = composeUrl(config, TRANSFORM_URL);
     return BaseService.httpGet(requestURL, {
       crafterSite: config.site,
@@ -169,11 +173,11 @@ export class UrlTransformationService extends BaseService {
    * @param {string} transformerName - Name of the transformer to apply
    * @param {string} url - URL that will be transformed
    */
-  transform(transformerName, url) {
+  transform(transformerName, url): Observable {
     return UrlTransformationService.transform(transformerName, url, this.config);
   }
 
-  static getInstance(config: StudioConfig) {
+  static getInstance(config: StudioConfig): UrlTransformationService {
     if (urlTransformService == null) {
       urlTransformService = new UrlTransformationService(config);
     }
@@ -186,7 +190,7 @@ export class UrlTransformationService extends BaseService {
  * Wrapper class for engine-related services.
  */
 export class EngineClient extends UrlTransformationService, NavigationService, ContentStoreService {
-  static getInstance(config: StudioConfig) {
+  static getInstance(config: StudioConfig): EngineClient {
     if (engineClient == null) {
       engineClient = new EngineClient(config);
     }
