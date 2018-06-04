@@ -12,6 +12,7 @@ let engineClient: EngineClient;
  */
 export class EngineClient extends SDKService {
 
+  // TODO doesn't make that much sense to have a getInstance with the `config` param
   static getInstance(config: StudioConfig): EngineClient {
     if (engineClient == null) {
       engineClient = new EngineClient(config);

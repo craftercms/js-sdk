@@ -3,18 +3,24 @@ import { combineEpics, createEpicMiddleware, Epic } from 'redux-observable';
 
 import { log } from '@craftercms/utils';
 import { CrafterReduxProps, CrafterReduxStore } from '@craftercms/models';
-import { allEpics, allReducers, rootEpic, rootReducer } from '@craftercms/redux';
+import { allEpics, allReducers } from '@craftercms/redux';
 
 export function createReduxStore(config: {
+  namespaceCrafterState?: boolean, // TODO implement...
   reducerMixin?: { [statePropName: string]: Function },
   epicsArray?: Epic<AnyAction, Store<any>>[],
   reduxDevTools?: boolean
-} = { reduxDevTools: true }) {
+} = {}) {
+
+  config = Object.assign({}, {
+    reduxDevTools: true,
+    namespaceCrafterState: false
+  }, config);
 
   const epicMiddleware = createEpicMiddleware(
     config.epicsArray
-      ? combineEpics(allEpics.concat(config.epicsArray))
-      : rootEpic);
+      ? combineEpics(...allEpics.concat(config.epicsArray))
+      : combineEpics(...allEpics));
 
   const enhancers = config.reduxDevTools
     ? (window['__REDUX_DEVTOOLS_EXTENSION_COMPOSE__'] || compose)
@@ -23,7 +29,7 @@ export function createReduxStore(config: {
   return createStore(
     config.reducerMixin
       ? combineReducers({ ...allReducers, ...config.reducerMixin })
-      : rootReducer,
+      : combineReducers(allReducers),
     enhancers(applyMiddleware(epicMiddleware))
   );
 

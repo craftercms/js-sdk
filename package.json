@@ -27,6 +27,7 @@
   "devDependencies": {
     "jsdoc": "^3.5.5",
     "mocha": "^5.1.0",
+    "rimraf": "^2.6.2",
     "rollup": "^0.59.4",
     "rollup-plugin-node-resolve": "^3.3.0",
     "rollup-plugin-sourcemaps": "^0.4.2",
