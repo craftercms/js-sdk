@@ -1,0 +1,22 @@
+{
+  "name": "@craftercms/ice",
+  "version": "0.0.0-PLACEHOLDER",
+  "description": "Crafter CMS In Context Editing",
+  "main": "./bundles/ice.umd.js",
+  "module": "./esm5/ice.js",
+  "es2015": "./esm2015/ice.js",
+  "typings": "./ice.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/craftercms/craftercms-sdk-js.git"
+  },
+  "author": "CrafterCMS",
+  "license": "GNU",
+  "private": false,
+  "scripts": {
+    "rollup": "../../node_modules/rollup/bin/rollup -c rollup.config.js",
+    "build:ts": "tsc -p tsconfig.build.json",
+    "clean:ts": "../../node_modules/rimraf/bin.js ts-out",
+    "build ": "npm run build:ts && npm run rollup && npm run clean:ts"
+  }
+}

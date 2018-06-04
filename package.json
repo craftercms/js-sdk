@@ -2,15 +2,7 @@
   "name": "@craftercms/sdk",
   "version": "4.0.0",
   "description": "Crafter CMS SDK for JavaScript",
-  "main": "./dist/craftercms.js",
-  "scripts": {
-    "compile": "npx babel -d lib/ src/",
-    "pretest": "npm run compile",
-    "test": "npx mocha --require babel-core/register",
-    "build": "npx webpack",
-    "dev": "npx webpack -w --mode=development",
-    "doc": "npx jsdoc -d doc src/*"
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/craftercms/craftercms-sdk-js.git"
@@ -28,16 +20,17 @@
   },
   "homepage": "https://github.com/craftercms/craftercms-sdk-js#readme",
   "dependencies": {
+    "redux": "^4.0.0",
+    "redux-observable": "^0.18.0",
     "rxjs": "^6.2.0"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.0",
-    "babel-loader": "^7.1.4",
-    "babel-preset-env": "^1.6.1",
     "jsdoc": "^3.5.5",
     "mocha": "^5.1.0",
-    "webpack": "^4.5.0",
-    "webpack-cli": "^2.0.14"
+    "rollup": "^0.59.4",
+    "rollup-plugin-node-resolve": "^3.3.0",
+    "rollup-plugin-sourcemaps": "^0.4.2",
+    "tslib": "^1.9.2",
+    "typescript": "^2.9.1"
   }
 }
