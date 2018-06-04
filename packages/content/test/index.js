@@ -16,12 +16,12 @@
  */
 
 import assert from 'assert';
-import { EngineClient } from './../lib/craftercms';
+import { ContentStoreService, NavigationService, UrlTransformationService } from '@craftercms/content';
 
-var engineClient = new EngineClient("http://localhost:8080", "editorial");
-var contentStoreService = engineClient.contentStoreService;
-var navService = engineClient.navigationService;
-var urlService = engineClient.urlTransformationService;
+const config = {
+  baseUrl: "http://localhost:8080",
+  site: "editorial"
+};
 
 describe('Engine Client', () => {
 
@@ -29,7 +29,7 @@ describe('Engine Client', () => {
 
     describe('getItem', () => {
       it('should return the index item', done => {
-        contentStoreService.getItem("/site/website/index.xml").then(item => {
+        ContentStoreService.getItem("/site/website/index.xml", config).toPromise().then(item => {
           assert.equal(item.descriptorDom.page.objectId, '8d7f21fa-5e09-00aa-8340-853b7db302da');
           done();
         }).catch(error => {
@@ -40,7 +40,7 @@ describe('Engine Client', () => {
 
     describe('getDescriptor', () => {
       it('should return the index descriptor', done => {
-        contentStoreService.getDescriptor("/site/website/index.xml").then(descriptor => {
+        ContentStoreService.getDescriptor("/site/website/index.xml", config).toPromise().then(descriptor => {
           assert(descriptor.page.hero_text, 'hero_text field should not be empty');
           done();
         }).catch(error => {
@@ -51,7 +51,7 @@ describe('Engine Client', () => {
 
     describe('getChildren', () => {
       it('should return the child pages', done => {
-        contentStoreService.getChildren("/site/website/").then(children => {
+        ContentStoreService.getChildren("/site/website/", config).toPromise().then(children => {
           assert.equal(children.length, 8, 'index should have 8 child pages');
           done();
         }).catch(error => {
@@ -62,7 +62,7 @@ describe('Engine Client', () => {
 
     describe('getTree', () => {
       it('should return the page tree', done => {
-        contentStoreService.getTree("/site/website/").then(tree => {
+        contentStoreService.getTree("/site/website/", config).toPromise().then(tree => {
           assert.equal(tree.children.length, 8, 'tree should have 8 child pages');
           done();
         }).catch(error => {
@@ -77,7 +77,7 @@ describe('Engine Client', () => {
 
     describe('getNavTree', () => {
       it('should return the nav tree', done => {
-        navService.getNavTree("/site/website", 3, null).then(tree => {
+        NavigationService.getNavTree("/site/website", config, 3, null).toPromise().then(tree => {
           assert.equal(tree.label, "Home", 'tree should start at the index');
           assert(tree.subItems, 'tree should have subItems');
           done();
@@ -89,7 +89,7 @@ describe('Engine Client', () => {
 
     describe('getNavBreadcrumb', () => {
       it('should return the nav breadcrumb', done => {
-        navService.getNavBreadcrumb("/site/website/style/index.xml", null).then(breadcrumb => {
+        NavigationService.getNavBreadcrumb("/site/website/style/index.xml", config, null).toPromise().then(breadcrumb => {
           assert.equal(breadcrumb.length, 2, 'breadcrumb should have 2 items');
           assert.equal(breadcrumb[1].label, 'Style', 'last item should be Style');
           done();
@@ -106,7 +106,7 @@ describe('Engine Client', () => {
     describe('transform', () => {
 
       it('should return the render url', done => {
-        urlService.transform("storeUrlToRenderUrl", "/site/website/style/index.xml").then(url => {
+        UrlTransformationService.transform("storeUrlToRenderUrl", "/site/website/style/index.xml", config).toPromise().then(url => {
           assert.equal(url, '/style');
           done();
         }).catch(error => {
@@ -115,7 +115,7 @@ describe('Engine Client', () => {
       });
 
       it('should return the store url', done => {
-        urlService.transform("renderUrlToStoreUrl", "/technology").then(url => {
+        UrlTransformationService.transform("renderUrlToStoreUrl", "/technology", config).toPromise().then(url => {
           assert.equal(url, '/site/website/technology/index.xml');
           done();
         }).catch(error => {

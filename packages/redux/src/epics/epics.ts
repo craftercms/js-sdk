@@ -1,8 +1,7 @@
-import { allEngineEpics } from './engine';
+import { allContentEpics } from './content';
 import { allSearchEpics } from './search';
 
 export const allEpics = [].concat(
-  allEngineEpics,
+  allContentEpics,
   allSearchEpics
 );
-

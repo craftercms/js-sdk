@@ -2,7 +2,7 @@ import { Observable } from 'rxjs/internal/Observable';
 
 import { StudioConfig, SDKService } from '@craftercms/models';
 import { composeUrl } from '@craftercms/utils';
-import { TRANSFORM_URL } from './api-endpoints';
+import { TRANSFORM_URL_ENDPOINT } from './api-endpoints';
 
 let urlTransformService: UrlTransformationService;
 
@@ -12,7 +12,7 @@ let urlTransformService: UrlTransformationService;
 export class UrlTransformationService extends SDKService {
 
   static transform(transformerName: string, url: string, config: StudioConfig): Observable<any> {
-    const requestURL = composeUrl(config, TRANSFORM_URL);
+    const requestURL = composeUrl(config, TRANSFORM_URL_ENDPOINT);
     return SDKService.httpGet(requestURL, {
       crafterSite: config.site,
       transformerName,
@@ -20,8 +20,11 @@ export class UrlTransformationService extends SDKService {
     });
   }
 
-  static getInstance(config: StudioConfig): UrlTransformationService {
+  static getInstance(config?: StudioConfig): UrlTransformationService {
     if (urlTransformService == null) {
+      if (config == null) {
+        throw new Error('First call to UrlTransformationService.getInstance requires the StudioConfig to be supplied.');
+      }
       urlTransformService = new UrlTransformationService(config);
     }
     return urlTransformService;

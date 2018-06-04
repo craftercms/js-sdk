@@ -2,7 +2,7 @@ import { Observable } from 'rxjs/internal/Observable';
 
 import { StudioConfig, SDKService } from '@craftercms/models';
 import { composeUrl } from '@craftercms/utils';
-import { GET_NAV_TREE, GET_BREADCRUMB } from './api-endpoints';
+import { GET_NAV_TREE_ENDPOINT, GET_BREADCRUMB_ENDPOINT } from './api-endpoints';
 
 let navigationService: NavigationService;
 
@@ -12,21 +12,24 @@ let navigationService: NavigationService;
 export class NavigationService extends SDKService {
 
   static getNavTree(url: string, config: StudioConfig, depth: number = 1, currentPageUrl: string = ''): Observable<any> {
-    const requestURL = composeUrl(config, GET_NAV_TREE);
+    const requestURL = composeUrl(config, GET_NAV_TREE_ENDPOINT);
     return SDKService.httpGet(requestURL, {
       crafterSite: config.site, url, depth, currentPageUrl
     });
   }
 
   static getNavBreadcrumb(url: string, config: StudioConfig, root: string = ''): Observable<any> {
-    const requestURL = composeUrl(config, GET_BREADCRUMB);
+    const requestURL = composeUrl(config, GET_BREADCRUMB_ENDPOINT);
     return SDKService.httpGet(requestURL, {
       crafterSite: config.site, url, root
     });
   }
 
-  static getInstance(config: StudioConfig): NavigationService {
+  static getInstance(config?: StudioConfig): NavigationService {
     if (navigationService == null) {
+      if (config == null) {
+        throw new Error('First call to NavigationService.getInstance requires the StudioConfig to be supplied.');
+      }
       navigationService = new NavigationService(config);
     }
     return navigationService;

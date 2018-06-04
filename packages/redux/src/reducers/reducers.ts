@@ -1,4 +1,4 @@
-import { itemsReducer, navigationReducer } from './engine';
+import { itemsReducer, navigationReducer } from './content';
 
 export const allReducers = {
   items: itemsReducer,

@@ -9,7 +9,8 @@
       "redux": ["../../node_modules/redux"],
       "redux-observable": ["../../node_modules/redux-observable"],
       "@craftercms/models": ["../../dist/packages/models"],
-      "@craftercms/engine": ["../../dist/packages/engine"],
+      "@craftercms/content": ["../../dist/packages/content"],
+      "@craftercms/utils": ["../../dist/packages/utils"],
       "@craftercms/redux": ["."]
     },
     "outDir": "../../dist/packages/redux"

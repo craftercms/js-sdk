@@ -1,3 +1,3 @@
 const rollupUtils = require('../../util/rollup-utils');
 
-module.exports = rollupUtils.config('engine');
+module.exports = rollupUtils.config('content');

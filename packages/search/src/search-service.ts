@@ -7,12 +7,12 @@ export const SEARCH_ENDPOINT = '/crafter-search/api/2/search/search.json';
 
 // TODO add return types
 
-let solrService: SolrService;
+let solrService: SearchService;
 
 /**
  * Implementation of Search Service for Solr
  */
-export class SolrService extends SDKService {
+export class SearchService extends SDKService {
 
   static search(query: Query, config: StudioConfig) {
     const requestURL = composeUrl(config, SEARCH_ENDPOINT);
@@ -22,9 +22,9 @@ export class SolrService extends SDKService {
     });
   }
 
-  static getInstance(config: StudioConfig): SolrService {
+  static getInstance(config: StudioConfig): SearchService {
     if (solrService == null) {
-      solrService = new SolrService(config);
+      solrService = new SearchService(config);
     }
     return solrService;
   }
@@ -33,6 +33,7 @@ export class SolrService extends SDKService {
    * Returns a new Query object
    */
   createQuery(params: Object = {}): SolrQuery {
+    // TODO create factory or elsehow abstract other non-solr search engines. Based on "config", perhaps?
     const solrQuery = new SolrQuery();
     Object.assign(solrQuery.params, params);
     return solrQuery;
@@ -43,7 +44,7 @@ export class SolrService extends SDKService {
    * @param {Query} query - the query object
    */
   search(query: Query) {
-    return SolrService.search(query, this.config);
+    return SearchService.search(query, this.config);
   }
 
 }

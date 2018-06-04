@@ -6,11 +6,11 @@
     "rootDir": ".",
     "paths": {
       "rxjs/*": ["../../node_modules/rxjs/*"],
-      "@craftercms/engine": ["."],
+      "@craftercms/content": ["."],
       "@craftercms/models": ["../../dist/packages/models"],
       "@craftercms/utils": ["../../dist/packages/utils"]
     },
-    "outDir": "../../dist/packages/engine"
+    "outDir": "../../dist/packages/content"
   },
 
   "files": [

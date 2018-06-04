@@ -3,10 +3,10 @@ import { Observable } from 'rxjs/internal/Observable';
 import { SDKService, StudioConfig, Descriptor, Item } from '@craftercms/models';
 import { composeUrl } from '@craftercms/utils';
 import {
-  GET_CHILDREN,
-  GET_DESCRIPTOR,
-  GET_ITEM_URL,
-  GET_TREE
+  GET_CHILDREN_ENDPOINT,
+  GET_DESCRIPTOR_ENDPOINT,
+  GET_ITEM_URL_ENDPOINT,
+  GET_TREE_ENDPOINT
 } from './api-endpoints';
 
 let contentStoreService: ContentStoreService;
@@ -17,27 +17,30 @@ let contentStoreService: ContentStoreService;
 export class ContentStoreService extends SDKService {
 
   static getItem(url: string, config: StudioConfig): Observable<Item> {
-    const requestURL = composeUrl(config, GET_ITEM_URL);
+    const requestURL = composeUrl(config, GET_ITEM_URL_ENDPOINT);
     return SDKService.httpGet(requestURL, { url, crafterSite: config.site });
   }
 
   static getDescriptor(url: string, config: StudioConfig): Observable<Descriptor> {
-    const requestURL = composeUrl(config, GET_DESCRIPTOR);
+    const requestURL = composeUrl(config, GET_DESCRIPTOR_ENDPOINT);
     return SDKService.httpGet(requestURL, { url, crafterSite: config.site });
   }
 
   static getChildren(url: string, config: StudioConfig): Observable<Item[]> {
-    const requestURL = composeUrl(config, GET_CHILDREN);
+    const requestURL = composeUrl(config, GET_CHILDREN_ENDPOINT);
     return SDKService.httpGet(requestURL, { url, crafterSite: config.site });
   }
 
   static getTree(url: string, config: StudioConfig, depth: number = 1): Observable<Item> {
-    const requestURL = composeUrl(config, GET_TREE);
+    const requestURL = composeUrl(config, GET_TREE_ENDPOINT);
     return SDKService.httpGet(requestURL, { url, depth, crafterSite: config.site });
   }
 
-  static getInstance(config: StudioConfig): ContentStoreService {
+  static getInstance(config?: StudioConfig): ContentStoreService {
     if (contentStoreService == null) {
+      if (config == null) {
+        throw new Error('First call to ContentStoreService.getInstance requires the StudioConfig to be supplied.');
+      }
       contentStoreService = new ContentStoreService(config);
     }
     return contentStoreService;

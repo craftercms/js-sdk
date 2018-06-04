@@ -9,7 +9,7 @@
 * `getInstance` method supplied by services to use as singleton
 * Removed `axios` and `qs` packages
 * Added RxJS
-* Renamed SolrSearchService to SolrService
+* Renamed SolrSearchService to SearchService
 * Converted to mono-repo for other packages too (redux, ice, utils, etc)
 
 **BREAKING CHANGES**
@@ -17,7 +17,8 @@
 * All engine classes receive a StudioConfig object instead of baseUrl and site
 * Services now return Observables. Promises can be used by calling .toPromise on the observable or using the promise wrapper classes provided
 * Engine client publishes all methods of the wrapped classes as a class method directly and no longer has each service instance as a property
-* Removed SearchClient class (Use SolrService directly instead).
+* Removed SearchClient class (Use SearchService directly instead).
+* Renamed all "engine" to "content"
 
 ---
 

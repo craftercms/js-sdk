@@ -3,12 +3,12 @@ import { AnyAction, Store } from 'redux';
 import { switchMap, map, tap } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 
-import { ContentStoreService } from '@craftercms/engine';
+import { ContentStoreService } from '@craftercms/content';
 import { CrafterReduxStore } from '@craftercms/models';
 import {
   GET_ITEM,
   getItemComplete
-} from '../actions/engine';
+} from '../actions/content';
 import { getState } from '../utils';
 
 export const getItemEpic =
@@ -22,6 +22,6 @@ export const getItemEpic =
         ))
   );
 
-export const allEngineEpics = [
+export const allContentEpics = [
   getItemEpic
 ];

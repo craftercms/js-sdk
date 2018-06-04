@@ -1,11 +1,11 @@
 {
-  "name": "@craftercms/engine",
+  "name": "@craftercms/content",
   "version": "0.0.0-PLACEHOLDER",
   "description": "Crafter CMS",
-  "main": "./bundles/engine.umd.js",
-  "module": "./esm5/engine.js",
-  "es2015": "./esm2015/engine.js",
-  "typings": "./engine.d.ts",
+  "main": "./bundles/content.umd.js",
+  "module": "./esm5/content.js",
+  "es2015": "./esm2015/content.js",
+  "typings": "./content.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/craftercms/craftercms-sdk-js.git"

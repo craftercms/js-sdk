@@ -1,6 +1,6 @@
 import { AnyAction } from 'redux';
 
-import { GET_ITEM_COMPLETE, GET_ITEM } from '../actions/engine';
+import { GET_ITEM_COMPLETE, GET_ITEM } from '../actions/content';
 import { CrafterReduxState, Item } from '@craftercms/models';
 
 export function itemsReducer(state = {

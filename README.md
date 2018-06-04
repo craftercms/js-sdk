@@ -1,47 +1,6 @@
 # craftercms-sdk-js
 Crafter CMS SDK for JavaScript in the browser and Node JS
 
-## Examples
-
-- Add the module to your project by running `npm install --save @craftercms/sdk`
-
-- Connect Crafter Engine to get the index page from the site:
-
-```js
-  import { EngineClient } from '@craftercms/engine';
-
-  const engineClient = new EngineClient({
-    baseUrl: 'http://localhost:8080', 
-    site: 'editorial'
-  });
-
-  engineClient.getItem('/site/website/index.xml')
-    .subscribe(item => {
-      // ...
-    });
-```
-
-- Connect to Crafter Search to query for content:
-
-```js
-    import { SolrService } from '@craftercms/search';
-
-    const searchService = new SolrService({
-      baseUrl: 'http://localhost:8080', 
-      site: 'editorial'
-    });
-
-    var query = searchService.createQuery({
-      query: '*:*',
-      filterQueries: ['content-type:/page/article', 'featured_b:true']
-    });
-    
-    searchService.search(query)
-      .subscribe(results => {
-          // ...
-      });
-```
-
 ## Project Structure
 
 - `packages` contains the different SDK packages and their respective sources (TypeScript for the most part)
