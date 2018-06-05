@@ -1,0 +1,23 @@
+{
+  "extends": "../tsconfig-build.json",
+
+  "compilerOptions": {
+    "baseUrl": ".",
+    "rootDir": ".",
+    "paths": {
+      "rxjs/*": ["../../node_modules/rxjs/*"],
+      "redux": ["../../node_modules/redux"],
+      "redux-observable": ["../../node_modules/redux-observable"],
+      "@craftercms/models": ["../../dist/packages/models"],
+      "@craftercms/content": ["../../dist/packages/content"],
+      "@craftercms/utils": ["../../dist/packages/utils"],
+      "@craftercms/redux": ["."]
+    },
+    "outDir": "../../dist/packages/redux"
+  },
+
+  "files": [
+    "index.ts"
+  ]
+
+}
