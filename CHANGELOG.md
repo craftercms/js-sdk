@@ -4,20 +4,22 @@
 **Refactors**
 
 * Migrated to typescript
-* Services now able to work both as static classes and instances
+* Services now able to work both as static classes or as instances
 * API endpoints are available as constants
-* `getInstance` method supplied by services to use as singleton
+* New `getInstance` method on services
 * Removed `axios` and `qs` packages
 * Added RxJS
-* Renamed SolrSearchService to SearchService
-* Converted to mono-repo for other packages too (redux, ice, utils, etc)
+* Removed SolrSearchService in favour of SearchService and SearchService is now published
+* `createQuery` is now a static method of SearchService 
 
 **BREAKING CHANGES**
 
-* All engine classes receive a StudioConfig object instead of baseUrl and site
-* Services now return Observables. Promises can be used by calling .toPromise on the observable or using the promise wrapper classes provided
-* Engine client publishes all methods of the wrapped classes as a class method directly and no longer has each service instance as a property
-* Removed SearchClient class (Use SearchService directly instead).
+* Converted to mono-repo of all craftercms JS packages (redux, ice, utils, etc)
+* The @craftercms/sdk is no longer the lib. Use specific packages instead (@craftercms/content, @craftercms/search, @craftercms/redux, etc)
+* All content api (@craftercms/content) classes receive a StudioConfig object instead of baseUrl and site
+* Services now return Observables (Promises can be gotten by calling .toPromise() on the observable if desired)
+* Removed EngineClient (use specific services directly) 
+* Removed SearchClient class (use SearchService directly instead)
 * Renamed all "engine" to "content"
 
 ---
