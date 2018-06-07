@@ -1,0 +1,14 @@
+{
+  "extends": "../tsconfig-build.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "rootDir": ".",
+    "paths": {
+      "@craftercms/utils": ["."]
+    },
+    "outDir": "../../dist/packages/utils"
+  },
+  "files": [
+    "index.ts"
+  ]
+}
