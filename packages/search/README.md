@@ -14,12 +14,11 @@
       site: 'editorial'
     });
 
-    var query = searchService.createQuery({
-      query: '*:*',
-      filterQueries: ['content-type:/page/article', 'featured_b:true']
-    });
-    
-    searchService.search(query)
+    searchService
+      .search({
+         query: '*:*',
+         filterQueries: ['content-type:/page/article', 'featured_b:true']
+       })
       .subscribe(results => {
           // ...
       });
