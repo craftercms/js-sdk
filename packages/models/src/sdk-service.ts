@@ -19,7 +19,7 @@ export class SDKService {
 
   static httpPost(requestURL: string, body: Object = {}): Observable<any> {
     return ajax.post(requestURL, body)
-      .pipe(map((ajaxResponse: AjaxResponse) => ajaxResponse.response.data));
+      .pipe(map((ajaxResponse: AjaxResponse) => ajaxResponse.response));
   }
 
 }
