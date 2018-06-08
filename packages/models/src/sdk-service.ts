@@ -11,13 +11,15 @@ export class SDKService {
 
   static httpGet(requestURL: string, params: Object = {}): Observable<any> {
     const searchParams = new URLSearchParams(params as URLSearchParams);
-    return ajax.get(`${requestURL}${searchParams.toString()}`)
-      .pipe(map((ajaxResponse: AjaxResponse) => ajaxResponse.response.data));
+    return ajax.get(`${requestURL}?${searchParams.toString()}`)
+      .pipe(
+        map((ajaxResponse: AjaxResponse) => ajaxResponse.response)
+      );
   }
 
   static httpPost(requestURL: string, body: Object = {}): Observable<any> {
     return ajax.post(requestURL, body)
-      .pipe(map((ajaxResponse: AjaxResponse) => ajaxResponse.response.data));
+      .pipe(map((ajaxResponse: AjaxResponse) => ajaxResponse.response));
   }
 
 }

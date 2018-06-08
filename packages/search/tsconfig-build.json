@@ -6,7 +6,8 @@
     "paths": {
       "rxjs/*": ["../../node_modules/rxjs/*"],
       "@craftercms/utils": ["../../dist/packages/utils"],
-      "@craftercms/models": ["../../dist/packages/models"]
+      "@craftercms/models": ["../../dist/packages/models"],
+      "@craftercms/search": ["."]
     },
     "outDir": "../../dist/packages/search"
   },
