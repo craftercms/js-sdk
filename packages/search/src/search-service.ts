@@ -4,7 +4,7 @@ import { Query } from './query';
 import { SolrQuery } from '@craftercms/search';
 import { ElasticQuery } from '@craftercms/search';
 
-export const SEARCH_ENDPOINT = '/crafter-search/api/2/search/search.json';
+export const SEARCH_ENDPOINT = 'crafter-search/api/2/search/search.json';
 
 // TODO add return types
 
