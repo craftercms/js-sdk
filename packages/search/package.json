@@ -18,5 +18,10 @@
     "build:ts": "tsc -p tsconfig.build.json",
     "clean:ts": "../../node_modules/rimraf/bin.js ts-out",
     "build ": "npm run build:ts && npm run rollup && npm run clean:ts"
+  },
+  "peerDependencies": {
+    "rxjs": "^6.2.0",
+    "@craftercms/utils": "0.0.0-PLACEHOLDER",
+    "@craftercms/models": "0.0.0-PLACEHOLDER"
   }
 }

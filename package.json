@@ -19,18 +19,18 @@
     "url": "https://github.com/craftercms/craftercms/issues"
   },
   "homepage": "https://github.com/craftercms/craftercms-sdk-js#readme",
-  "dependencies": {
-    "redux": "^4.0.0",
-    "redux-observable": "^0.18.0",
-    "rxjs": "^6.2.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "jsdoc": "^3.5.5",
     "mocha": "^5.1.0",
+    "ng2-dnd": "^5.0.2",
+    "redux": "^4.0.0",
+    "redux-observable": "^0.18.0",
     "rimraf": "^2.6.2",
     "rollup": "^0.59.4",
     "rollup-plugin-node-resolve": "^3.3.0",
     "rollup-plugin-sourcemaps": "^0.4.2",
+    "rxjs": "^6.2.0",
     "tslib": "^1.9.2",
     "typescript": "^2.9.1",
     "uglify-es": "^3.3.9"

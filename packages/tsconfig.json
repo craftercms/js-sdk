@@ -23,6 +23,6 @@
     "target": "es5"
   },
   "exclude": [
-
+    "./angular"
   ]
 }

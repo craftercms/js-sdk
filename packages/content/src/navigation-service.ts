@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs/internal/Observable';
+import { Observable } from 'rxjs';
 
 import { StudioConfig, SDKService } from '@craftercms/models';
 import { composeUrl } from '@craftercms/utils';
