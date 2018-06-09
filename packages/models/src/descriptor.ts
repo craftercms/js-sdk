@@ -1,1 +1,4 @@
-export interface Descriptor {}
+export interface Descriptor {
+  page: any;
+  [prop: string]: any;
+}
