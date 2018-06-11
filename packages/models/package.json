@@ -11,7 +11,7 @@
     "url": "https://github.com/craftercms/craftercms-sdk-js.git"
   },
   "author": "CrafterCMS",
-  "license": "GNU",
+  "license": "GNU LGPL 3.0",
   "private": false,
   "scripts": {
     "rollup": "../../node_modules/rollup/bin/rollup -c rollup.config.js",
