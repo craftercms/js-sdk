@@ -1,5 +1,5 @@
 export function log(message: string, type: string = log.DEFAULT) {
-  console && (console[type] && console[type](message) || console.log && console.log(message));
+  console && (console[type] && !console[type](message) || console.log && console.log(message));
 }
 
 export namespace log {

@@ -1,12 +1,12 @@
 import { AnyAction } from 'redux';
 
 import { GET_ITEM_COMPLETE, GET_ITEM } from '../actions/content';
-import { CrafterReduxState, Item } from '@craftercms/models';
+import { StateContainer, Item } from '@craftercms/models';
 
 export function itemsReducer(state = {
   loading: {}, // { all: boolean, [id: string]: boolean }
   entries: {}
-}, action: AnyAction): CrafterReduxState<Item> {
+}, action: AnyAction): StateContainer<Item> {
   switch (action.type) {
     case GET_ITEM: {
       return {

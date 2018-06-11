@@ -1,0 +1,16 @@
+{
+  "extends": "../tsconfig-build.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "rootDir": ".",
+    "paths": {
+      "@craftercms/classes": ["."],
+      "@craftercms/utils": ["../../dist/packages/utils"],
+      "@craftercms/models": ["../../dist/packages/models"]
+    },
+    "outDir": "../../dist/packages/classes"
+  },
+  "files": [
+    "index.ts"
+  ]
+}

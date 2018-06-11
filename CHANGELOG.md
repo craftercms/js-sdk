@@ -16,7 +16,7 @@
 
 * Converted to mono-repo of all craftercms JS packages (redux, ice, utils, etc)
 * The @craftercms/sdk is no longer the lib. Use specific packages instead (@craftercms/content, @craftercms/search, @craftercms/redux, etc)
-* All content api (@craftercms/content) classes receive a StudioConfig object instead of baseUrl and site
+* All content api (@craftercms/content) classes receive a CrafterConfig object instead of baseUrl and site
 * Services now return Observables (Promises can be gotten by calling .toPromise() on the observable if desired)
 * Removed EngineClient (use specific services directly) 
 * Removed SearchClient class (use SearchService directly instead)

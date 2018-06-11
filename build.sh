@@ -10,12 +10,14 @@ cd ${currentDir}
 
 PACKAGES=(utils
   models
+  classes
   content
   search
   redux)
 
 TSC_PACKAGES=(utils
   models
+  classes
   content
   search
   redux)
