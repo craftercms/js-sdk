@@ -7,10 +7,10 @@ import {
   SEARCH,
   searchComplete
 } from '../actions/search';
-import { CrafterReduxStore } from '@craftercms/models';
+import { CrafterNamespacedState } from '@craftercms/models';
 
 export const searchEpic =
-  (action$: Observable<AnyAction>, store: Store<CrafterReduxStore>) => action$.pipe(
+  (action$: Observable<AnyAction>, store: Store<CrafterNamespacedState>) => action$.pipe(
     ofType(SEARCH),
     switchMap(({ payload }) =>
       // TODO: implement properly

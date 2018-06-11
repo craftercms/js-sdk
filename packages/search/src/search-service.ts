@@ -1,24 +1,27 @@
-import { composeUrl } from '@craftercms/utils';
-import { SDKService, StudioConfig } from '@craftercms/models';
+import { Observable } from 'rxjs';
+import { composeUrl, SearchEngines } from '@craftercms/utils';
+import { crafterConf, SDKService } from '@craftercms/classes';
+import { CrafterConfig } from '@craftercms/models';
 import { Query } from './query';
 import { SolrQuery } from '@craftercms/search';
 import { ElasticQuery } from '@craftercms/search';
 
-export const SEARCH_ENDPOINT = 'crafter-search/api/2/search/search.json';
-
-// TODO add return types
-
-let solrService: SearchService;
+// TODO: Add correct return types
+type TodoSearchReturnType = Observable<any>;
 
 /**
  * Implementation of Search Service for Solr
  */
 export class SearchService extends SDKService {
 
-  static search(query: Query, config: StudioConfig);
-  static search(params: Object, config: StudioConfig);
-  static search(queryOrParams: Query | Object, config: StudioConfig) {
-    const requestURL = composeUrl(config, SEARCH_ENDPOINT);
+  /**
+   * Does a full-text search and returns a Map model.
+   * @param {Query} query - the query object
+   */
+  static search(query: Query, config: CrafterConfig): TodoSearchReturnType;
+  static search(params: Object, config: CrafterConfig): TodoSearchReturnType;
+  static search(queryOrParams: Query | Object, config: CrafterConfig): TodoSearchReturnType {
+    const requestURL = composeUrl(config, crafterConf.getConfig().endpoints.SEARCH);
     // TODO test if instances of classes that inherit from Query fulfil this condition
     const params = (queryOrParams instanceof Query)
       ? queryOrParams.params
@@ -29,19 +32,20 @@ export class SearchService extends SDKService {
     });
   }
 
-  static getInstance(config: StudioConfig): SearchService {
-    if (solrService == null) {
-      solrService = new SearchService(config);
-    }
-    return solrService;
-  }
-
   /**
    * Returns a new Query object
    */
-  static createQuery(searchEngine: 'solr' | 'elastic' = 'solr', params: Object = {}): Query {
+  static createQuery(): SolrQuery;
+  static createQuery<T extends Query>(searchEngine: SearchEngines): T;
+  static createQuery<T extends Query>(searchEngine: SearchEngines, params: Object): T;
+  static createQuery<T extends Query>(searchEngineOrParams: SearchEngines | Object = 'solr', params: Object = {}): T {
+    let engine = searchEngineOrParams;
+    if (typeof searchEngineOrParams !== 'string') {
+      engine = 'solr';
+      params = searchEngineOrParams;
+    }
     let query;
-    switch (searchEngine) {
+    switch (searchEngineOrParams) {
       case 'solr':
         query = new SolrQuery();
         break;
@@ -51,16 +55,6 @@ export class SearchService extends SDKService {
     }
     Object.assign(query.params, params);
     return query;
-  }
-
-  /**
-   * Does a full-text search and returns a Map model.
-   * @param {Query} query - the query object
-   */
-  search(query: Query);
-  search(params: Object);
-  search(queryOrParams: Query | Object) {
-    return SearchService.search(queryOrParams, this.config);
   }
 
 }

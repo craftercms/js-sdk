@@ -11,6 +11,7 @@
       "@craftercms/models": ["../../dist/packages/models"],
       "@craftercms/content": ["../../dist/packages/content"],
       "@craftercms/utils": ["../../dist/packages/utils"],
+      "@craftercms/classes": ["../../dist/packages/classes"],
       "@craftercms/redux": ["."]
     },
     "outDir": "../../dist/packages/redux"

@@ -2,7 +2,7 @@ import { applyMiddleware, compose, Store, createStore, combineReducers, AnyActio
 import { combineEpics, createEpicMiddleware, Epic } from 'redux-observable';
 
 import { log } from '@craftercms/utils';
-import { CrafterReduxProps, CrafterReduxStore } from '@craftercms/models';
+import { CrafterState, CrafterNamespacedState } from '@craftercms/models';
 import { allEpics, allReducers } from '@craftercms/redux';
 
 export function createReduxStore(config: {
@@ -37,10 +37,10 @@ export function createReduxStore(config: {
 
 /**
  * Retrieves the crafter-redux state container whether it is namespaced or on the root
- * @param {Store<CrafterReduxStore>} store
- * @returns {CrafterReduxProps}
+ * @param {Store<CrafterNamespacedState>} store
+ * @returns {CrafterState}
  */
-export function getState(store: Store<CrafterReduxStore>): CrafterReduxProps {
+export function getState(store: Store<CrafterNamespacedState>): CrafterState {
   const state = store.getState();
   if ('craftercms' in state) {
     validateCrafterStore(state.craftercms);
