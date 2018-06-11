@@ -1,7 +1,6 @@
-import { isNullOrUndefined } from 'util';
 import { Subject, Observable, Subscription, fromEvent, OperatorFunction } from 'rxjs';
 import { filter, map, multicast, tap, refCount } from 'rxjs/operators';
-import { ObserverOrNext } from '@craftercms/utils';
+import { notNullOrUndefined, ObserverOrNext } from '@craftercms/utils';
 import { Message, MessageScope, MessageTopic } from '@craftercms/models';
 
 export abstract class Messenger {
@@ -61,7 +60,7 @@ export abstract class Messenger {
                     ...operations): Subscription {
     let ops = [];
     // operations = operations || [];
-    if (!isNullOrUndefined(scope)) {
+    if (!notNullOrUndefined(scope)) {
       ops.push(
         filter((message: Message) =>
           message.scope === scope && message.topic === topic));
