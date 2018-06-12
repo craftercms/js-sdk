@@ -2,7 +2,7 @@ import { applyMiddleware, compose, Store, createStore, combineReducers, AnyActio
 import { combineEpics, createEpicMiddleware, Epic } from 'redux-observable';
 
 import { log } from '@craftercms/utils';
-import { CrafterState, CrafterNamespacedState } from '@craftercms/models';
+import { CrafterState, CrafterNamespacedState, LookupTable } from '@craftercms/models';
 import { allEpics, allReducers } from '@craftercms/redux';
 
 export function createReduxStore(config: {
@@ -69,4 +69,63 @@ function validateCrafterStore(store: Object) {
       log.ERROR
     );
   }
+}
+
+
+function processObj(obj, subItemProp){
+  const objNoChildren = { ...obj },
+        childIds = [],
+        children = obj[subItemProp];
+
+  objNoChildren[subItemProp] = null;
+
+  if(children && children.length > 0){
+    for (const child of children) {
+      childIds.push(child.url);
+    }
+  }
+
+  return {
+    objNoChildren: objNoChildren,
+    childIds
+  }
+}
+
+/**
+ * TODO: description
+ * @param {T[]} collection
+ * @param {string} childrenProperty
+ * @returns 
+ */
+
+export function flattenEntries<T>(collection: {}, childrenProperty:string = 'children'): LookupTable<any>{
+  var state = {
+    entries: {},
+    childIds: {}
+  };
+  var entriesObj = {};
+
+  for (var property in collection) {
+      if (collection.hasOwnProperty(property)) {
+        if (childrenProperty === property && collection[property]){
+          for (const child of collection[property]) {
+            var newState = flattenEntries(child, childrenProperty);
+            state = {
+              entries: Object.assign(state.entries, newState.entries),
+              childIds: Object.assign(state.childIds, newState.childIds)
+            }
+
+          }
+        } else {
+          if("url" === property){
+            var processedObj = processObj(collection, childrenProperty);
+            state.entries[collection[property]] = processedObj.objNoChildren;
+            state.childIds[collection[property]] = processedObj.childIds;
+          }
+        }
+      }
+  }
+  
+  return state;
+  
 }

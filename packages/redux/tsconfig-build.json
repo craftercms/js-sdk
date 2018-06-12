@@ -10,6 +10,7 @@
       "redux-observable": ["../../node_modules/redux-observable"],
       "@craftercms/models": ["../../dist/packages/models"],
       "@craftercms/content": ["../../dist/packages/content"],
+      "@craftercms/search": ["../../dist/packages/search"],
       "@craftercms/utils": ["../../dist/packages/utils"],
       "@craftercms/classes": ["../../dist/packages/classes"],
       "@craftercms/redux": ["."]

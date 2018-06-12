@@ -31,67 +31,82 @@ export function getItemComplete(item: Item) {
   }
 }
 
-export function getDescriptor() {
+export function getDescriptor(url: string) {
   return {
-    type: GET_DESCRIPTOR
+    type: GET_DESCRIPTOR,
+    payload: url
   }
 }
 
 export function getDescriptorComplete(descriptor: Descriptor) {
   return {
-    type: GET_CHILDREN_COMPLETE,
+    type: GET_DESCRIPTOR_COMPLETE,
     payload: descriptor
   }
 }
 
-export function getChildren() {
+export function getChildren(url: string) {
   return {
-    type: GET_CHILDREN
+    type: GET_CHILDREN,
+    payload: url
   }
 }
 
-export function getChildrenComplete(payload) {
+export function getChildrenComplete(children) {
   return {
     type: GET_CHILDREN_COMPLETE,
-    payload
+    payload: children
   }
 }
 
-export function getTree() {
+export function getTree(url: string, depth?: Number) {
   return {
-    type: GET_TREE
+    type: GET_TREE,
+    payload: {
+      url,
+      depth
+    }
   }
 }
 
-export function getTreeComplete(payload) {
+export function getTreeComplete(tree) {
   return {
     type: GET_TREE_COMPLETE,
-    payload
+    payload: tree
   }
 }
 
-export function getNav() {
+export function getNav(url: string, depth: Number, currentPageUrl: string) {
   return {
-    type: GET_NAV
+    type: GET_NAV,
+    payload: {
+      url,
+      depth,
+      currentPageUrl
+    }
   }
 }
 
-export function getNavComplete(payload) {
+export function getNavComplete(nav) {
   return {
     type: GET_NAV_COMPLETE,
-    payload
+    payload: nav
   }
 }
 
-export function getNavBreadcrumb() {
+export function getNavBreadcrumb(url: string, root?: string) {
   return {
-    type: GET_NAV_BREADCRUMB
+    type: GET_NAV_BREADCRUMB,
+    payload: {
+      url,
+      root
+    }
   }
 }
 
-export function getNavBreadcrumbComplete(payload) {
+export function getNavBreadcrumbComplete(navBreadcrumb) {
   return {
     type: GET_NAV_BREADCRUMB_COMPLETE,
-    payload
+    payload: navBreadcrumb
   }
 }
