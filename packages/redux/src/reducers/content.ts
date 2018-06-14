@@ -50,7 +50,7 @@ export function itemsReducer(state = {
   }
 }
 
-var currentDescriptorUrl;
+let currentDescriptorUrl;
 export function descriptorsReducer(state = {
   loading: {}, // { all: boolean, [id: string]: boolean }
   entries: {}
@@ -68,7 +68,7 @@ export function descriptorsReducer(state = {
       }
     }
     case GET_DESCRIPTOR_COMPLETE: {
-      const descriptor = action.payload;    //TODO: Properly set Descriptor model
+      const descriptor = action.payload;
       return {
         ...state,
         loading: {
@@ -86,7 +86,7 @@ export function descriptorsReducer(state = {
   }
 }
 
-var currentChildrenUrl;
+let currentChildrenUrl;
 export function childrenReducer(state = {
   loading: {}, // { all: boolean, [id: string]: boolean }
   entries: {}
@@ -137,7 +137,7 @@ export function treeReducer(state = {
       }
     }
     case GET_TREE_COMPLETE: {
-      const flatEntries = flattenEntries(action.payload, 'children');
+      const flatEntries = flattenEntries(action.payload);
 
       return {
         ...state,
@@ -145,8 +145,8 @@ export function treeReducer(state = {
           ...state.loading,
           [action.payload.url]: false
         },
-        entries: Object.assign(state.entries, flatEntries.entries),
-        childIds: Object.assign(state.childIds, flatEntries.childIds)
+        entries: { ...state.entries, ...flatEntries.entries },
+        childIds: { ...state.childIds, ...flatEntries.childIds }
       }
     }
     default:
@@ -154,7 +154,7 @@ export function treeReducer(state = {
   }
 }
 
-var currentBreadcrumbUrl;
+let currentBreadcrumbUrl;
 export function breadcrumbsReducer(state = {
   loading: {}, // { all: boolean, [id: string]: boolean }
   entries: {}
@@ -207,7 +207,7 @@ export function navigationReducer(state = {
     }
     case GET_NAV_COMPLETE: {
       const item: Item = action.payload;
-      const flatEntries = flattenEntries(action.payload, 'children');
+      const flatEntries = flattenEntries(action.payload, 'subItems');
 
       return {
         ...state,
@@ -215,8 +215,8 @@ export function navigationReducer(state = {
           ...state.loading,
           [item.url]: false
         },
-        entries: Object.assign(state.entries, flatEntries.entries),
-        childIds: Object.assign(state.childIds, flatEntries.childIds)
+        entries: { ...state.entries, ...flatEntries.entries },
+        childIds: { ...state.childIds, ...flatEntries.childIds }
       }
     }
     default:

@@ -1,4 +1,4 @@
-import { Descriptor, Item } from '@craftercms/models';
+import { Descriptor, Item, NavigationItem } from '@craftercms/models';
 
 export const GET_ITEM = 'CRAFTERCMS_GET_ITEM';
 export const GET_ITEM_COMPLETE = 'CRAFTERCMS_GET_ITEM_COMPLETE';
@@ -13,9 +13,6 @@ export const GET_NAV = 'CRAFTERCMS_GET_NAV';
 export const GET_NAV_COMPLETE = 'CRAFTERCMS_GET_NAV_COMPLETE';
 export const GET_NAV_BREADCRUMB = 'CRAFTERCMS_GET_NAV_BREADCRUMB';
 export const GET_NAV_BREADCRUMB_COMPLETE = 'CRAFTERCMS_GET_NAV_BREADCRUMB_COMPLETE';
-
-// TODO:
-// * Give semantic names and add type to all action params
 
 export function getItem(itemUrl: string) {
   return {
@@ -52,7 +49,7 @@ export function getChildren(url: string) {
   }
 }
 
-export function getChildrenComplete(children) {
+export function getChildrenComplete(children: Array<Item>) {
   return {
     type: GET_CHILDREN_COMPLETE,
     payload: children
@@ -69,14 +66,14 @@ export function getTree(url: string, depth?: Number) {
   }
 }
 
-export function getTreeComplete(tree) {
+export function getTreeComplete(tree: Item) {
   return {
     type: GET_TREE_COMPLETE,
     payload: tree
   }
 }
 
-export function getNav(url: string, depth: Number, currentPageUrl: string) {
+export function getNav(url: string, depth?: Number, currentPageUrl?: string) {
   return {
     type: GET_NAV,
     payload: {
@@ -87,7 +84,7 @@ export function getNav(url: string, depth: Number, currentPageUrl: string) {
   }
 }
 
-export function getNavComplete(nav) {
+export function getNavComplete(nav: NavigationItem) {
   return {
     type: GET_NAV_COMPLETE,
     payload: nav
@@ -104,7 +101,7 @@ export function getNavBreadcrumb(url: string, root?: string) {
   }
 }
 
-export function getNavBreadcrumbComplete(navBreadcrumb) {
+export function getNavBreadcrumbComplete(navBreadcrumb: Array<NavigationItem>) {   //TODO: should breadcrumb be a interface?
   return {
     type: GET_NAV_BREADCRUMB_COMPLETE,
     payload: navBreadcrumb

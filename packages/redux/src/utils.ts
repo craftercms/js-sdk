@@ -5,9 +5,13 @@ import { log } from '@craftercms/utils';
 import { CrafterState, CrafterNamespacedState, LookupTable } from '@craftercms/models';
 import { allEpics, allReducers } from '@craftercms/redux';
 
+/**
+ * Retrieves a crafter-redux store based on a config, combining craftercms states/epics with 
+ * optional extra states/epics from config
+ */
 export function createReduxStore(config: {
   namespace?: string,
-  namespaceCrafterState?: boolean, // TODO implement...
+  namespaceCrafterState?: boolean,
   reducerMixin?: ReducersMapObject<any, any>,
   epicsArray?: Epic<AnyAction, Store<any>>[],
   reduxDevTools?: boolean
@@ -28,6 +32,8 @@ export function createReduxStore(config: {
     ? (window['__REDUX_DEVTOOLS_EXTENSION_COMPOSE__'] || compose)
     : compose;
 
+  // if config has namespaceCrafterState set to true, combines crafter reducers into namespace, plus config reducers
+  // (if available), otherwise, combines crafter reducers directly on root of state.
   const reducer = (config.namespaceCrafterState)
     ? <ReducersMapObject<CrafterNamespacedState, AnyAction>>{ [config.namespace]: combineReducers(allReducers) }
     : <ReducersMapObject<CrafterState, AnyAction>>allReducers;
@@ -71,61 +77,49 @@ function validateCrafterStore(store: Object) {
   }
 }
 
-
-function processObj(obj, subItemProp){
-  const objNoChildren = { ...obj },
-        childIds = [],
-        children = obj[subItemProp];
-
-  objNoChildren[subItemProp] = null;
-
-  if(children && children.length > 0){
-    for (const child of children) {
-      childIds.push(child.url);
-    }
-  }
-
-  return {
-    objNoChildren: objNoChildren,
-    childIds
-  }
-}
-
 /**
- * TODO: description
- * @param {T[]} collection
+ * Flattens a collection, returning its entries and childIds per entry
+ * @param {Store<CrafterNamespacedState>} collection
  * @param {string} childrenProperty
- * @returns 
+ * @returns {LookupTable}
  */
+export function flattenEntries(collection: LookupTable<any>, childrenProperty:string = 'children'): LookupTable<any>{
+  let entries: LookupTable<any> = {},
+      childIds: LookupTable<any> = {};
 
-export function flattenEntries<T>(collection: {}, childrenProperty:string = 'children'): LookupTable<any>{
-  var state = {
-    entries: {},
-    childIds: {}
-  };
-  var entriesObj = {};
-
-  for (var property in collection) {
+  for (let property in collection) {
       if (collection.hasOwnProperty(property)) {
         if (childrenProperty === property && collection[property]){
           for (const child of collection[property]) {
-            var newState = flattenEntries(child, childrenProperty);
-            state = {
-              entries: Object.assign(state.entries, newState.entries),
-              childIds: Object.assign(state.childIds, newState.childIds)
-            }
-
+            let newState = flattenEntries(child, childrenProperty);
+           
+            entries = Object.assign(entries, newState.entries),
+            childIds = Object.assign(childIds, newState.childIds)
+    
           }
         } else {
-          if("url" === property){
-            var processedObj = processObj(collection, childrenProperty);
-            state.entries[collection[property]] = processedObj.objNoChildren;
-            state.childIds[collection[property]] = processedObj.childIds;
+          if("url" === property){            
+            let children = collection[childrenProperty],
+                ids = [];
+            let noChildren = { ...collection };
+            noChildren[childrenProperty] = null;
+            
+            if(children && children.length > 0){
+              for (const child of children) {
+                ids.push(child.url);
+              }
+            }
+
+            entries[collection[property]] = noChildren;
+            childIds[collection[property]] = ids;
           }
         }
       }
   }
   
-  return state;
+  return {
+    entries,
+    childIds
+  };
   
 }
