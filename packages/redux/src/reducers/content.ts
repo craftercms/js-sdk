@@ -171,7 +171,6 @@ export function breadcrumbsReducer(state = {
     case GET_NAV_BREADCRUMB_COMPLETE: {
       const breadcrumb: Array<Item> = action.payload.breadcrumb,
             url: string = action.payload.url;
-      console.log("GET_NAV_BREADCRUMB_PAYLOAD", action.payload);
       return {
         ...state,
         loading: {
