@@ -50,34 +50,32 @@ export function itemsReducer(state = {
   }
 }
 
-let currentDescriptorUrl;
 export function descriptorsReducer(state = {
   loading: {}, // { all: boolean, [id: string]: boolean }
   entries: {}
 }, action: AnyAction): StateContainer<Item> {
   switch (action.type) {
     case GET_DESCRIPTOR: {
-      currentDescriptorUrl = action.payload;
-
       return {
         ...state,
         loading: {
           ...state.loading,
-          [currentDescriptorUrl]: true
+          [action.payload]: true
         }
       }
     }
     case GET_DESCRIPTOR_COMPLETE: {
-      const descriptor = action.payload;
+      const descriptor = action.payload.descriptor,
+            url = action.payload.url;
       return {
         ...state,
         loading: {
           ...state.loading,
-          [currentDescriptorUrl]: false
+          [url]: false
         },
         entries: {
           ...state.entries,
-          [currentDescriptorUrl]: descriptor
+          [url]: descriptor
         }
       }
     }
@@ -86,33 +84,33 @@ export function descriptorsReducer(state = {
   }
 }
 
-let currentChildrenUrl;
 export function childrenReducer(state = {
   loading: {}, // { all: boolean, [id: string]: boolean }
   entries: {}
 }, action: AnyAction): StateContainer<Item> {
   switch (action.type) {
     case GET_CHILDREN: {
-      currentChildrenUrl = action.payload;
+      const url = action.payload;
       return {
         ...state,
         loading: {
           ...state.loading,
-          [currentChildrenUrl]: true
+          [url]: true
         }
       }
     }
     case GET_CHILDREN_COMPLETE: {
-      const item: Item = action.payload;
+      const children: Array<Item> = action.payload.children,
+            url: string = action.payload.url;
       return {
         ...state,
         loading: {
           ...state.loading,
-          [currentChildrenUrl]: false
+          [url]: false
         },
         entries: {
           ...state.entries,
-          [currentChildrenUrl]: item
+          [url]: children
         }
       }
     }
@@ -154,34 +152,35 @@ export function treeReducer(state = {
   }
 }
 
-let currentBreadcrumbUrl;
 export function breadcrumbsReducer(state = {
   loading: {}, // { all: boolean, [id: string]: boolean }
   entries: {}
 }, action: AnyAction): StateContainer<Item> {
   switch (action.type) {
     case GET_NAV_BREADCRUMB: {
-      currentBreadcrumbUrl = action.payload.url
+      const url = action.payload.url
 
       return {
         ...state,
         loading: {
           ...state.loading,
-          [currentBreadcrumbUrl]: true
+          [url]: true
         }
       }
     }
     case GET_NAV_BREADCRUMB_COMPLETE: {
-      const breadcrumb: Array<Item> = action.payload;     //TODO: should it be another model?
+      const breadcrumb: Array<Item> = action.payload.breadcrumb,
+            url: string = action.payload.url;
+      console.log("GET_NAV_BREADCRUMB_PAYLOAD", action.payload);
       return {
         ...state,
         loading: {
           ...state.loading,
-          [currentBreadcrumbUrl]: false
+          [url]: false
         },
         entries: {
           ...state.entries,
-          [currentBreadcrumbUrl]: breadcrumb
+          [url]: breadcrumb
         }
       }
     }

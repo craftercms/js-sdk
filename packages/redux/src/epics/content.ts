@@ -37,7 +37,10 @@ export const getDescriptorEpic =
       switchMap(({ payload }) =>
       ContentStoreService.getDescriptor(payload)
           .pipe(
-              map(descriptor => getDescriptorComplete(descriptor))
+              map(descriptor => getDescriptorComplete({
+                descriptor,
+                url: payload
+              }))
           ))
   );
 
@@ -47,7 +50,10 @@ export const getChildrenEpic =
       switchMap(({ payload }) =>
       ContentStoreService.getChildren(payload)
           .pipe(
-              map(children => getChildrenComplete(children))
+              map(children => getChildrenComplete({
+                children,
+                url: payload
+              }))
           ))
   );
 
@@ -77,7 +83,10 @@ export const getNavBreadcrumbEpic =
       switchMap(({ payload }) =>
       NavigationService.getNavBreadcrumb(payload.url, payload.root)
           .pipe(
-              map(breadcrumb => getNavBreadcrumbComplete(breadcrumb))
+              map(breadcrumb => getNavBreadcrumbComplete({
+                breadcrumb,
+                url: payload.url
+              }))
           ))
   );
 

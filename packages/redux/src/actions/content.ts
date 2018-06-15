@@ -35,10 +35,10 @@ export function getDescriptor(url: string) {
   }
 }
 
-export function getDescriptorComplete(descriptor: Descriptor) {
+export function getDescriptorComplete(descriptorObj: {}) {
   return {
     type: GET_DESCRIPTOR_COMPLETE,
-    payload: descriptor
+    payload: descriptorObj
   }
 }
 
@@ -49,10 +49,10 @@ export function getChildren(url: string) {
   }
 }
 
-export function getChildrenComplete(children: Array<Item>) {
+export function getChildrenComplete(childrenObj: {}) {
   return {
     type: GET_CHILDREN_COMPLETE,
-    payload: children
+    payload: childrenObj
   }
 }
 
@@ -101,9 +101,9 @@ export function getNavBreadcrumb(url: string, root?: string) {
   }
 }
 
-export function getNavBreadcrumbComplete(navBreadcrumb: Array<NavigationItem>) {   //TODO: should breadcrumb be a interface?
+export function getNavBreadcrumbComplete(navBreadcrumbObj: {}) {   //TODO: should breadcrumb be a interface?
   return {
     type: GET_NAV_BREADCRUMB_COMPLETE,
-    payload: navBreadcrumb
+    payload: navBreadcrumbObj
   }
 }
