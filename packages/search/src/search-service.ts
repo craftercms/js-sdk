@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { composeUrl, SearchEngines } from '@craftercms/utils';
+import { composeUrl, SearchEngines, generateUUID } from '@craftercms/utils';
 import { crafterConf, SDKService } from '@craftercms/classes';
 import { CrafterConfig } from '@craftercms/models';
 import { Query } from './query';
@@ -54,6 +54,9 @@ export class SearchService extends SDKService {
         break;
     }
     Object.assign(query.params, params);
+
+    query.uuid = generateUUID();
+
     return query;
   }
 

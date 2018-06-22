@@ -1,5 +1,5 @@
 import { Observable, of } from 'rxjs';
-import { switchMap, map, tap } from 'rxjs/operators';
+import { switchMap, map } from 'rxjs/operators';
 import { AnyAction, Store } from 'redux';
 import { ofType } from 'redux-observable';
 
@@ -17,7 +17,10 @@ export const searchEpic =
     switchMap(({ payload }) =>
       SearchService.search(payload, crafterConf.getConfig())
         .pipe(
-          map(response => searchComplete(response))
+          map(response => searchComplete({
+            response: response.response,
+            queryId: payload.uuid
+          }))
         ))
   );
 

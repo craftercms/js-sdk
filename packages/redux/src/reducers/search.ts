@@ -17,18 +17,35 @@ const DEFAULT = {
 // What's a better name?
 
 export function searchReducer(state = {
-  //loading: {}, // { all: boolean, [id: string]: boolean }
-  //entries: {}
-  loading: false
+  loading: {}, // { all: boolean, [id: string]: boolean }
+  entries: {}
 }, action) {
   switch (action.type) {
     case SEARCH: {
-      return { ...state, loading: true }
-    }
-    case SEARCH_COMPLETE: {
+      const queryId: string = action.payload.uuid;
+
       return {
         ...state,
-        loading: false
+        loading: {
+          ...state.loading,
+          [queryId]: false
+        }
+      }
+    }
+    case SEARCH_COMPLETE: {
+      const response = action.payload.response,
+            queryId = action.payload.queryId;
+
+      return {
+        ...state,
+        loading: {
+          ...state.loading,
+          [queryId]: false
+        },
+        entries: {
+          ...state.entries,
+          [queryId]: response
+        }
       }
     }
     default: {

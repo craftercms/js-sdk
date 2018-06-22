@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 import { AnyAction, Store } from 'redux';
-import { switchMap, map, tap } from 'rxjs/operators';
+import { switchMap, map } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 
 import { Item, Descriptor, NavigationItem } from '@craftercms/models';

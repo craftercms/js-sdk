@@ -65,8 +65,7 @@ export function descriptorsReducer(state = {
       }
     }
     case GET_DESCRIPTOR_COMPLETE: {
-      const descriptor = action.payload.descriptor,
-            url = action.payload.url;
+      const { descriptor, url } = action.payload;
       return {
         ...state,
         loading: {
@@ -100,8 +99,7 @@ export function childrenReducer(state = {
       }
     }
     case GET_CHILDREN_COMPLETE: {
-      const children: Array<Item> = action.payload.children,
-            url: string = action.payload.url;
+      const { children, url } = action.payload;
       return {
         ...state,
         loading: {
@@ -158,7 +156,7 @@ export function breadcrumbsReducer(state = {
 }, action: AnyAction): StateContainer<Item> {
   switch (action.type) {
     case GET_NAV_BREADCRUMB: {
-      const url = action.payload.url
+      const url = action.payload.url;
 
       return {
         ...state,
@@ -169,8 +167,7 @@ export function breadcrumbsReducer(state = {
       }
     }
     case GET_NAV_BREADCRUMB_COMPLETE: {
-      const breadcrumb: Array<Item> = action.payload.breadcrumb,
-            url: string = action.payload.url;
+      const { breadcrumb, url } = action.payload;
       return {
         ...state,
         loading: {
@@ -205,7 +202,7 @@ export function navigationReducer(state = {
     }
     case GET_NAV_COMPLETE: {
       const item: Item = action.payload;
-      const flatEntries = flattenEntries(action.payload, 'subItems');
+      const flatEntries = flattenEntries(item, 'subItems');
 
       return {
         ...state,
