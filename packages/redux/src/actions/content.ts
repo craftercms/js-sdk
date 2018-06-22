@@ -83,7 +83,7 @@ export function getTreeComplete(tree: Item) {
 
 export function getNav(url: string);
 export function getNav(url: string, depth: Number);
-export function getNav(url: string, depth: Number, currentPageUrl)
+export function getNav(url: string, depth: Number, currentPageUrl:string)
 export function getNav(url: string, depth: Number = 1, currentPageUrl: string = '') {
   return {
     type: GET_NAV,
