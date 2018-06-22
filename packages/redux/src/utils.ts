@@ -94,7 +94,7 @@ function validateCrafterStore(store: Object) {
 export function flattenEntries(item: Item, childrenProperty:string = 'children'): LookupTable<any>{
   let entries: LookupTable<any> = {},
       childIds: LookupTable<any> = {},
-      children = item[childrenProperty],
+      children = { ...item[childrenProperty] },
       noChildren = { ...item },
       itemUrl = item['url'];
 

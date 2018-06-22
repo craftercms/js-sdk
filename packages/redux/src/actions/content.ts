@@ -63,6 +63,7 @@ export function getChildrenComplete(childrenObj: {
 }
 
 export function getTree(url: string);
+export function getTree(url: string, depth: Number);
 export function getTree(url: string, depth: Number = 1) {
   return {
     type: GET_TREE,
@@ -82,6 +83,7 @@ export function getTreeComplete(tree: Item) {
 
 export function getNav(url: string);
 export function getNav(url: string, depth: Number);
+export function getNav(url: string, depth: Number, currentPageUrl)
 export function getNav(url: string, depth: Number = 1, currentPageUrl: string = '') {
   return {
     type: GET_NAV,
@@ -101,6 +103,7 @@ export function getNavComplete(nav: NavigationItem) {
 }
 
 export function getNavBreadcrumb(url: string);
+export function getNavBreadcrumb(url:string, root: string);
 export function getNavBreadcrumb(url: string, root: string = '') {
   return {
     type: GET_NAV_BREADCRUMB,

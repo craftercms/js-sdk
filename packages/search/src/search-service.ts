@@ -1,10 +1,12 @@
 import { Observable } from 'rxjs';
-import { composeUrl, SearchEngines, generateUUID } from '@craftercms/utils';
+import { composeUrl, SearchEngines } from '@craftercms/utils';
 import { crafterConf, SDKService } from '@craftercms/classes';
 import { CrafterConfig } from '@craftercms/models';
 import { Query } from './query';
 import { SolrQuery } from '@craftercms/search';
 import { ElasticQuery } from '@craftercms/search';
+
+import uuid from 'uuid';
 
 // TODO: Add correct return types
 type TodoSearchReturnType = Observable<any>;
@@ -55,7 +57,7 @@ export class SearchService extends SDKService {
     }
     Object.assign(query.params, params);
 
-    query.uuid = generateUUID();
+    query.uuid = uuid();
 
     return query;
   }
