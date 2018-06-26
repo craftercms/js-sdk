@@ -156,7 +156,7 @@ export function breadcrumbsReducer(state = {
 }, action: AnyAction): StateContainer<Item> {
   switch (action.type) {
     case GET_NAV_BREADCRUMB: {
-      const url = action.payload.url;
+      const { url } = action.payload;
 
       return {
         ...state,

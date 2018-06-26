@@ -3,7 +3,6 @@ import { Query } from '@craftercms/search';
 export const SEARCH = 'CRAFTERCMS_SEARCH';
 export const SEARCH_COMPLETE = 'CRAFTERCMS_SEARCH_COMPLETE';
 
-//TODO: query type
 export function search(query: Query) {
   return {
     type: SEARCH,
@@ -11,12 +10,12 @@ export function search(query: Query) {
   }
 }
 
-export function searchComplete(searchResponseObj: {
+export function searchComplete(searchResponseData: {
   response,
   queryId: string
 }) {
   return {
     type: SEARCH_COMPLETE,
-    payload: searchResponseObj
+    payload: searchResponseData
   }
 }

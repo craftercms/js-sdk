@@ -50,7 +50,7 @@ export function searchReducer(state = {
     }
     default: {
       return {
-        ...state
+        state
       }
     }
   }

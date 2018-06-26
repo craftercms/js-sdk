@@ -1,4 +1,4 @@
-import { applyMiddleware, compose, Store, createStore, combineReducers, AnyAction, ReducersMapObject } from 'redux';
+import { applyMiddleware, compose, Store, createStore, combineReducers, AnyAction, ReducersMapObject, Middleware } from 'redux';
 import { combineEpics, createEpicMiddleware, Epic } from 'redux-observable';
 
 import { log } from '@craftercms/utils';
@@ -14,7 +14,7 @@ export function createReduxStore(config: {
   namespaceCrafterState?: boolean,
   reducerMixin?: ReducersMapObject<any, any>,
   epicsArray?: Epic<AnyAction, Store<any>>[],
-  additionalMiddleWare?,
+  additionalMiddleWare?: Middleware[],
   reduxDevTools?: boolean
 } = {}) {
 
@@ -39,15 +39,15 @@ export function createReduxStore(config: {
     ? <ReducersMapObject<CrafterNamespacedState, AnyAction>>{ [config.namespace]: combineReducers(allReducers) }
     : <ReducersMapObject<CrafterState, AnyAction>>allReducers;
 
-  const middleWare = config.additionalMiddleWare 
-    ? applyMiddleware(config.additionalMiddleWare, epicMiddleware) 
-    : applyMiddleware(epicMiddleware);
+  var middlewares = config.additionalMiddleWare 
+    ? [ epicMiddleware, ...config.additionalMiddleWare ]
+    : [ epicMiddleware ];
 
   return createStore(
     config.reducerMixin
       ? combineReducers({ ...reducer, ...config.reducerMixin })
       : combineReducers(reducer),
-    enhancers(middleWare)
+    enhancers(applyMiddleware(...middlewares))
   );
 
 }

@@ -35,13 +35,13 @@ export function getDescriptor(url: string) {
   }
 }
 
-export function getDescriptorComplete(descriptorObj: {
+export function getDescriptorComplete(descriptorData: {
   descriptor: Descriptor,
   url: string
 }) {
   return {
     type: GET_DESCRIPTOR_COMPLETE,
-    payload: descriptorObj
+    payload: descriptorData
   }
 }
 
@@ -52,13 +52,13 @@ export function getChildren(url: string) {
   }
 }
 
-export function getChildrenComplete(childrenObj: {
+export function getChildrenComplete(childrenData: {
   children: Array<Item>,
   url: string
 }) {
   return {
     type: GET_CHILDREN_COMPLETE,
-    payload: childrenObj
+    payload: childrenData
   }
 }
 
@@ -83,7 +83,7 @@ export function getTreeComplete(tree: Item) {
 
 export function getNav(url: string);
 export function getNav(url: string, depth: Number);
-export function getNav(url: string, depth: Number, currentPageUrl:string)
+export function getNav(url: string, depth: Number, currentPageUrl: string)
 export function getNav(url: string, depth: Number = 1, currentPageUrl: string = '') {
   return {
     type: GET_NAV,
@@ -103,7 +103,7 @@ export function getNavComplete(nav: NavigationItem) {
 }
 
 export function getNavBreadcrumb(url: string);
-export function getNavBreadcrumb(url:string, root: string);
+export function getNavBreadcrumb(url: string, root: string);
 export function getNavBreadcrumb(url: string, root: string = '') {
   return {
     type: GET_NAV_BREADCRUMB,
@@ -114,12 +114,12 @@ export function getNavBreadcrumb(url: string, root: string = '') {
   }
 }
 
-export function getNavBreadcrumbComplete(navBreadcrumbObj: {
+export function getNavBreadcrumbComplete(navBreadcrumbData: {
   breadcrumb: Array<NavigationItem>,
   url: string
 }) {
   return {
     type: GET_NAV_BREADCRUMB_COMPLETE,
-    payload: navBreadcrumbObj
+    payload: navBreadcrumbData
   }
 }
