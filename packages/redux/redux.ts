@@ -9,3 +9,5 @@ export * from './src/reducers/content';
 export * from './src/reducers/search';
 export * from './src/reducers/reducers';
 
+export * from './src/utils';
+

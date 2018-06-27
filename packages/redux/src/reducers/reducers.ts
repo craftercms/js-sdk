@@ -1,11 +1,19 @@
-import { itemsReducer, navigationReducer } from './content';
+import { 
+  itemsReducer, 
+  navigationReducer, 
+  breadcrumbsReducer, 
+  descriptorsReducer,
+  childrenReducer,
+  treeReducer
+} from './content';
+import { searchReducer } from './search'
 
 export const allReducers = {
   items: itemsReducer,
-  navigation: navigationReducer
-  /*...etc*/
-};
-
-export const crafercmsReducer = (state, action) => {
-  // TODO...
+  descriptors: descriptorsReducer,
+  children: childrenReducer,
+  trees: treeReducer,
+  navigation: navigationReducer,
+  breadcrumbs: breadcrumbsReducer,
+  search: searchReducer
 };

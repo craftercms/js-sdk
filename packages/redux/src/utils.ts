@@ -1,18 +1,25 @@
-import { applyMiddleware, compose, Store, createStore, combineReducers, AnyAction } from 'redux';
+import { applyMiddleware, compose, Store, createStore, combineReducers, AnyAction, ReducersMapObject, Middleware } from 'redux';
 import { combineEpics, createEpicMiddleware, Epic } from 'redux-observable';
 
 import { log } from '@craftercms/utils';
-import { CrafterState, CrafterNamespacedState } from '@craftercms/models';
+import { CrafterState, CrafterNamespacedState, LookupTable, Item } from '@craftercms/models';
 import { allEpics, allReducers } from '@craftercms/redux';
 
+/**
+ * Retrieves a crafter-redux store based on a config, combining craftercms states/epics with 
+ * optional extra states/epics from config
+ */
 export function createReduxStore(config: {
-  namespaceCrafterState?: boolean, // TODO implement...
-  reducerMixin?: { [statePropName: string]: Function },
+  namespace?: string,
+  namespaceCrafterState?: boolean,
+  reducerMixin?: ReducersMapObject<any, any>,
   epicsArray?: Epic<AnyAction, Store<any>>[],
+  additionalMiddleWare?: Middleware[],
   reduxDevTools?: boolean
 } = {}) {
 
   config = Object.assign({}, {
+    namespace: 'craftercms',
     reduxDevTools: true,
     namespaceCrafterState: false
   }, config);
@@ -26,17 +33,30 @@ export function createReduxStore(config: {
     ? (window['__REDUX_DEVTOOLS_EXTENSION_COMPOSE__'] || compose)
     : compose;
 
+  // if config has namespaceCrafterState set to true, combines crafter reducers into namespace, plus config reducers
+  // (if available), otherwise, combines crafter reducers directly on root of state.
+  const reducer = (config.namespaceCrafterState)
+    ? <ReducersMapObject<CrafterNamespacedState, AnyAction>>{ [config.namespace]: combineReducers(allReducers) }
+    : <ReducersMapObject<CrafterState, AnyAction>>allReducers;
+
+  var middlewares = config.additionalMiddleWare 
+    ? [ epicMiddleware, ...config.additionalMiddleWare ]
+    : [ epicMiddleware ];
+
   return createStore(
     config.reducerMixin
-      ? combineReducers({ ...allReducers, ...config.reducerMixin })
-      : combineReducers(allReducers),
-    enhancers(applyMiddleware(epicMiddleware))
+      ? combineReducers({ ...reducer, ...config.reducerMixin })
+      : combineReducers(reducer),
+    enhancers(applyMiddleware(...middlewares))
   );
 
 }
 
 /**
- * Retrieves the crafter-redux state container whether it is namespaced or on the root
+ * Creates a redux store with all the crafter-redux details attached. Optionally, custom app reducers and/or epics 
+ * may be supplied to create the store as required by client application. Crafter state props may be nested under 
+ * a namespace by setting the namespaceCrafterSate flag to true. The specific namespace (craftercms by default) may 
+ * also be customised by supplying the namespace property to the config object.
  * @param {Store<CrafterNamespacedState>} store
  * @returns {CrafterState}
  */
@@ -64,3 +84,41 @@ function validateCrafterStore(store: Object) {
     );
   }
 }
+
+/**
+ * Flattens a collection, returning its entries and childIds per entry
+ * @param {Item} item
+ * @param {string} childrenProperty
+ * @returns {LookupTable}
+ */
+export function flattenEntries(item: Item, childrenProperty:string = 'children'): LookupTable<any>{
+  let entries: LookupTable<any> = {},
+      childIds: LookupTable<any> = {},
+      children = { ...item[childrenProperty] },
+      noChildren = { ...item },
+      itemUrl = item['url'];
+
+  //Removes children to store in entries.
+  noChildren[childrenProperty] = null;
+  entries[itemUrl] = noChildren;
+  
+  childIds[itemUrl] = [];
+  //If item has children
+  if(children && children.length > 0){
+    for (let child of children) {
+      //Adds child url (id) into childIds  
+      childIds[itemUrl].push(child.url);
+
+      //Recursive call
+      let newState = flattenEntries(child, childrenProperty);
+      //Assigns values from lookupTable got from recursive call
+      entries = Object.assign(entries, newState.entries),
+      childIds = Object.assign(childIds, newState.childIds)
+    }
+  }
+
+  return {
+    entries,
+    childIds
+  };
+ }

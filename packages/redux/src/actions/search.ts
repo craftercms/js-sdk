@@ -1,17 +1,21 @@
+import { Query } from '@craftercms/search';
+
 export const SEARCH = 'CRAFTERCMS_SEARCH';
 export const SEARCH_COMPLETE = 'CRAFTERCMS_SEARCH_COMPLETE';
 
-
-export function search(payload) {
+export function search(query: Query) {
   return {
     type: SEARCH,
-    payload
+    payload: query
   }
 }
 
-export function searchComplete(payload) {
+export function searchComplete(searchResponseData: {
+  response,
+  queryId: string
+}) {
   return {
     type: SEARCH_COMPLETE,
-    payload
+    payload: searchResponseData
   }
 }

@@ -6,6 +6,8 @@ import { Query } from './query';
 import { SolrQuery } from '@craftercms/search';
 import { ElasticQuery } from '@craftercms/search';
 
+import uuid from 'uuid';
+
 // TODO: Add correct return types
 type TodoSearchReturnType = Observable<any>;
 
@@ -54,6 +56,9 @@ export class SearchService extends SDKService {
         break;
     }
     Object.assign(query.params, params);
+
+    query.uuid = uuid();
+
     return query;
   }
 

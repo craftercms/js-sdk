@@ -16,22 +16,41 @@ const DEFAULT = {
 // What's the model?
 // What's a better name?
 
-export function searchReducer(state = DEFAULT, action) {
+export function searchReducer(state = {
+  loading: {}, // { all: boolean, [id: string]: boolean }
+  entries: {}
+}, action) {
   switch (action.type) {
     case SEARCH: {
-      return { ...state, fetching: true }
-    }
-    case SEARCH_COMPLETE: {
+      const queryId: string = action.payload.uuid;
+
       return {
         ...state,
-        fetching: false,
-        fetched: true,
-        nav: action.payload
+        loading: {
+          ...state.loading,
+          [queryId]: false
+        }
+      }
+    }
+    case SEARCH_COMPLETE: {
+      const response = action.payload.response,
+            queryId = action.payload.queryId;
+
+      return {
+        ...state,
+        loading: {
+          ...state.loading,
+          [queryId]: false
+        },
+        entries: {
+          ...state.entries,
+          [queryId]: response
+        }
       }
     }
     default: {
       return {
-        ...state
+        state
       }
     }
   }

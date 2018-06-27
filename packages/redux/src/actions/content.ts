@@ -1,4 +1,4 @@
-import { Descriptor, Item } from '@craftercms/models';
+import { Descriptor, Item, NavigationItem } from '@craftercms/models';
 
 export const GET_ITEM = 'CRAFTERCMS_GET_ITEM';
 export const GET_ITEM_COMPLETE = 'CRAFTERCMS_GET_ITEM_COMPLETE';
@@ -14,9 +14,6 @@ export const GET_NAV_COMPLETE = 'CRAFTERCMS_GET_NAV_COMPLETE';
 export const GET_NAV_BREADCRUMB = 'CRAFTERCMS_GET_NAV_BREADCRUMB';
 export const GET_NAV_BREADCRUMB_COMPLETE = 'CRAFTERCMS_GET_NAV_BREADCRUMB_COMPLETE';
 
-// TODO:
-// * Give semantic names and add type to all action params
-
 export function getItem(itemUrl: string) {
   return {
     type: GET_ITEM,
@@ -31,67 +28,98 @@ export function getItemComplete(item: Item) {
   }
 }
 
-export function getDescriptor() {
+export function getDescriptor(url: string) {
   return {
-    type: GET_DESCRIPTOR
+    type: GET_DESCRIPTOR,
+    payload: url
   }
 }
 
-export function getDescriptorComplete(descriptor: Descriptor) {
+export function getDescriptorComplete(descriptorData: {
+  descriptor: Descriptor,
+  url: string
+}) {
+  return {
+    type: GET_DESCRIPTOR_COMPLETE,
+    payload: descriptorData
+  }
+}
+
+export function getChildren(url: string) {
+  return {
+    type: GET_CHILDREN,
+    payload: url
+  }
+}
+
+export function getChildrenComplete(childrenData: {
+  children: Array<Item>,
+  url: string
+}) {
   return {
     type: GET_CHILDREN_COMPLETE,
-    payload: descriptor
+    payload: childrenData
   }
 }
 
-export function getChildren() {
+export function getTree(url: string);
+export function getTree(url: string, depth: Number);
+export function getTree(url: string, depth: Number = 1) {
   return {
-    type: GET_CHILDREN
+    type: GET_TREE,
+    payload: {
+      url,
+      depth
+    }
   }
 }
 
-export function getChildrenComplete(payload) {
-  return {
-    type: GET_CHILDREN_COMPLETE,
-    payload
-  }
-}
-
-export function getTree() {
-  return {
-    type: GET_TREE
-  }
-}
-
-export function getTreeComplete(payload) {
+export function getTreeComplete(tree: Item) {
   return {
     type: GET_TREE_COMPLETE,
-    payload
+    payload: tree
   }
 }
 
-export function getNav() {
+export function getNav(url: string);
+export function getNav(url: string, depth: Number);
+export function getNav(url: string, depth: Number, currentPageUrl: string)
+export function getNav(url: string, depth: Number = 1, currentPageUrl: string = '') {
   return {
-    type: GET_NAV
+    type: GET_NAV,
+    payload: {
+      url,
+      depth,
+      currentPageUrl
+    }
   }
 }
 
-export function getNavComplete(payload) {
+export function getNavComplete(nav: NavigationItem) {
   return {
     type: GET_NAV_COMPLETE,
-    payload
+    payload: nav
   }
 }
 
-export function getNavBreadcrumb() {
+export function getNavBreadcrumb(url: string);
+export function getNavBreadcrumb(url: string, root: string);
+export function getNavBreadcrumb(url: string, root: string = '') {
   return {
-    type: GET_NAV_BREADCRUMB
+    type: GET_NAV_BREADCRUMB,
+    payload: {
+      url,
+      root
+    }
   }
 }
 
-export function getNavBreadcrumbComplete(payload) {
+export function getNavBreadcrumbComplete(navBreadcrumbData: {
+  breadcrumb: Array<NavigationItem>,
+  url: string
+}) {
   return {
     type: GET_NAV_BREADCRUMB_COMPLETE,
-    payload
+    payload: navBreadcrumbData
   }
 }
