@@ -23,15 +23,25 @@ export class SearchService extends SDKService {
   static search(query: Query, config: CrafterConfig): TodoSearchReturnType;
   static search(params: Object, config: CrafterConfig): TodoSearchReturnType;
   static search(queryOrParams: Query | Object, config: CrafterConfig): TodoSearchReturnType {
-    const requestURL = composeUrl(config, crafterConf.getConfig().endpoints.SEARCH);
-    // TODO test if instances of classes that inherit from Query fulfil this condition
-    const params = (queryOrParams instanceof Query)
-      ? queryOrParams.params
-      : queryOrParams;
-    return SDKService.httpGet(requestURL, {
-      ...params,
-      index_id: config.site
-    });
+    const requestURL = composeUrl(config, crafterConf.getConfig().endpoints.SEARCH),
+          params = (queryOrParams instanceof Query)
+            ? queryOrParams.params
+            : queryOrParams,
+          searchParams = new URLSearchParams();
+
+    for(let param in params){
+      if(Array.isArray(params[param])){
+        for(let x = 0; x < params[param].length; x++){
+          searchParams.append(param, params[param][x]);
+        }
+      }else{
+        searchParams.append(param, params[param]);
+      }
+    }
+
+    searchParams.append('index_id', config.site);
+
+    return SDKService.httpGet(requestURL, searchParams);  
   }
 
   /**
