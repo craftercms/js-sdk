@@ -28,7 +28,7 @@ export function searchReducer(state = {
         ...state,
         loading: {
           ...state.loading,
-          [queryId]: false
+          [queryId]: true
         }
       }
     }
@@ -48,10 +48,7 @@ export function searchReducer(state = {
         }
       }
     }
-    default: {
-      return {
-        state
-      }
-    }
+    default: 
+      return state
   }
 }
