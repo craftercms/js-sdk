@@ -1,3 +1,6 @@
 const rollupUtils = require('../../util/rollup-utils');
+const commonJS = require('rollup-plugin-commonjs');
 
-module.exports = rollupUtils.config('content');
+const config = rollupUtils.config('content')
+
+module.exports = config;
