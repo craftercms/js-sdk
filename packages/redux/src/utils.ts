@@ -30,7 +30,7 @@ export function createReduxStore(config: {
       : combineEpics(...allEpics));
 
   const enhancers = config.reduxDevTools
-    ? (window['__REDUX_DEVTOOLS_EXTENSION_COMPOSE__'] || compose)
+    ? ((typeof(window) != "undefined" && window['__REDUX_DEVTOOLS_EXTENSION_COMPOSE__']) || compose)
     : compose;
 
   // if config has namespaceCrafterState set to true, combines crafter reducers into namespace, plus config reducers

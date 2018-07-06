@@ -33,7 +33,7 @@ import {
   navBreadcrumb,
   renderUrl,
   storeUrl
-} from './mockup-responses';
+} from './mock-responses';
 
 crafterConf.configure({
   site: 'editorial'
