@@ -29,12 +29,12 @@ export class SearchService extends SDKService {
             : queryOrParams,
           searchParams = new URLSearchParams();
 
-    for(let param in params){
-      if(Array.isArray(params[param])){
-        for(let x = 0; x < params[param].length; x++){
+    for(let param in params) {
+      if(Array.isArray(params[param])) {
+        for(let x = 0; x < params[param].length; x++) {
           searchParams.append(param, params[param][x]);
         }
-      }else{
+      } else {
         searchParams.append(param, params[param]);
       }
     }
@@ -51,7 +51,8 @@ export class SearchService extends SDKService {
   static createQuery<T extends Query>(searchEngine: SearchEngines): T;
   static createQuery<T extends Query>(searchEngine: SearchEngines, params: Object): T;
   static createQuery<T extends Query>(searchEngineOrParams: SearchEngines | Object = 'solr', params: Object = {}): T {
-    let engine = searchEngineOrParams;
+    let engine = searchEngineOrParams,
+        queryId = params && params['uuid'] ? params['uuid'] : uuid();
     if (typeof searchEngineOrParams !== 'string') {
       engine = 'solr';
       params = searchEngineOrParams;
@@ -67,7 +68,7 @@ export class SearchService extends SDKService {
     }
     Object.assign(query.params, params);
 
-    query.uuid = uuid();
+    query.uuid = queryId;
 
     return query;
   }

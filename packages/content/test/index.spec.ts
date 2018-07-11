@@ -59,8 +59,8 @@ describe('Engine Client', () => {
         });
 
         ContentStoreService.getItem("/site/website/index.xml", crafterConf.getConfig())
-          .subscribe((item) => {
-            assert.equal(item.descriptorDom.page.objectId, '8d7f21fa-5e09-00aa-8340-853b7db302da');
+          .subscribe((respItem) => {
+            assert.equal(respItem.descriptorDom.page.objectId, item.descriptorDom.page.objectId);
             done();
           })
       });
@@ -76,8 +76,8 @@ describe('Engine Client', () => {
         });
 
         ContentStoreService.getDescriptor("/site/website/index.xml", crafterConf.getConfig())
-          .subscribe((descriptor) => {
-            assert.equal(descriptor.page.objectId, '8d7f21fa-5e09-00aa-8340-853b7db302da');
+          .subscribe((respDescriptor) => {
+            assert.equal(respDescriptor.page.objectId, descriptor.page.objectId);
             done();
           })
       });
@@ -93,8 +93,8 @@ describe('Engine Client', () => {
         });
 
         ContentStoreService.getChildren("/site/website/", crafterConf.getConfig())
-          .subscribe((children) => {
-            assert.equal(children.length, 9, 'index should have 9 child pages');
+          .subscribe((respChildren) => {
+            assert.equal(respChildren.length, children.length, 'index should have 9 child pages');
             done();
           })
       });
@@ -110,8 +110,8 @@ describe('Engine Client', () => {
         });
 
         ContentStoreService.getTree("/site/website/", 3, crafterConf.getConfig())
-          .subscribe((tree) => {
-            assert.equal(tree.children.length, 3, 'tree should have 3 child pages');
+          .subscribe((respTree) => {
+            assert.equal(respTree.children.length, tree.children.length, 'tree should have 3 child pages');
             done();
           })
       });
@@ -131,9 +131,9 @@ describe('Engine Client', () => {
         });
 
         NavigationService.getNavTree("/site/website", 3,  null, crafterConf.getConfig())
-          .subscribe((tree) => {
-            assert.equal(tree.label, "Home", 'tree should start at the index');
-            assert(tree.subItems, 'tree should have subItems');
+          .subscribe((respTree) => {
+            assert.equal(respTree.label, navTree.label, 'tree should start at the index');
+            assert(respTree.subItems, 'tree should have subItems');
             done();
           })
       });
@@ -149,9 +149,9 @@ describe('Engine Client', () => {
         });
 
         NavigationService.getNavBreadcrumb("/site/website/style/index.xml", null, crafterConf.getConfig())
-          .subscribe((navBreadcrumb) => {
-            assert.equal(navBreadcrumb.length, 2, 'breadcrumb should have 2 items');
-            assert.equal(navBreadcrumb[1].label, 'Style', 'last item should be Style');
+          .subscribe((respNavBreadcrumb) => {
+            assert.equal(respNavBreadcrumb.length, navBreadcrumb.length, 'breadcrumb should have 2 items');
+            assert.equal(respNavBreadcrumb[1].label, navBreadcrumb[1].label, 'last item should be Style');
             done();
           })
       });
@@ -173,7 +173,7 @@ describe('Engine Client', () => {
 
         UrlTransformationService.transform("storeUrlToRenderUrl", "/site/website/style/index.xml", crafterConf.getConfig())
           .subscribe((url) => {
-            assert.equal(url, '/style');
+            assert.equal(url, renderUrl);
             done();
           })
       });
@@ -188,7 +188,7 @@ describe('Engine Client', () => {
 
         UrlTransformationService.transform("renderUrlToStoreUrl", "/technology", crafterConf.getConfig())
           .subscribe((url) => {
-            assert.equal(url, '/site/website/technology/index.xml');
+            assert.equal(url, storeUrl);
             done();
           })
       });

@@ -19,9 +19,6 @@
     "url": "https://github.com/craftercms/craftercms/issues"
   },
   "homepage": "https://github.com/craftercms/craftercms-sdk-js#readme",
-  "dependencies": {
-    "uuid": "^3.3.2"
-  },
   "devDependencies": {
     "@types/chai": "^4.1.4",
     "@types/mocha": "^5.2.4",
@@ -44,6 +41,7 @@
     "typescript": "^2.9.1",
     "uglify-es": "^3.3.9",
     "url-search-params-polyfill": "^4.0.0",
-    "xhr-mock": "^2.4.0"
+    "xhr-mock": "^2.4.0",
+    "uuid": "^3.3.2"
   }
 }

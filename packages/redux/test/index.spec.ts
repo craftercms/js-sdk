@@ -57,6 +57,7 @@ import {
   descriptor,
   children,
   navItem,
+  navBreadcrumb,
   tree
 } from './mock-responses';
 
@@ -64,7 +65,6 @@ import {
 import mock from 'xhr-mock';
 import MockRequest from "xhr-mock/lib/MockRequest";
 import MockResponse from "xhr-mock/lib/MockResponse";
-import { Item, Descriptor } from 'models';
 import { ActionsObservable } from 'redux-observable';
 
 crafterConf.configure({
@@ -268,13 +268,13 @@ describe('Crafter CMS Redux', () => {
             expectedAction = {
               type: "CRAFTERCMS_GET_NAV_BREADCRUMB_COMPLETE",
               payload: {
-                breadcrumb: [navItem],
+                breadcrumb: navBreadcrumb,
                 url
               }
             };
         
         const action = getNavBreadcrumbComplete({
-          breadcrumb: [navItem],
+          breadcrumb: navBreadcrumb,
           url
         });
         
@@ -527,14 +527,14 @@ describe('Crafter CMS Redux', () => {
         let url:string = '/',
             action = {
               type: 'CRAFTERCMS_GET_NAV_BREADCRUMB_COMPLETE',
-              payload: { breadcrumb: [navItem], url }
+              payload: { breadcrumb: navBreadcrumb, url }
             },
             expectedState = {
               loading: {
                 [url]: false
               },
               entries: {
-                [url]: [navItem]
+                [url]: navBreadcrumb
               }
             };
         
@@ -688,7 +688,7 @@ describe('Crafter CMS Redux', () => {
 
         mock.get("http://localhost:8080/api/1/site/navigation/breadcrumb.json?crafterSite=editorial&url=%2Fsite%2Fwebsite%2Findex.xml&root=", 
         (req: MockRequest, res: MockResponse) => {
-          res.body(JSON.stringify([navItem]));
+          res.body(JSON.stringify(navBreadcrumb));
           return res;
         });
 
@@ -698,7 +698,7 @@ describe('Crafter CMS Redux', () => {
               payload: { url }
             }),
             expectedResponse = {
-              payload: { breadcrumb: [navItem], url },
+              payload: { breadcrumb: navBreadcrumb, url },
               type: 'CRAFTERCMS_GET_NAV_BREADCRUMB_COMPLETE'
             }
 

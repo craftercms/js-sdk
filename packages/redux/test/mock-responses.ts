@@ -1,27 +1,14 @@
-import { Item, Descriptor } from "models";
+import { item,
+         descriptor,
+         children,
+         navBreadcrumb } from '../../../util/mock-responses-common';
 
-export const item:Item = {
-  name: "test",
-  url: "/",
-  descriptorUrl: "test",
-  desriptorDom: new Object(),
-  folder: false
-}
+export { item, descriptor, children, navBreadcrumb };
 
-export const descriptor:Descriptor = {
-  page: {
-    "objectId": "8d7f21fa-5e09-00aa-8340-853b7db302da"
-  }
-}
-
-export const children:Array<Item> = [
-  item
-];
+export const tree = { ...item, children: [] }
 
 export const navItem = {
   url: "/",
   active: true,
   subItems: []
 }
-
-export const tree = { ...item, children: [] }

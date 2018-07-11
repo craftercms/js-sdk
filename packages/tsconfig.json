@@ -23,6 +23,8 @@
     "target": "es5"
   },
   "exclude": [
-    "./angular"
+    "./angular",
+    "**/**.spec.ts",
+    "**/mock-responses.ts"
   ]
 }
