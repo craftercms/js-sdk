@@ -24,7 +24,6 @@
     "@craftercms/models": "0.0.0-PLACEHOLDER",
     "@craftercms/utils": "0.0.0-PLACEHOLDER",
     "rxjs": "^6.2.0",
-    "uuid": "^3.3.2",
-    "chai": "^4.1.2"
+    "uuid": "^3.3.2"
   }
 }
