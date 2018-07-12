@@ -29,9 +29,9 @@ export class SearchService extends SDKService {
             : queryOrParams,
           searchParams = new URLSearchParams();
 
-    for(let param in params) {
-      if(Array.isArray(params[param])) {
-        for(let x = 0; x < params[param].length; x++) {
+    for (let param in params) {
+      if (Array.isArray(params[param])) {
+        for (let x = 0; x < params[param].length; x++) {
           searchParams.append(param, params[param][x]);
         }
       } else {
