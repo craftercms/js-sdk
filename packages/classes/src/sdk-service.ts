@@ -6,6 +6,7 @@ export class SDKService {
 
   static httpGet(requestURL: string, params: Object = {}): Observable<any> {
     const searchParams = new URLSearchParams(params as URLSearchParams);
+      
     return ajax.get(`${requestURL}?${searchParams.toString()}`)
       .pipe(
         map((ajaxResponse: AjaxResponse) => ajaxResponse.response)

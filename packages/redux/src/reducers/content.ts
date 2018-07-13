@@ -124,11 +124,12 @@ export function treeReducer(state = {
 }, action: AnyAction): StateContainer<any> {
   switch (action.type) {
     case GET_TREE: {
+      const { url } = action.payload;
       return {
         ...state,
         loading: {
           ...state.loading,
-          [action.payload.url]: true
+          [url]: true
         }
       }
     }

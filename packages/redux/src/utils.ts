@@ -30,7 +30,7 @@ export function createReduxStore(config: {
       : combineEpics(...allEpics));
 
   const enhancers = config.reduxDevTools
-    ? (window['__REDUX_DEVTOOLS_EXTENSION_COMPOSE__'] || compose)
+    ? ((typeof window !== "undefined" && window['__REDUX_DEVTOOLS_EXTENSION_COMPOSE__']) || compose)
     : compose;
 
   // if config has namespaceCrafterState set to true, combines crafter reducers into namespace, plus config reducers
@@ -94,7 +94,7 @@ function validateCrafterStore(store: Object) {
 export function flattenEntries(item: Item, childrenProperty:string = 'children'): LookupTable<any>{
   let entries: LookupTable<any> = {},
       childIds: LookupTable<any> = {},
-      children = { ...item[childrenProperty] },
+      children,
       noChildren = { ...item },
       itemUrl = item['url'];
 
@@ -103,8 +103,14 @@ export function flattenEntries(item: Item, childrenProperty:string = 'children')
   entries[itemUrl] = noChildren;
   
   childIds[itemUrl] = [];
+  
+  children = item[childrenProperty] 
+    ? [ ...item[childrenProperty] ] 
+    : [];
+
   //If item has children
   if(children && children.length > 0){
+
     for (let child of children) {
       //Adds child url (id) into childIds  
       childIds[itemUrl].push(child.url);

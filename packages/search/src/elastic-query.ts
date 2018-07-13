@@ -1,4 +1,4 @@
-import { Query } from '@craftercms/search';
+import { Query } from './query';
 
 export class ElasticQuery extends Query {
 
