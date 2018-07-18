@@ -1,5 +1,7 @@
 # @craftercms/redux
 
+This package contains tools for integrating your application with Crafter Engine and Crafter Search using Redux as the state container.
+
 ## Usage
 
 - Add the module to your project by running `yarn add @craftercms/redux`

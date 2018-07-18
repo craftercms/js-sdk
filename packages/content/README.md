@@ -1,5 +1,7 @@
 # @craftercms/content
 
+This package contains tools for integrating your application with Crafter Engine services.
+
 ## Usage
 
 - Add the module to your project by running `yarn add @craftercms/content`

@@ -1,5 +1,7 @@
 # @craftercms/search
 
+This package contains tools for integrating your application with Crafter Search engine.
+
 ## Usage
 
 - Add the module to your project by running `yarn add @craftercms/search`
