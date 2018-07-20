@@ -4,22 +4,15 @@ This package contains tools for integrating your application with Crafter Engine
 
 ## Usage
 
-- Add the module to your project by running `yarn add @craftercms/redux`
+- Install module using `yarn` or `npm`
+  - Yarn: `yarn add @craftercms/redux`
+  - npm: `npm install @craftercms/redux`
 - Set the Crafter Configuration (site, baseUrl).
 - Import and use the redux store provided by the library, or implement your own store.
 - Import and use the action(s) you need.
 
-## Actions
-
-- `getItem` Get an Item from the content store.
-- `getDescriptor` Get the descriptor data of an Item in the content store.
-- `getChildren` Get the list of Items directly under a folder in the content store.
-- `getTree` Get the complete Item hierarchy under the specified folder in the content store.
-- `getNav` Returns the navigation tree with the specified depth for the specified store URL.
-- `getNavBreadcrumb` Returns the navigation items that form the breadcrumb for the specified store URL.
-- `search` 
-
 ## Utils
+---
 
 - `createReduxStore` Creates a redux store with all the crafter-redux details attached. Optionally, custom app reducers and/or epics may be supplied to create the store as required by client application.
 - `getState` Retrieves the current redux store state.
@@ -56,7 +49,21 @@ This package contains tools for integrating your application with Crafter Engine
 
 ```
 
-- Get the index page from the site into your store
+## Action Creators
+---
+
+## getItem
+Creates an action to get an Item from the content store.
+
+`getItem(itemUrl: string)`
+
+| Parameters    |                |
+| ------------- |:--------------:|
+| url           | The item’s url in the content store |
+
+### Example
+
+- Dispatch action to get the index page from the site into your store
 
 ```js
   import { getItem } from '@craftercms/redux';
@@ -65,6 +72,144 @@ This package contains tools for integrating your application with Crafter Engine
 
   store.dispatch(getItem(itemUrl));
 ```
+
+## getDescriptor
+Creates an action to get the descriptor data of an Item in the content store.
+
+`getDescriptor(url: string)`
+
+| Parameters    |                |
+| ------------- |:--------------:|
+| url           | The item’s url in the content store |
+
+### Example
+
+- Dispatch action to get the index page descriptor from the site into your store
+
+```js
+  import { getDescriptor } from '@craftercms/redux';
+
+  const itemUrl = '/site/website/index.xml';
+
+  store.dispatch(getDescriptor(itemUrl));
+```
+
+## getChildren
+Creates an action to get the list of Items directly under a folder into your store.
+
+`getChildren(url: string)`
+
+| Parameters    |                |
+| ------------- |:--------------:|
+| url           | The folder’s url |
+
+### Example
+
+- Dispatch action to get the children under a folder into your store
+
+```js
+  import { getChildren } from '@craftercms/redux';
+
+  const url = '/site/website';
+
+  store.dispatch(getChildren(url));
+```
+
+
+## getTree
+Creates an action to get the complete Item hierarchy under the specified folder in the content store.
+
+`getTree(url: string, depth: int)`
+
+| Parameters    |                |
+| ------------- |:--------------:|
+| url           | The folder’s url |
+| depth         | Amount of levels to include. Optional. Default is `1` |
+
+### Example
+
+- Dispatch action to get the items tree under the root folder into your store
+
+```js
+  import { getTree } from '@craftercms/redux';
+
+  const url = '/site/website';
+
+  store.dispatch(getTree(url, 2));
+```
+
+## getNav
+Creates an action to return the navigation tree with the specified depth for the specified store URL.
+
+`getNav(url: string, depth: int, currentPageUrl: string)`
+
+| Parameters     |                |
+| -------------- |:--------------:|
+| url            | The folder’s url |
+| depth          | Amount of levels to include. Optional. Default is `1` |
+| currentPageUrl | The URL of the current page. Optional. Default is `''` |
+
+### Example
+
+- Dispatch action to get the navigation tree of the root folder from the site (depth = 2)
+
+```js
+  import { getNav } from '@craftercms/redux';
+
+  const url = '/site/website';
+
+  store.dispatch(getNav(url, 2));
+```
+
+## getNavBreadcrumb
+Creates an action to return the navigation items that form the breadcrumb for the specified store URL.
+
+`getNavBreadcrumb(url: string, root: string)`
+
+| Parameters     |                |
+| -------------- |:--------------:|
+| url            | The folder’s url |
+| root           | the root URL, basically the starting point of the breadcrumb. Optional. Default is `''` |
+
+### Example
+
+- Dispatch action to get the breadcrumb for the root folder from the site
+
+```js
+  import { getNavBreadcrumb } from '@craftercms/redux';
+
+  const url = '/site/website/health';
+
+  store.dispatch(getNavBreadcrumb(url));
+```
+
+## search
+Creates an action to return the result for a given query.
+
+`search(query: Query)` 
+
+| Parameters    |                |
+| ------------- |:--------------:|
+| query         | The query object |
+
+### Example
+
+- Dispatch action to query for content
+
+```js
+  import { SearchService } from '@craftercms/search';
+  import { search } from '@craftercms/redux';
+
+  const query = SearchService.createQuery();
+  query.query = "*:*";
+  query.filterQueries = ['content-type:"/component/video"'];
+
+  store.dispatch(search(query));
+```
+
+
+
+
 
 Store state while loading item
 

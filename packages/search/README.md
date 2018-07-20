@@ -4,34 +4,53 @@ This package contains tools for integrating your application with Crafter Search
 
 ## Usage
 
-- Add the module to your project by running `yarn add @craftercms/search`
+- Install module using `yarn` or `npm`
+  - Yarn: `yarn add @craftercms/search`
+  - npm: `npm install @craftercms/search`
 - Import and use the service(s) you need
 
 ## Services
+---
 
-- `SearchService.getItem` Returns the result for a given query.
+## Search
+Returns the result for a given query.
 
-## Example
+`search(query: Query)` 
+
+| Parameters    |                |
+| ------------- |:--------------:|
+| query         | The query object |
+
+### Returns
+
+Map model
+
+### Examples
 
 - Connect to Crafter Search to query for content:
 
 ```js
+  import { crafterConf } from '@craftercms/classes';
   import { SearchService } from '@craftercms/search';
+
+  //First, set the Crafter configuration to _cache_ your config. 
+  //All subsequent calls to `getConfig` will use that configuration.
+  crafterConf.configure({
+    baseUrl: 'http://localhost:8080'
+    site: 'editorial'
+  })
 
   SearchService
     .search({
         query: '*:*',
         filterQueries: ['content-type:"/page/article"', 'featured_b:true']
-      }, {
-        baseUrl: 'http://localhost:8080',
-        site: 'editorial'
       })
     .subscribe(results => {
       // ...
     });
 ```
 
-You may also set the Crafter configuration to _cache_ your config
+You may alternatively use a different config by supplying the config object at the service call invoking time
 
 ```js
   import { SearchService } from '@craftercms/search';

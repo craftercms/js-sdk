@@ -1,30 +1,37 @@
 # @craftercms/models
 
-This package contains definitions for different content used by Crafter CMS.
+This package contains data model definitions of different structures of Crafter CMS.
 
 ## Usage
 
-- Add the module to your project by running `yarn add @craftercms/models`
+- Install module using `yarn` or `npm`
+  - Yarn: `yarn add @craftercms/models`
+  - npm: `npm install @craftercms/models`
 - Import and use the models you need
 
 ## Models
+---
 
-- `CrafterConfig` Crafter configuration model for modules to work
-- `Endpoints` 
-- `Item` Crafter item model with its base properties
-- `Descriptor` Crafter descriptor model with its base properties
-- `NavigationItem` Crafter navigation item model  with its base properties
-- `Page` Crafter Page model with its base properties
-- `StateContainer` Describes the container of a redux states, with entries and optional childIds.
-- `CrafterState` Describes the crafter state, each entry is as StateConainer
-- `CrafterNamespacedState` Describes a namespaced state, with a CrafterState under the namespace
-- `LookupTable` Describes an object consisting on keys (item id property) and values (content itself)
+## - CrafterConfig
+Crafter configuration model for modules to work
 
-## Utils
+### Example
 
-- `createLookupTable` Creates a lookup table based on an array of items (of a type) and the items id identifier.
+- Defining an object of type Item:
 
-## Examples
+```js
+  import { CrafterConfig } from "@craftercms/models";
+
+  const config:CrafterConfig = {
+    "site": "editorial",
+    "baseUrl": "http://localhost:8090"
+  };
+```
+
+## - Item
+Crafter item model with its base properties
+
+### Example
 
 - Defining an object of type Item:
 
@@ -40,7 +47,119 @@ This package contains definitions for different content used by Crafter CMS.
   };
 ```
 
-Notice that all of the properties on Item model are required, and it can have extra properties as a part of the item.
+## - Descriptor
+Crafter descriptor model with its base properties
+
+### Example
+
+- Defining an object of type Descriptor:
+
+```js
+  import { Descriptor } from "@craftercms/models";
+
+  const item:Descriptor = {
+    "page": { ... }
+  };
+```
+
+## - NavigationItem
+Crafter navigation item model  with its base properties
+
+### Example
+
+- Defining an object of type NavigationItem:
+
+```js
+  import { NavigationItem } from "@craftercms/models";
+
+  const item:NavigationItem = {
+    url: "/site/website",
+    active: boolean,
+    subItems: [
+      {
+        //Each Item is a NavigationItem
+      }
+    ]
+  };
+```
+
+## - StateContainer
+Describes the container of a redux state, with entries and optional childIds.
+
+### Example
+
+- Defining an object of type StateContainer:
+
+```js
+  import { StateContainer } from "@craftercms/models";
+
+  const item:StateContainer = {
+    entries: { /* type = LookupTable */ },
+    loading: { /* type = LookupTable */ }
+    childIds?: { /* type = LookupTable */ }
+  };
+```
+
+Every property value in a state container is a [LookupTable](#lookupTable)
+
+## - CrafterState
+Describes the crafter state, each entry is as [StateContainer](#stateContainer)
+
+### Example
+
+- Defining an object of type CrafterState:
+
+```js
+  import { CrafterState } from "@craftercms/models";
+
+  const item:CrafterState = {
+    items: { /* type = StateContainer */ }
+  };
+```
+
+## - CrafterNamespacedState
+Describes a namespaced state, with a [CrafterState](#CrafterState) under the namespace
+
+### Example
+
+- Defining an object of type CrafterNamespacedState:
+
+```js
+  import { CrafterNamespacedState } from "@craftercms/models";
+
+  const item:CrafterNamespacedState = {
+    craftercms: { /* type = CrafterState */ }
+  };
+```
+
+## - LookupTable
+Describes an object consisting on keys (item id property) and values (content itself)
+
+### Example
+
+- Defining an object of type LookupTable:
+
+```js
+  import { LookupTable } from "@craftercms/models";
+
+  const item:LookupTable = {
+    "/site/website/index.xml": {
+      "name": "index.xml",
+      "url": "/site/website/index.xml",
+      "descriptorUrl": "/site/website/index.xml",
+      "descriptorDom": { ... },
+      "folder": false
+    }
+  };
+```
+
+## Utils
+---
+
+## createLookupTable
+Creates a lookup table based on an array of items (of a type) and the items id identifier.
+
+### Example
 
 - Create a lookupTable of type Item:
 

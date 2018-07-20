@@ -1,10 +1,8 @@
 import { Observable } from 'rxjs';
 import { AnyAction, Store } from 'redux';
-import { switchMap, map } from 'rxjs/operators';
+import { mergeMap, map } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 
-import { Item, Descriptor, NavigationItem } from '@craftercms/models';
-import { crafterConf } from '@craftercms/classes';
 import { ContentStoreService, NavigationService } from '@craftercms/content';
 import {
   GET_ITEM,
@@ -24,7 +22,7 @@ import {
 export const getItemEpic =
   (action$: Observable<AnyAction>) => action$.pipe(
     ofType(GET_ITEM),
-    switchMap(({ payload }) =>
+    mergeMap(({ payload }) =>
       ContentStoreService.getItem(payload)
         .pipe(
           map(item => getItemComplete(item))
@@ -34,7 +32,7 @@ export const getItemEpic =
 export const getDescriptorEpic =
   (action$: Observable<AnyAction>) => action$.pipe(
       ofType(GET_DESCRIPTOR),
-      switchMap(({ payload }) =>
+      mergeMap(({ payload }) =>
       ContentStoreService.getDescriptor(payload)
           .pipe(
               map(descriptor => getDescriptorComplete({
@@ -47,7 +45,7 @@ export const getDescriptorEpic =
 export const getChildrenEpic =
   (action$: Observable<AnyAction>) => action$.pipe(
       ofType(GET_CHILDREN),
-      switchMap(({ payload }) =>
+      mergeMap(({ payload }) =>
       ContentStoreService.getChildren(payload)
           .pipe(
               map(children => getChildrenComplete({
@@ -60,7 +58,7 @@ export const getChildrenEpic =
 export const getTreeEpic =
   (action$: Observable<AnyAction>) => action$.pipe(
       ofType(GET_TREE),
-      switchMap(({ payload }) =>
+      mergeMap(({ payload }) =>
       ContentStoreService.getTree(payload.url, payload.depth)
           .pipe(
               map(tree => getTreeComplete(tree))
@@ -70,7 +68,7 @@ export const getTreeEpic =
 export const getNavEpic =
   (action$: Observable<AnyAction>) => action$.pipe(
       ofType(GET_NAV),
-      switchMap(({ payload }) =>
+      mergeMap(({ payload }) =>
       NavigationService.getNavTree(payload.url, payload.depth, payload.currentPageUrl)
           .pipe(
               map(nav => getNavComplete(nav))
@@ -80,7 +78,7 @@ export const getNavEpic =
 export const getNavBreadcrumbEpic =
   (action$: Observable<AnyAction>) => action$.pipe(
       ofType(GET_NAV_BREADCRUMB),
-      switchMap(({ payload }) =>
+      mergeMap(({ payload }) =>
       NavigationService.getNavBreadcrumb(payload.url, payload.root)
           .pipe(
               map(breadcrumb => getNavBreadcrumbComplete({

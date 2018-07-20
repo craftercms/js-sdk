@@ -1,5 +1,5 @@
 import { Observable, of } from 'rxjs';
-import { switchMap, map } from 'rxjs/operators';
+import { mergeMap, map } from 'rxjs/operators';
 import { AnyAction, Store } from 'redux';
 import { ofType } from 'redux-observable';
 
@@ -14,7 +14,7 @@ import { CrafterNamespacedState } from '@craftercms/models';
 export const searchEpic =
   (action$: Observable<AnyAction>) => action$.pipe(
     ofType(SEARCH),
-    switchMap(({ payload }) =>
+    mergeMap(({ payload }) =>
       SearchService.search(payload, crafterConf.getConfig())
         .pipe(
           map(response => searchComplete({

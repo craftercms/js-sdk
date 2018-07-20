@@ -1,25 +1,52 @@
 # @craftercms/content
 
-This package contains tools for integrating your application with Crafter Engine services.
+This package contains services for retrieving and manipulating content and navigation using APIs offered by craftercms.
 
 ## Usage
 
-- Add the module to your project by running `yarn add @craftercms/content`
+- Install module using `yarn` or `npm`
+  - Yarn: `yarn add @craftercms/content`
+  - npm: `npm install @craftercms/content`
 - Import and use the service(s) you need
 
-## Services
+## Services - Content Store
+---
 
-- `ContentStoreService.getItem` Get an Item from the content store.
-- `ContentStoreService.getDescriptor` Get the descriptor data of an Item in the content store.
-- `ContentStoreService.getChildren` Get the list of Items directly under a folder in the content store.
-- `ContentStoreService.getTree` Get the complete Item hierarchy under the specified folder in the content store.
-- `NavigationService.getNavTree` Returns the navigation tree with the specified depth for the specified store URL.
-- `NavigationService.getNavBreadcrumb` Returns the navigation items that form the breadcrumb for the specified store URL.
-- `UrlTransformationService.transform` Transforms a URL, based on the current site’s configuration. 
+## Get Item
+Get an Item from the content store.
 
-## Examples
+`getItem(url: string)`
+
+| Parameters    |                |
+| ------------- |:--------------:|
+| url           | The item’s url in the content store |
+
+### Returns
+
+[Item](../models/README.md#Item) - from the content store
+
+### Examples
 
 - Get the index page from the site:
+
+```js
+  import { crafterConf } from '@craftercms/classes';
+  import { ContentStoreService } from '@craftercms/content';
+
+  //First, set the Crafter configuration to _cache_ your config. 
+  //All subsequent calls to `getConfig` will use that configuration.
+  crafterConf.configure({
+    baseUrl: 'http://localhost:8090',  //by default - http://localhost:8080
+    site: 'editorial'
+  })
+
+  ContentStoreService.getItem('/site/website/index.xml')
+    .subscribe(item => {
+      // ...
+    });
+```
+
+You may alternatively use a different config by supplying the config object at the service call invoking time
 
 ```js
   import { ContentStoreService } from '@craftercms/content';
@@ -33,37 +60,180 @@ This package contains tools for integrating your application with Crafter Engine
       // ...
     });
 ```
-You may also set the Crafter configuration to _cache_ your config
+
+
+## Get Descriptor
+Get the descriptor data of an Item in the content store.
+
+`getDescriptor(url: string` 
+
+| Parameters    |                |
+| ------------- |:--------------:|
+| url           | The item’s url in the content store |
+
+### Returns
+
+[Descriptor](../models/README.md#Descriptor) - from the content store
+
+### Examples
+
+- Get the index page from the site:
 
 ```js
-  import { crafterConf } from '@craftercms/classes';
   import { ContentStoreService } from '@craftercms/content';
 
-  // Supply config on first invocation. All subsequent calls 
-  // to `getConfig` will use that config.
-  crafterConf.configure({
-    baseUrl: 'http://localhost:8090',  //by default - http://localhost:8080
-    site: 'editorial'
-  })
+  // Assuming that you already set the configuration (as explained above)
 
-  ContentStoreService.getItem('/site/website/index.xml')
-    .subscribe(item => {
+  ContentStoreService.getDescriptor('/site/website/index.xml')
+    .subscribe(descriptor => {
       // ...
     });
 ```
 
-- Get the navigation tree for the index page from the site, depth 3:
+
+## Get Children
+Get the list of Items directly under a folder in the content store.
+
+`getChildren(url: string)` 
+
+| Parameters    |                |
+| ------------- |:--------------:|
+| url           | The folder’s url |
+
+### Returns
+
+[Item](../models/README.md#Item)[] - List of Items from the content store
+
+### Examples
+
+- Get the children items under root folder from the site:
+
+```js
+  import { ContentStoreService } from '@craftercms/content';
+
+  // Assuming that you already set the configuration (as explained above)
+
+  ContentStoreService.getChildren('/site/website')
+    .subscribe(children => {
+      // ...
+    });
+```
+
+
+## Get Tree
+Get the complete Item hierarchy under the specified folder in the content store.
+
+`getTree(url: string, depth: int)` 
+
+| Parameters    |                |
+| ------------- |:--------------:|
+| url           | The folder’s url |
+| depth         | Amount of levels to include. Optional. Default is `1` |
+
+### Returns
+
+[Item](../models/README.md#Item) - from the content store
+
+### Examples
+
+- Get the items tree under root folder from the site:
+
+```js
+  import { ContentStoreService } from '@craftercms/content';
+
+  // Assuming that you already set the configuration (as explained above)
+
+  //This call will get 3 levels of the tree under the specified folder
+  ContentStoreService.getTree('/site/website', 3)
+    .subscribe(tree => {
+      // ...
+    });
+```
+
+
+## Services - Navigation
+---
+
+## Get Navigation Tree
+Returns the navigation tree with the specified depth for the specified store URL.
+
+`getNavTree(url: string, depth: string, currentPageUrl: string)`
+
+| Parameters     |                |
+| -------------- |:--------------:|
+| url            | The folder’s url |
+| depth          | Amount of levels to include. Optional. Default is `1` |
+| currentPageUrl | The URL of the current page. Optional. Default is `''` |
+
+### Returns
+
+[NavigationItem](../models/README.md#NavigationItem) - from the content store
+
+### Examples
+
+- Get the navigation tree of the root folder from the site (depth = 3):
 
 ```js
   import { NavigationService } from '@craftercms/content';
 
   // Assuming that you already set the configuration (as explained above)
 
-  NavigationService.getNavTree("/site/website", 3)
-    .subscribe((tree) => {
+  //This call will get 3 levels of the tree under the specified folder
+  NavigationService.getTree('/site/website', 3)
+    .subscribe(tree => {
       // ...
-    })
+    });
 ```
+
+
+## Get Navigation Breadcrumb
+Returns the navigation items that form the breadcrumb for the specified store URL.
+
+`getNavBreadcrumb(url: string, root: string)`
+
+| Parameters     |                |
+| -------------- |:--------------:|
+| url            | The folder’s url |
+| root           | the root URL, basically the starting point of the breadcrumb. Optional. Default is `''` |
+
+### Returns
+
+[NavigationItem](../models/README.md#NavigationItem)[] - List of NavigationItem from the content store
+
+### Examples
+
+- Get the breadcrumb for the root folder from the site:
+
+```js
+  import { NavigationService } from '@craftercms/content';
+
+  // Assuming that you already set the configuration (as explained above)
+
+  NavigationService.getNavBreadcrumb('/site/website')
+    .subscribe(navBreadcrumb => {
+      // ...
+    });
+```
+
+
+## Services - URL Transformation
+---
+
+## Transform
+Transforms a URL, based on the current site’s configuration. 
+
+- `transform(transformerName: string, url: string)` 
+
+| Parameters      |                |
+| --------------- |:--------------:|
+| transformerName | Name of the transformer to apply |
+| url             | URL that will be transformed |
+
+### Returns
+
+string - URL transformed according to transformer applied.
+
+### Examples
 
 - Transform a store url into a render url
 
