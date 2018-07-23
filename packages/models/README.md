@@ -28,7 +28,7 @@ Crafter configuration model for modules to work
 
 - Defining an object of type CrafterConfig:
 
-```js
+```ts
   import { CrafterConfig } from "@craftercms/models";
 
   const config: CrafterConfig = {
@@ -44,7 +44,7 @@ Crafter item model with its base properties
 
 - Defining an object of type Item:
 
-```js
+```ts
   import { Item } from "@craftercms/models";
 
   const item: Item = {
@@ -63,7 +63,7 @@ Crafter descriptor model with its base properties
 
 - Defining an object of type Descriptor:
 
-```js
+```ts
   import { Descriptor } from "@craftercms/models";
 
   const item: Descriptor = {
@@ -78,7 +78,7 @@ Crafter navigation item model  with its base properties
 
 - Defining an object of type NavigationItem:
 
-```js
+```ts
   import { NavigationItem } from "@craftercms/models";
 
   const item: NavigationItem = {
@@ -99,7 +99,7 @@ Describes the container of a redux state, with entries and optional childIds.
 
 - Defining an object of type StateContainer:
 
-```js
+```ts
   import { StateContainer } from "@craftercms/models";
 
   const item: StateContainer = {
@@ -118,7 +118,7 @@ Describes the crafter state, each entry is as [StateContainer](#stateContainer)
 
 - Defining an object of type CrafterState:
 
-```js
+```ts
   import { CrafterState } from "@craftercms/models";
 
   const item: CrafterState = {
@@ -133,7 +133,7 @@ Describes a namespaced state, with a [CrafterState](#CrafterState) under the nam
 
 - Defining an object of type CrafterNamespacedState:
 
-```js
+```ts
   import { CrafterNamespacedState } from "@craftercms/models";
 
   const item: CrafterNamespacedState = {
@@ -148,7 +148,7 @@ Describes an object consisting on keys (item id property) and values (content it
 
 - Defining an object of type LookupTable:
 
-```js
+```ts
   import { LookupTable } from "@craftercms/models";
 
   const item: LookupTable = {
@@ -172,7 +172,7 @@ Creates a lookup table based on an array of items (of a type) and the items id i
 
 - Create a lookupTable of type Item:
 
-```js
+```ts
   import { createLookupTable } from "@craftercms/models";
   import { Item } from "@craftercms/models";
 
@@ -182,7 +182,7 @@ Creates a lookup table based on an array of items (of a type) and the items id i
 
 The lookupTable will look like this:
 
-```js
+```json
   {
     /site/website/index.xml: {
       name: "index.xml",

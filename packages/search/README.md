@@ -30,7 +30,7 @@ Map model
 
 - Connect to Crafter Search to query for content:
 
-```js
+```ts
   import { crafterConf } from '@craftercms/classes';
   import { SearchService } from '@craftercms/search';
 
@@ -53,7 +53,7 @@ Map model
 
 You may alternatively use a different config by supplying the config object at the service call invoking time
 
-```js
+```ts
   import { SearchService } from '@craftercms/search';
 
   //Create query

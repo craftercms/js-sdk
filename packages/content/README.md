@@ -30,7 +30,7 @@ Get an Item from the content store.
 
 - Get the index page from the site:
 
-```js
+```ts
   import { crafterConf } from '@craftercms/classes';
   import { ContentStoreService } from '@craftercms/content';
 
@@ -49,7 +49,7 @@ Get an Item from the content store.
 
 You may alternatively use a different config by supplying the config object at the service call invoking time
 
-```js
+```ts
   import { ContentStoreService } from '@craftercms/content';
 
   ContentStoreService
@@ -82,7 +82,7 @@ Get the descriptor data of an Item in the content store.
 
 - Get the index page from the site:
 
-```js
+```ts
   import { ContentStoreService } from '@craftercms/content';
 
   // Assuming that you already set the configuration (as explained above)
@@ -113,7 +113,7 @@ Get the list of Items directly under a folder in the content store.
 
 - Get the children items under root folder from the site:
 
-```js
+```ts
   import { ContentStoreService } from '@craftercms/content';
 
   // Assuming that you already set the configuration (as explained above)
@@ -145,7 +145,7 @@ Get the complete Item hierarchy under the specified folder in the content store.
 
 - Get the items tree under root folder from the site:
 
-```js
+```ts
   import { ContentStoreService } from '@craftercms/content';
 
   // Assuming that you already set the configuration (as explained above)
@@ -181,7 +181,7 @@ Returns the navigation tree with the specified depth for the specified store URL
 
 - Get the navigation tree of the root folder from the site (depth = 3):
 
-```js
+```ts
   import { NavigationService } from '@craftercms/content';
 
   // Assuming that you already set the configuration (as explained above)
@@ -213,7 +213,7 @@ Returns the navigation items that form the breadcrumb for the specified store UR
 
 - Get the breadcrumb for the root folder from the site:
 
-```js
+```ts
   import { NavigationService } from '@craftercms/content';
 
   // Assuming that you already set the configuration (as explained above)
@@ -247,7 +247,7 @@ string - URL transformed according to transformer applied.
 
 - Transform a store url into a render url
 
-```js
+```ts
   import { UrlTransformationService } from '@craftercms/content';
 
   // Assuming that you already set the configuration (as explained above)
