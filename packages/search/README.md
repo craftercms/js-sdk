@@ -20,6 +20,7 @@ Returns the result for a given query.
 | Parameters    |                |
 | ------------- |:--------------:|
 | query         | The query object |
+| config        | Crafter configuration. Optional. Default value in [here](../models/README.md#CrafterConfig). |
 
 ### Returns
 

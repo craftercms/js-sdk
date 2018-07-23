@@ -14,10 +14,26 @@ This package contains tools for integrating your application with Crafter Engine
 ## Utils
 ---
 
-- `createReduxStore` Creates a redux store with all the crafter-redux details attached. Optionally, custom app reducers and/or epics may be supplied to create the store as required by client application.
-- `getState` Retrieves the current redux store state.
+## createReduxStore
+Creates a redux store with all the crafter-redux details attached. Optionally, custom app reducers and/or epics may be supplied to create the store as required by client application.
 
-## Examples
+`createReduxStore(config: Object)`
+
+| Parameters    |                |
+| ------------- |:--------------:|
+| config        | Configuration for the redux store |
+
+Default config:
+
+```js
+  {
+    namespace: 'craftercms',
+    reduxDevTools: true,
+    namespaceCrafterState: false
+  }
+```
+
+### Example
 
 - Set the configuration for the redux store
 
@@ -46,6 +62,26 @@ This package contains tools for integrating your application with Crafter Engine
     reduxDevTools: true,           // Set to true if you want to use reduxDevTools extension
     additionalMiddleWare: [thunk]  // Your chosen middleware to combine it with the library store
   });
+
+```
+
+## getState
+Retrieves the current redux store state.
+
+`getState(store: Store)`
+
+| Parameters    |                |
+| ------------- |:--------------:|
+| store           | Redux store where the state is going to be retrieved from |
+
+### Example
+
+```js
+  import { getState } from '@craftercms/redux';
+
+  // store = Redux store created in previous example
+
+  const state = getState(store);
 
 ```
 
@@ -215,12 +251,12 @@ Store state while loading item
 
 ```json
   {
-    "craftercms": {
-      "items": {
-        "loading": {
-          "/site/website/index.xml": true
+    craftercms: {
+      items: {
+        loading: {
+          /site/website/index.xml: true
         },
-        "entries": { }
+        entries: { }
       }
     },
     ...
@@ -231,13 +267,13 @@ Resulting store state
 
 ```json
   {
-    "craftercms": {
-      "items": {
-        "loading": {
-          "/site/website/index.xml": false
+    craftercms: {
+      items: {
+        loading: {
+          /site/website/index.xml: false
         },
-        "entries": {
-          "/site/website/index.xml": { ... }
+        entries: {
+          /site/website/index.xml: { ... }
         }
       }
     },
@@ -259,13 +295,13 @@ Store state while loading tree
 
 ```json
   {
-    "craftercms": {
-      "trees": {
-        "loading": {
-          "/site/website": true
+    craftercms: {
+      trees: {
+        loading: {
+          /site/website: true
         },
-        "entries": {},
-        "childIds": {}
+        entries: {},
+        childIds: {}
       }
     },
     ...
@@ -276,23 +312,23 @@ Resulting store state
 
 ```json
   {
-    "craftercms": {
-      "items": {
-        "loading": {
-          "/site/website": true
+    craftercms: {
+      items: {
+        loading: {
+          /site/website: true
         },
-        "entries": {
-          "/site/website": { ... },
-          "/site/website/style": { ... },
-          "/site/website/health": { ... }
+        entries: {
+          /site/website: { ... },
+          /site/website/style: { ... },
+          /site/website/health: { ... }
         },
-        "childIds": {
-          "/site/website" : [
+        childIds: {
+          /site/website : [
             "/site/website/style",
             "/site/website/health"
           ],
-          "/site/website/style": [],
-          "/site/website/health": []
+          /site/website/style: [],
+          /site/website/health: []
         }
       }
     },

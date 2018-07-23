@@ -1,6 +1,6 @@
 # @craftercms/models
 
-This package contains data model definitions of different structures of Crafter CMS.
+This package contains data model definitions of different structures of Crafter CMS. This interfaces are useful when developing in typescript.
 
 ## Usage
 
@@ -17,14 +17,23 @@ Crafter configuration model for modules to work
 
 ### Example
 
-- Defining an object of type Item:
+- Default values:
+
+```json
+  {
+    site: "editorial",
+    baseUrl: "http://localhost:8080"
+  }
+```
+
+- Defining an object of type CrafterConfig:
 
 ```js
   import { CrafterConfig } from "@craftercms/models";
 
-  const config:CrafterConfig = {
-    "site": "editorial",
-    "baseUrl": "http://localhost:8090"
+  const config: CrafterConfig = {
+    site: "editorial",
+    baseUrl: "http://localhost:8090"
   };
 ```
 
@@ -38,12 +47,12 @@ Crafter item model with its base properties
 ```js
   import { Item } from "@craftercms/models";
 
-  const item:Item = {
-    "name": "index.xml",
-    "url": "/site/website/index.xml",
-    "descriptorUrl": "/site/website/index.xml",
-    "descriptorDom": { ... },
-    "folder": false
+  const item: Item = {
+    name: "index.xml",
+    url: "/site/website/index.xml",
+    descriptorUrl: "/site/website/index.xml",
+    descriptorDom: { ... },
+    folder: false
   };
 ```
 
@@ -57,8 +66,8 @@ Crafter descriptor model with its base properties
 ```js
   import { Descriptor } from "@craftercms/models";
 
-  const item:Descriptor = {
-    "page": { ... }
+  const item: Descriptor = {
+    page: { ... }
   };
 ```
 
@@ -72,7 +81,7 @@ Crafter navigation item model  with its base properties
 ```js
   import { NavigationItem } from "@craftercms/models";
 
-  const item:NavigationItem = {
+  const item: NavigationItem = {
     url: "/site/website",
     active: boolean,
     subItems: [
@@ -93,10 +102,10 @@ Describes the container of a redux state, with entries and optional childIds.
 ```js
   import { StateContainer } from "@craftercms/models";
 
-  const item:StateContainer = {
+  const item: StateContainer = {
     entries: { /* type = LookupTable */ },
     loading: { /* type = LookupTable */ }
-    childIds?: { /* type = LookupTable */ }
+    childIds: { /* type = LookupTable */ }
   };
 ```
 
@@ -112,7 +121,7 @@ Describes the crafter state, each entry is as [StateContainer](#stateContainer)
 ```js
   import { CrafterState } from "@craftercms/models";
 
-  const item:CrafterState = {
+  const item: CrafterState = {
     items: { /* type = StateContainer */ }
   };
 ```
@@ -127,7 +136,7 @@ Describes a namespaced state, with a [CrafterState](#CrafterState) under the nam
 ```js
   import { CrafterNamespacedState } from "@craftercms/models";
 
-  const item:CrafterNamespacedState = {
+  const item: CrafterNamespacedState = {
     craftercms: { /* type = CrafterState */ }
   };
 ```
@@ -142,13 +151,13 @@ Describes an object consisting on keys (item id property) and values (content it
 ```js
   import { LookupTable } from "@craftercms/models";
 
-  const item:LookupTable = {
-    "/site/website/index.xml": {
-      "name": "index.xml",
-      "url": "/site/website/index.xml",
-      "descriptorUrl": "/site/website/index.xml",
-      "descriptorDom": { ... },
-      "folder": false
+  const item: LookupTable = {
+    /site/website/index.xml: {
+      name: "index.xml",
+      url: "/site/website/index.xml",
+      descriptorUrl: "/site/website/index.xml",
+      descriptorDom: { ... },
+      folder: false
     }
   };
 ```
@@ -173,14 +182,14 @@ Creates a lookup table based on an array of items (of a type) and the items id i
 
 The lookupTable will look like this:
 
-```json
+```js
   {
-    "/site/website/index.xml": {
-      "name": "index.xml",
-      "url": "/site/website/index.xml",
-      "descriptorUrl": "/site/website/index.xml",
-      "descriptorDom": { ... },
-      "folder": false
+    /site/website/index.xml: {
+      name: "index.xml",
+      url: "/site/website/index.xml",
+      descriptorUrl: "/site/website/index.xml",
+      descriptorDom: { ... },
+      folder: false
     }
   }
 ```

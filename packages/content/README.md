@@ -15,11 +15,12 @@ This package contains services for retrieving and manipulating content and navig
 ## Get Item
 Get an Item from the content store.
 
-`getItem(url: string)`
+`getItem(url: string, config: CrafterConfig)`
 
 | Parameters    |                |
 | ------------- |:--------------:|
 | url           | The item’s url in the content store |
+| config        | Crafter configuration. Optional. Default value in [here](../models/README.md#CrafterConfig). |
 
 ### Returns
 
@@ -65,11 +66,13 @@ You may alternatively use a different config by supplying the config object at t
 ## Get Descriptor
 Get the descriptor data of an Item in the content store.
 
-`getDescriptor(url: string` 
+`getDescriptor(url: string, config: CrafterConfig)` 
 
 | Parameters    |                |
 | ------------- |:--------------:|
 | url           | The item’s url in the content store |
+| config        | Crafter configuration. Optional. Default value in [here](../models/README.md#CrafterConfig). |
+
 
 ### Returns
 
@@ -94,11 +97,13 @@ Get the descriptor data of an Item in the content store.
 ## Get Children
 Get the list of Items directly under a folder in the content store.
 
-`getChildren(url: string)` 
+`getChildren(url: string, config: CrafterConfig)` 
 
 | Parameters    |                |
 | ------------- |:--------------:|
 | url           | The folder’s url |
+| config        | Crafter configuration. Optional. Default value in [here](../models/README.md#CrafterConfig). |
+
 
 ### Returns
 
@@ -123,12 +128,14 @@ Get the list of Items directly under a folder in the content store.
 ## Get Tree
 Get the complete Item hierarchy under the specified folder in the content store.
 
-`getTree(url: string, depth: int)` 
+`getTree(url: string, depth: int, config: CrafterConfig)` 
 
 | Parameters    |                |
 | ------------- |:--------------:|
 | url           | The folder’s url |
 | depth         | Amount of levels to include. Optional. Default is `1` |
+| config        | Crafter configuration. Optional. Default value in [here](../models/README.md#CrafterConfig). |
+
 
 ### Returns
 
@@ -157,13 +164,14 @@ Get the complete Item hierarchy under the specified folder in the content store.
 ## Get Navigation Tree
 Returns the navigation tree with the specified depth for the specified store URL.
 
-`getNavTree(url: string, depth: string, currentPageUrl: string)`
+`getNavTree(url: string, depth: string, currentPageUrl: string, config: CrafterConfig)`
 
 | Parameters     |                |
 | -------------- |:--------------:|
 | url            | The folder’s url |
 | depth          | Amount of levels to include. Optional. Default is `1` |
 | currentPageUrl | The URL of the current page. Optional. Default is `''` |
+| config        | Crafter configuration. Optional. Default value in [here](../models/README.md#CrafterConfig). |
 
 ### Returns
 
@@ -189,12 +197,13 @@ Returns the navigation tree with the specified depth for the specified store URL
 ## Get Navigation Breadcrumb
 Returns the navigation items that form the breadcrumb for the specified store URL.
 
-`getNavBreadcrumb(url: string, root: string)`
+`getNavBreadcrumb(url: string, root: string, config: CrafterConfig)`
 
 | Parameters     |                |
 | -------------- |:--------------:|
 | url            | The folder’s url |
 | root           | the root URL, basically the starting point of the breadcrumb. Optional. Default is `''` |
+| config        | Crafter configuration. Optional. Default value in [here](../models/README.md#CrafterConfig). |
 
 ### Returns
 
@@ -222,12 +231,13 @@ Returns the navigation items that form the breadcrumb for the specified store UR
 ## Transform
 Transforms a URL, based on the current site’s configuration. 
 
-- `transform(transformerName: string, url: string)` 
+- `transform(transformerName: string, url: string, config: CrafterConfig)` 
 
 | Parameters      |                |
 | --------------- |:--------------:|
 | transformerName | Name of the transformer to apply |
 | url             | URL that will be transformed |
+| config        | Crafter configuration. Optional. Default value in [here](../models/README.md#CrafterConfig). |
 
 ### Returns
 
