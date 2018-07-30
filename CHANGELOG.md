@@ -23,5 +23,3 @@
 * Renamed all "engine" to "content"
 
 ---
-
-(Changelog prior to 1.0.0 not available.)
