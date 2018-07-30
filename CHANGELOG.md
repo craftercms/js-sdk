@@ -1,5 +1,5 @@
 
-# 4.0.0
+# 1.0.0
 
 **Refactors**
 
@@ -24,4 +24,4 @@
 
 ---
 
-(Changelog prior to 4.0.0 not available.)
+(Changelog prior to 1.0.0 not available.)
