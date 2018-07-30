@@ -11,8 +11,8 @@ export function search(query: Query) {
 }
 
 export function searchComplete(searchResponseData: {
-  response,
-  queryId: string
+  queryId: string,
+  response?
 }) {
   return {
     type: SEARCH_COMPLETE,
