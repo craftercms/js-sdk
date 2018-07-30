@@ -1,0 +1,337 @@
+# @craftercms/redux
+
+This package contains tools for integrating your application with Crafter Engine and Crafter Search using Redux as the state container.
+
+## Usage
+
+- Install module using `yarn` or `npm`
+  - Yarn: `yarn add @craftercms/redux`
+  - npm: `npm install @craftercms/redux`
+- Set the Crafter Configuration (site, baseUrl).
+- Import and use the redux store provided by the library, or implement your own store.
+- Import and use the action(s) you need.
+
+## Utils
+---
+
+## createReduxStore
+Creates a redux store with all the crafter-redux details attached. Optionally, custom app reducers and/or epics may be supplied to create the store as required by client application.
+
+`createReduxStore(config: Object)`
+
+| Parameters    |                |
+| ------------- |:--------------:|
+| config        | Configuration for the redux store |
+
+Default config:
+
+```json
+  {
+    namespace: 'craftercms',
+    reduxDevTools: true,
+    namespaceCrafterState: false
+  }
+```
+
+### Example
+
+- Set the configuration for the redux store
+
+```ts
+  import { crafterConf } from '@craftercms/classes';
+
+  // This configuration will by used for all of the calls in the library. 
+  crafterConf.configure({
+    baseUrl: 'http://localhost:8090',  // By default - http://localhost:8080
+    site: 'editorial'
+  })
+```
+
+- Create redux store provided by the library
+
+```ts
+  import { createReduxStore } from '@craftercms/redux';
+
+  import { allReducers } from './your-reducers/reducers';
+  import thunk from 'redux-thunk';  // Or your chosen middleware
+
+  const store = createReduxStore({
+    namespaceCrafterState: true,   // Set to true to namespace craftercms states
+    namespace: "craftercms",       // Namespace label used for craftercms states
+    reducerMixin: allReducers,     // Your reducers (to combine them with the redux store)
+    reduxDevTools: true,           // Set to true if you want to use reduxDevTools extension
+    additionalMiddleWare: [thunk]  // Your chosen middleware to combine it with the library store
+  });
+
+```
+
+## getState
+Retrieves the current redux store state.
+
+`getState(store: Store)`
+
+| Parameters    |                |
+| ------------- |:--------------:|
+| store           | Redux store where the state is going to be retrieved from |
+
+### Example
+
+```ts
+  import { getState } from '@craftercms/redux';
+
+  // store = Redux store created in previous example
+
+  const state = getState(store);
+
+```
+
+## Action Creators
+---
+
+## getItem
+Creates an action to get an Item from the content store.
+
+`getItem(itemUrl: string)`
+
+| Parameters    |                |
+| ------------- |:--------------:|
+| url           | The item’s url in the content store |
+
+### Example
+
+- Dispatch action to get the index page from the site into your store
+
+```ts
+  import { getItem } from '@craftercms/redux';
+
+  const itemUrl = '/site/website/index.xml';
+
+  store.dispatch(getItem(itemUrl));
+```
+
+## getDescriptor
+Creates an action to get the descriptor data of an Item in the content store.
+
+`getDescriptor(url: string)`
+
+| Parameters    |                |
+| ------------- |:--------------:|
+| url           | The item’s url in the content store |
+
+### Example
+
+- Dispatch action to get the index page descriptor from the site into your store
+
+```ts
+  import { getDescriptor } from '@craftercms/redux';
+
+  const itemUrl = '/site/website/index.xml';
+
+  store.dispatch(getDescriptor(itemUrl));
+```
+
+## getChildren
+Creates an action to get the list of Items directly under a folder into your store.
+
+`getChildren(url: string)`
+
+| Parameters    |                |
+| ------------- |:--------------:|
+| url           | The folder’s url |
+
+### Example
+
+- Dispatch action to get the children under a folder into your store
+
+```ts
+  import { getChildren } from '@craftercms/redux';
+
+  const url = '/site/website';
+
+  store.dispatch(getChildren(url));
+```
+
+
+## getTree
+Creates an action to get the complete Item hierarchy under the specified folder in the content store.
+
+`getTree(url: string, depth: int)`
+
+| Parameters    |                |
+| ------------- |:--------------:|
+| url           | The folder’s url |
+| depth         | Amount of levels to include. Optional. Default is `1` |
+
+### Example
+
+- Dispatch action to get the items tree under the root folder into your store
+
+```ts
+  import { getTree } from '@craftercms/redux';
+
+  const url = '/site/website';
+
+  store.dispatch(getTree(url, 2));
+```
+
+## getNav
+Creates an action to return the navigation tree with the specified depth for the specified store URL.
+
+`getNav(url: string, depth: int, currentPageUrl: string)`
+
+| Parameters     |                |
+| -------------- |:--------------:|
+| url            | The folder’s url |
+| depth          | Amount of levels to include. Optional. Default is `1` |
+| currentPageUrl | The URL of the current page. Optional. Default is `''` |
+
+### Example
+
+- Dispatch action to get the navigation tree of the root folder from the site (depth = 2)
+
+```ts
+  import { getNav } from '@craftercms/redux';
+
+  const url = '/site/website';
+
+  store.dispatch(getNav(url, 2));
+```
+
+## getNavBreadcrumb
+Creates an action to return the navigation items that form the breadcrumb for the specified store URL.
+
+`getNavBreadcrumb(url: string, root: string)`
+
+| Parameters     |                |
+| -------------- |:--------------:|
+| url            | The folder’s url |
+| root           | the root URL, basically the starting point of the breadcrumb. Optional. Default is `''` |
+
+### Example
+
+- Dispatch action to get the breadcrumb for the root folder from the site
+
+```ts
+  import { getNavBreadcrumb } from '@craftercms/redux';
+
+  const url = '/site/website/health';
+
+  store.dispatch(getNavBreadcrumb(url));
+```
+
+## search
+Creates an action to return the result for a given query.
+
+`search(query: Query)` 
+
+| Parameters    |                |
+| ------------- |:--------------:|
+| query         | The query object |
+
+### Example
+
+- Dispatch action to query for content
+
+```ts
+  import { SearchService } from '@craftercms/search';
+  import { search } from '@craftercms/redux';
+
+  const query = SearchService.createQuery();
+  query.query = "*:*";
+  query.filterQueries = ['content-type:"/component/video"'];
+
+  store.dispatch(search(query));
+```
+
+
+
+
+
+Store state while loading item
+
+```json
+  {
+    craftercms: {
+      items: {
+        loading: {
+          /site/website/index.xml: true
+        },
+        entries: { }
+      }
+    },
+    ...
+  }
+```
+
+Resulting store state
+
+```json
+  {
+    craftercms: {
+      items: {
+        loading: {
+          /site/website/index.xml: false
+        },
+        entries: {
+          /site/website/index.xml: { ... }
+        }
+      }
+    },
+    ...
+  }
+```
+
+- Get the tree under a specified folder from the site into your store
+
+```ts
+  import { getTree } from '@craftercms/redux';
+
+  const url = '/site/website';
+
+  store.dispatch(getTree(url));
+```
+
+Store state while loading tree
+
+```json
+  {
+    craftercms: {
+      trees: {
+        loading: {
+          /site/website: true
+        },
+        entries: {},
+        childIds: {}
+      }
+    },
+    ...
+  }
+```
+
+Resulting store state
+
+```json
+  {
+    craftercms: {
+      items: {
+        loading: {
+          /site/website: true
+        },
+        entries: {
+          /site/website: { ... },
+          /site/website/style: { ... },
+          /site/website/health: { ... }
+        },
+        childIds: {
+          /site/website : [
+            "/site/website/style",
+            "/site/website/health"
+          ],
+          /site/website/style: [],
+          /site/website/health: []
+        }
+      }
+    },
+    ...
+  }
+```

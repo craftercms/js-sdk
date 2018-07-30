@@ -32,16 +32,16 @@ export function itemsReducer(state = {
       }
     }
     case GET_ITEM_COMPLETE: {
-      const item: Item = action.payload;
+      const { item, url } = action.payload;
       return {
         ...state,
         loading: {
           ...state.loading,
-          [item.url]: false
+          [url]: false
         },
         entries: {
           ...state.entries,
-          [item.url]: item
+          [url]: item
         }
       }
     }
@@ -134,16 +134,17 @@ export function treeReducer(state = {
       }
     }
     case GET_TREE_COMPLETE: {
-      const flatEntries = flattenEntries(action.payload);
+      const { tree, url } = action.payload;
+      const flatEntries = typeof(tree) === "undefined" ? null : flattenEntries(tree);
 
       return {
         ...state,
         loading: {
           ...state.loading,
-          [action.payload.url]: false
+          [url]: false
         },
-        entries: { ...state.entries, ...flatEntries.entries },
-        childIds: { ...state.childIds, ...flatEntries.childIds }
+        entries: flatEntries ? { ...state.entries, ...flatEntries.entries } : { ...state.entries },
+        childIds: flatEntries ? { ...state.childIds, ...flatEntries.childIds } : { ...state.childIds }
       }
     }
     default:
@@ -202,17 +203,17 @@ export function navigationReducer(state = {
       }
     }
     case GET_NAV_COMPLETE: {
-      const item: Item = action.payload;
-      const flatEntries = flattenEntries(item, 'subItems');
+      const { nav, url } = action.payload;
+      const flatEntries = typeof(nav) === "undefined" ? null : flattenEntries(nav, 'subItems');
 
       return {
         ...state,
         loading: {
           ...state.loading,
-          [item.url]: false
+          [url]: false
         },
-        entries: { ...state.entries, ...flatEntries.entries },
-        childIds: { ...state.childIds, ...flatEntries.childIds }
+        entries: flatEntries ? { ...state.entries, ...flatEntries.entries } : { ...state.entries },
+        childIds: flatEntries ? { ...state.childIds, ...flatEntries.childIds } : { ...state.childIds }
       }
     }
     default:
