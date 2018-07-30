@@ -1,6 +1,6 @@
 # @craftercms/content
 
-This package contains services for retrieving and manipulating content and navigation using APIs offered by craftercms.
+This package contains services for retrieving content and navigation using APIs offered by craftercms.
 
 ## Usage
 

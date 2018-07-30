@@ -1,6 +1,6 @@
 # @craftercms/search
 
-This package contains tools for integrating your application with Crafter Search engine.
+This package contains tools for integrating your application with Crafter Search.
 
 ## Usage
 
