@@ -515,7 +515,7 @@ do
     # Replace the NG_UPDATE_PACKAGE_GROUP value with the JSON array of packages.
     perl -p -i -e "s/\"NG_UPDATE_PACKAGE_GROUP\"/${NG_UPDATE_PACKAGE_GROUP}/g" ${NPM_DIR}/package.json < /dev/null
 
-    cp ${ROOT_DIR}/README.md ${NPM_DIR}/
+    cp ${ROOT_DIR}/${PACKAGE}/README.md ${NPM_DIR}/
   fi
 
 
