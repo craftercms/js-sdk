@@ -1,5 +1,5 @@
 import { Observable, of } from 'rxjs';
-import { mergeMap, map } from 'rxjs/operators';
+import { mergeMap, map, catchError } from 'rxjs/operators';
 import { AnyAction, Store } from 'redux';
 import { ofType } from 'redux-observable';
 
@@ -20,7 +20,10 @@ export const searchEpic =
           map(response => searchComplete({
             response: response.response,
             queryId: payload.uuid
-          }))
+          })),
+          catchError(() => Observable.of(searchComplete({
+            queryId: payload.uuid
+          })))
         ))
   );
 

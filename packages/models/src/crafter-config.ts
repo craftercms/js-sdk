@@ -2,7 +2,7 @@ import { LookupTable } from '@craftercms/models';
 
 export interface CrafterConfig {
   site: string;
-  baseUrl?: string;
+  baseUrl: string;
   endpoints?: Endpoints;
   contentTypeRegistry?: LookupTable<any>;
   // actions?
