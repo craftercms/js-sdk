@@ -10,6 +10,7 @@ const globals = {
   'rxjs/operators': 'rxjs.operators',
 
   '@craftercms/utils': 'craftercms.utils',
+  '@craftercms/classes': 'craftercms.classes',
   '@craftercms/models': 'craftercms.models',
   '@craftercms/engine': 'craftercms.engine',
   '@craftercms/search': 'craftercms.search',
