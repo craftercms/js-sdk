@@ -4,7 +4,7 @@ import { CrafterConfig } from '@craftercms/models';
 
 const DEFAULTS: CrafterConfig = {
   site: '',
-  baseUrl: 'http://localhost:8080',
+  baseUrl: '',
   endpoints: {
     GET_ITEM_URL: '/api/1/site/content_store/item.json',
     GET_DESCRIPTOR: '/api/1/site/content_store/descriptor.json',
