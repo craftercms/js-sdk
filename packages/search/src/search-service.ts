@@ -7,6 +7,7 @@ import { SolrQuery } from '@craftercms/search';
 import { ElasticQuery } from '@craftercms/search';
 
 import uuid from 'uuid';
+import 'url-search-params-polyfill';
 
 // TODO: Add correct return types
 type TodoSearchReturnType = Observable<any>;

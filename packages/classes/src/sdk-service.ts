@@ -1,6 +1,7 @@
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ajax, AjaxResponse } from 'rxjs/ajax';
+import 'url-search-params-polyfill';
 
 export class SDKService {
 
