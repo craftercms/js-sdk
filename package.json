@@ -40,8 +40,8 @@
     "tslib": "^1.9.2",
     "typescript": "^2.9.1",
     "uglify-es": "^3.3.9",
-    "url-search-params-polyfill": "^4.0.0",
-    "xhr-mock": "^2.4.0",
-    "uuid": "^3.3.2"
+    "url-search-params-polyfill": "^5.0.0",
+    "uuid": "^3.3.2",
+    "xhr-mock": "^2.4.0"
   }
 }
