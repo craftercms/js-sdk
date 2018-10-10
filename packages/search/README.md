@@ -38,7 +38,8 @@ Map model
   //All subsequent calls to `getConfig` will use that configuration.
   crafterConf.configure({
     baseUrl: 'http://localhost:8080'
-    site: 'editorial'
+    site: 'editorial',
+    searchId: 'editorial'   // if searchId is the same as site, this parameters is not needed
   })
 
   SearchService

@@ -40,7 +40,7 @@ export class SearchService extends SDKService {
       }
     }
 
-    searchParams.append('index_id', config.site);
+    searchParams.append('index_id', config.searchId ? config.searchId : config.site);
 
     return SDKService.httpGet(requestURL, searchParams);  
   }

@@ -22,6 +22,7 @@ Crafter configuration model for modules to work
 ```json
   {
     site: "editorial",
+    searchId: "editorial",
     baseUrl: "http://localhost:8080"
   }
 ```
@@ -33,6 +34,7 @@ Crafter configuration model for modules to work
 
   const config: CrafterConfig = {
     site: "editorial",
+    searchId: 'editorial'   // if searchId is the same as site, this parameters is not needed
     baseUrl: "http://localhost:8090"
   };
 ```
