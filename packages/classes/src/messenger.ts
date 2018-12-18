@@ -3,7 +3,7 @@ import { filter, map, multicast, tap, refCount } from 'rxjs/operators';
 import { notNullOrUndefined, ObserverOrNext } from '@craftercms/utils';
 import { Message, MessageScope, MessageTopic } from '@craftercms/models';
 
-export abstract class Messenger {
+export class Messenger {
 
   protected multiCaster$: Subject<Message>;
   protected messages$: Observable<Message>;
@@ -25,12 +25,11 @@ export abstract class Messenger {
             this.originAllowed(event.origin) &&
             (typeof event.data === 'object') &&
             ('topic' in event.data) &&
-            ('data' in event.data) &&
             ('scope' in event.data)
           ),
           map((event: MessageEvent) => ({
             topic: event.data.topic,
-            data: event.data.data,
+            data: event.data.data ? event.data.data : null,
             scope: event.data.scope || MessageScope.Broadcast
           })),
           multicast(multiCaster),
@@ -113,15 +112,19 @@ export abstract class Messenger {
           data: any = null,
           scope: MessageScope = MessageScope.Broadcast): void {
     let message: Message;
+
     if (topicOrMessage in MessageTopic) {
       message = {
         topic: <MessageTopic>topicOrMessage,
         data,
+        message: data,
         scope
       };
     } else {
       message = <Message>topicOrMessage;
+      message.message = message.data;
     }
+
     switch (scope) {
       case MessageScope.Local:
         this.multiCaster$.next(message);
@@ -136,7 +139,7 @@ export abstract class Messenger {
     }
   }
 
-  sendMessage(message: Message, targetOrigin: string = '*'): void {
+  sendMessage(message: Message, targetOrigin: string = '*'): void {    
     this.targets.forEach((target) => {
       // TODO need to determine where to get the origin
       if (!target.postMessage) {

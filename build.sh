@@ -13,14 +13,16 @@ PACKAGES=(utils
   classes
   content
   search
-  redux)
+  redux
+  ice)
 
 TSC_PACKAGES=(utils
   models
   classes
   content
   search
-  redux)
+  redux
+  ice)
 
 NODE_PACKAGES=
 
@@ -147,7 +149,7 @@ rollupIndex() {
   BANNER_TEXT=`cat ${LICENSE_BANNER}`
   if [[ -f ${in_file} ]]; then
     toRelative "===========           $ROLLUP -i ${in_file} -o ${out_file} --sourcemap -f es --banner BANNER_TEXT >/dev/null 2>&1"
-    $ROLLUP -i ${in_file} -o ${out_file} --sourcemap -f es --banner "$BANNER_TEXT" >/dev/null 2>&1
+    $ROLLUP -i ${in_file} -o ${out_file} --sourcemap -f es --banner "$BANNER_TEXT" 
   fi
 
   # Recurse for sub directories

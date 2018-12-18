@@ -4,7 +4,9 @@
     "baseUrl": ".",
     "rootDir": ".",
     "paths": {
+      "@craftercms/classes": ["../../dist/packages/classes"],
       "@craftercms/utils": ["../../dist/packages/utils"],
+      "@craftercms/models": ["../../dist/packages/models"],
       "@craftercms/ice": ["."]
     },
     "outDir": "../../dist/packages/ice"
