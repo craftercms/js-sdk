@@ -169,12 +169,18 @@ export class InContextEditing {
     this.communicator.publish(message);
   }
 
+  static checkInitRegions(){
+    let topic: MessageTopic = MessageTopic.IS_REVIEWER;
+    let scope: MessageScope = MessageScope.Broadcast;
+    this.communicator.publish(topic, null, scope);
+  }
+
   static zoneOn(itemId, iceId) {
     const message: Message = {
       topic: MessageTopic.ICE_ZONE_ON,
       data: {
-        itemId
-        // iceId
+        itemId,
+        iceId
       },
       scope: MessageScope.ALL
     } 

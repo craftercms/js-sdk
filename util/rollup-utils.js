@@ -8,6 +8,8 @@ const globals = {
   'rxjs': 'rxjs',
   'rxjs/ajax': 'rxjs.ajax',
   'rxjs/operators': 'rxjs.operators',
+  'react': 'react',
+  'react-dom': 'react-dom',
 
   '@craftercms/utils': 'craftercms.utils',
   '@craftercms/classes': 'craftercms.classes',
@@ -15,7 +17,8 @@ const globals = {
   '@craftercms/engine': 'craftercms.engine',
   '@craftercms/search': 'craftercms.search',
   '@craftercms/redux': 'craftercms.redux',
-  '@craftercms/ice': 'craftercms.ice'
+  '@craftercms/ice': 'craftercms.ice',
+  '@craftercms/react-ice': 'craftercms.react-ice'
 
 };
 

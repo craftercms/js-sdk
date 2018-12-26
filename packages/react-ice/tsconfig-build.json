@@ -1,0 +1,24 @@
+{
+    "extends": "../tsconfig-build.json",
+  
+    "compilerOptions": {
+      "baseUrl": ".",
+      "rootDir": ".",
+      "paths": {
+        "rxjs/*": ["../../node_modules/rxjs/*"],
+        "react/*": ["../../node_modules/react/*"],
+        "@craftercms/react-ice": ["."],
+        "@craftercms/models": ["../../dist/packages/models"],
+        "@craftercms/utils": ["../../dist/packages/utils"],
+        "@craftercms/classes": ["../../dist/packages/classes"],
+        "@craftercms/ice": ["../../dist/packages/ice"]
+      },
+      "outDir": "../../dist/packages/react-ice"
+    },
+  
+    "files": [
+      "index.ts"
+    ]
+  
+  }
+  
