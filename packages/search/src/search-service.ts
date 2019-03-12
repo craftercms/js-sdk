@@ -1,4 +1,5 @@
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { composeUrl, SearchEngines } from '@craftercms/utils';
 import { crafterConf, SDKService } from '@craftercms/classes';
 import { CrafterConfig } from '@craftercms/models';
@@ -24,25 +25,38 @@ export class SearchService extends SDKService {
   static search(query: Query, config: CrafterConfig): TodoSearchReturnType;
   static search(params: Object, config: CrafterConfig): TodoSearchReturnType;
   static search(queryOrParams: Query | Object, config: CrafterConfig): TodoSearchReturnType {
-    const requestURL = composeUrl(config, crafterConf.getConfig().endpoints.SEARCH),
-          params = (queryOrParams instanceof Query)
+    let requestURL;
+    const params = (queryOrParams instanceof Query)
             ? queryOrParams.params
             : queryOrParams,
           searchParams = new URLSearchParams();
 
-    for (let param in params) {
-      if (Array.isArray(params[param])) {
-        for (let x = 0; x < params[param].length; x++) {
-          searchParams.append(param, params[param][x]);
+    if (queryOrParams instanceof ElasticQuery) {
+      document.cookie = `crafterSite=${ config.site }`;
+      requestURL = composeUrl(config, crafterConf.getConfig().endpoints.ENGINE_SEARCH) + '?crafterSite=' + config.site;
+
+      return SDKService.httpPost(requestURL, params)
+        .pipe(map((res: any) => {
+          return res.response.hits;
+        }));
+    } else {
+      requestURL = composeUrl(config, crafterConf.getConfig().endpoints.SEARCH);
+
+      for (let param in params) {
+        if (Array.isArray(params[param])) {
+          for (let x = 0; x < params[param].length; x++) {
+            searchParams.append(param, params[param][x]);
+          }
+        } else {
+          searchParams.append(param, params[param]);
         }
-      } else {
-        searchParams.append(param, params[param]);
       }
+
+      searchParams.append('index_id', config.searchId ? config.searchId : config.site);
+
+      return SDKService.httpGet(requestURL, searchParams);  
     }
 
-    searchParams.append('index_id', config.searchId ? config.searchId : config.site);
-
-    return SDKService.httpGet(requestURL, searchParams);  
   }
 
   /**

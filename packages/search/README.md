@@ -28,7 +28,35 @@ Map model
 
 ### Examples
 
-- Connect to Crafter Search to query for content:
+- Connect to Crafter Search to query for content with ELASTIC SEARCH (crafter version: 3.1.x):
+
+```ts
+  import { crafterConf } from '@craftercms/classes';
+  import { SearchService } from '@craftercms/search';
+
+  //First, set the Crafter configuration to _cache_ your config. 
+  //All subsequent calls to `getConfig` will use that configuration.
+  crafterConf.configure({
+    baseUrl: 'http://localhost:8080'
+    site: 'editorial'
+  });
+
+  //Create elastic query
+  const query = SearchService.createQuery('elastic');
+  query.query = {
+    "query" : {
+        "match_all" : {}
+    }
+  }
+
+  SearchService
+    .search(query)
+    .subscribe(results => {
+      // ...
+    });
+```
+
+- Connect to Crafter Search to query for content with SOLR (crafter version: 3.0.x):
 
 ```ts
   import { crafterConf } from '@craftercms/classes';
@@ -42,11 +70,12 @@ Map model
     searchId: 'editorial'   // if searchId is the same as site, this parameters is not needed
   })
 
+  const query = SearchService.createQuery('solr');
+  query.query = "*:*";
+  query.filterQueries = ['content-type:"/component/video"'];
+
   SearchService
-    .search({
-        query: '*:*',
-        filterQueries: ['content-type:"/page/article"', 'featured_b:true']
-      })
+    .search(query)
     .subscribe(results => {
       // ...
     });
@@ -58,9 +87,12 @@ You may alternatively use a different config by supplying the config object at t
   import { SearchService } from '@craftercms/search';
 
   //Create query
-  const query = SearchService.createQuery();
-  query.query = "*:*";
-  query.filterQueries = ['content-type:"/component/video"'];
+  const query = SearchService.createQuery('elastic');
+  query.query = {
+    "query" : {
+        "match_all" : {}
+    }
+  }
 
   SearchService
     .search(query, {

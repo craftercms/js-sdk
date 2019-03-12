@@ -15,8 +15,7 @@ export class SDKService {
   }
 
   static httpPost(requestURL: string, body: Object = {}): Observable<any> {
-    return ajax.post(requestURL, body)
+    return ajax.post(requestURL, body, { 'Content-Type': 'application/json' })
       .pipe(map((ajaxResponse: AjaxResponse) => ajaxResponse.response));
   }
-
 }

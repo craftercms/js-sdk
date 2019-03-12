@@ -18,4 +18,5 @@ export interface Endpoints {
   GET_BREADCRUMB: string;
   TRANSFORM_URL: string;
   SEARCH: string;
+  ENGINE_SEARCH: string;    //TEMP - NEED TO DEFINE HOW WILL THIS BE
 }
