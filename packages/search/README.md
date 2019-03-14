@@ -42,7 +42,7 @@ Map model
   });
 
   //Create elastic query
-  const query = SearchService.createQuery('elastic');
+  const query = SearchService.createQuery('elasticsearch');
   query.query = {
     "query" : {
         "match_all" : {}
@@ -87,7 +87,7 @@ You may alternatively use a different config by supplying the config object at t
   import { SearchService } from '@craftercms/search';
 
   //Create query
-  const query = SearchService.createQuery('elastic');
+  const query = SearchService.createQuery('elasticsearch');
   query.query = {
     "query" : {
         "match_all" : {}

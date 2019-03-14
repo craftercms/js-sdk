@@ -50,7 +50,7 @@ export class SearchService extends SDKService {
 
     if (queryOrParams instanceof ElasticQuery) {
       document.cookie = `crafterSite=${ config.site }`;
-      requestURL = composeUrl(config, crafterConf.getConfig().endpoints.ENGINE_SEARCH) + '?crafterSite=' + config.site;
+      requestURL = composeUrl(config, crafterConf.getConfig().endpoints.ELASTICSEARCH) + '?crafterSite=' + config.site;
 
       return SDKService.httpPost(requestURL, params)
         .pipe(map((response: any) => {
@@ -94,7 +94,7 @@ export class SearchService extends SDKService {
       case 'solr':
         query = new SolrQuery();
         break;
-      case 'elastic':
+      case 'elasticsearch':
         query = new ElasticQuery();
         break;
     }
