@@ -49,7 +49,6 @@ export class SearchService extends SDKService {
           searchParams = new URLSearchParams();
 
     if (queryOrParams instanceof ElasticQuery) {
-      document.cookie = `crafterSite=${ config.site }`;
       requestURL = composeUrl(config, crafterConf.getConfig().endpoints.ELASTICSEARCH) + '?crafterSite=' + config.site;
 
       return SDKService.httpPost(requestURL, params)
@@ -60,12 +59,14 @@ export class SearchService extends SDKService {
       requestURL = composeUrl(config, crafterConf.getConfig().endpoints.SEARCH);
 
       for (let param in params) {
-        if (Array.isArray(params[param])) {
-          for (let x = 0; x < params[param].length; x++) {
-            searchParams.append(param, params[param][x]);
+        if (params.hasOwnProperty(param)) {
+          if (Array.isArray(params[param])) {
+            for (let x = 0; x < params[param].length; x++) {
+              searchParams.append(param, params[param][x]);
+            }
+          } else {
+            searchParams.append(param, params[param]);
           }
-        } else {
-          searchParams.append(param, params[param]);
         }
       }
 
