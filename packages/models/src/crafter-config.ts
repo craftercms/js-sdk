@@ -35,4 +35,5 @@ export interface Endpoints {
   GET_BREADCRUMB: string;
   TRANSFORM_URL: string;
   SEARCH: string;
+  ELASTICSEARCH: string; 
 }
