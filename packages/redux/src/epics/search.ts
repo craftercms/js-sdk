@@ -35,7 +35,7 @@ export const searchEpic =
       SearchService.search(payload, crafterConf.getConfig())
         .pipe(
           map(response => searchComplete({
-            response: response.response,
+            response: response.response ? response.response : response,
             queryId: payload.uuid
           })),
           catchError(() => Observable.of(searchComplete({
