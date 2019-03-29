@@ -18,7 +18,7 @@
 import { Query } from './query';
 
 /**
- * Query implementation for Solr
+ * Query implementation for Elasticsearch
  */
 export class ElasticQuery extends Query {
 
