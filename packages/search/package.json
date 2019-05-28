@@ -25,7 +25,7 @@
     "build": "npm run build:ts && npm run rollup && npm run clean:ts",
     "test": "../../node_modules/mocha/bin/mocha --opts ../../default.opts \"test/*.spec.ts\""
   },
-  "peerDependencies": {
+  "dependencies": {
     "@craftercms/models": "0.0.0-PLACEHOLDER",
     "@craftercms/utils": "0.0.0-PLACEHOLDER",
     "rxjs": "^6.2.0",
