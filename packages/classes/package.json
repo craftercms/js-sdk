@@ -25,6 +25,8 @@
     "build": "npm run build:ts && npm run rollup && npm run clean:ts"
   },
   "dependencies":  {
+    "@craftercms/models": "0.0.0-PLACEHOLDER",
+    "@craftercms/utils": "0.0.0-PLACEHOLDER",
     "url-search-params-polyfill": "^5.0.0"
   }
 }

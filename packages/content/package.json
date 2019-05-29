@@ -26,8 +26,9 @@
     "test": "../../node_modules/mocha/bin/mocha --opts ../../default.opts \"test/*.spec.ts\""
   },
   "dependencies": {
-    "rxjs": "^6.2.0",
+    "@craftercms/classes": "0.0.0-PLACEHOLDER",
+    "@craftercms/models": "0.0.0-PLACEHOLDER",
     "@craftercms/utils": "0.0.0-PLACEHOLDER",
-    "@craftercms/models": "0.0.0-PLACEHOLDER"
+    "rxjs": "^6.2.0"
   }
 }
