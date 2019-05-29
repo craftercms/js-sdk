@@ -84,21 +84,30 @@ export class SearchService extends SDKService {
   static createQuery<T extends Query>(searchEngine: SearchEngines): T;
   static createQuery<T extends Query>(searchEngine: SearchEngines, params: Object): T;
   static createQuery<T extends Query>(searchEngineOrParams: SearchEngines | Object = 'solr', params: Object = {}): T {
-    let engine = searchEngineOrParams,
-        queryId = params && params['uuid'] ? params['uuid'] : uuid();
+    let
+      query,
+      queryId = (params && params['uuid'])
+        ? params['uuid']
+        : uuid(),
+      engine = (typeof searchEngineOrParams === 'string')
+        ? (<string>searchEngineOrParams).toLowerCase()
+        : 'solr';
+
     if (typeof searchEngineOrParams !== 'string') {
-      engine = 'solr';
       params = searchEngineOrParams;
     }
-    let query;
-    switch (searchEngineOrParams) {
-      case 'solr':
-        query = new SolrQuery();
-        break;
+
+    switch (engine) {
+      case 'elastic':
       case 'elasticsearch':
         query = new ElasticQuery();
         break;
+      case 'solr':
+      default:
+        query = new SolrQuery();
+        break;
     }
+
     Object.assign(query.params, params);
 
     query.uuid = queryId;

@@ -24,7 +24,7 @@
     "clean:ts": "../../node_modules/rimraf/bin.js ts-out",
     "build": "npm run build:ts && npm run rollup && npm run clean:ts"
   },
-  "peerDependencies": {
+  "dependencies":  {
     "url-search-params-polyfill": "^5.0.0"
   }
 }
