@@ -15,8 +15,7 @@
  * along with this program. If not, see http://www.gnu.org/licenses/.
  */
 
-import { Observable } from 'rxjs';
-import 'rxjs/add/observable/of';
+import { Observable, of } from 'rxjs';
 import { AnyAction } from 'redux';
 import { mergeMap, map, catchError } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
@@ -47,7 +46,7 @@ export const getItemEpic =
             item,
             url: payload
           })),
-          catchError(() => Observable.of(getItemComplete({
+          catchError(() => of(getItemComplete({
             url: payload
           })))
         ))
@@ -63,11 +62,11 @@ export const getDescriptorEpic =
                 descriptor,
                 url: payload
               })),
-              catchError(() => Observable.of(getDescriptorComplete({
+              catchError(() => of(getDescriptorComplete({
                 url: payload
               })))
           ))
-          
+
   );
 
 export const getChildrenEpic =
@@ -80,7 +79,7 @@ export const getChildrenEpic =
                 children,
                 url: payload
               })),
-              catchError(() => Observable.of(getChildrenComplete({
+              catchError(() => of(getChildrenComplete({
                 url: payload
               })))
           ))
@@ -96,7 +95,7 @@ export const getTreeEpic =
                 tree,
                 url: payload.url
               })),
-              catchError(() => Observable.of(getTreeComplete({
+              catchError(() => of(getTreeComplete({
                 url: payload.url
               })))
           ))
@@ -112,7 +111,7 @@ export const getNavEpic =
                 nav,
                 url: payload.url
               })),
-              catchError(() => Observable.of(getNavComplete({
+              catchError(() => of(getNavComplete({
                 url: payload.url
               })))
           ))
@@ -128,7 +127,7 @@ export const getNavBreadcrumbEpic =
                 breadcrumb,
                 url: payload.url
               })),
-              catchError(() => Observable.of(getNavBreadcrumbComplete({
+              catchError(() => of(getNavBreadcrumbComplete({
                 url: payload.url
               })))
           ))

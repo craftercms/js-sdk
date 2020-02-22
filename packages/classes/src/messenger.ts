@@ -67,7 +67,7 @@ export abstract class Messenger {
     observerOrNext: ObserverOrNext<R>,
     ...operators: OperatorFunction<T, R>[]): Subscription {
     return this.messages$
-      .pipe(...operators)
+      .pipe.apply(this.messages$, operators)
       .subscribe(observerOrNext);
   }
 
@@ -86,7 +86,7 @@ export abstract class Messenger {
         filter((message: Message) => message.topic === topic));
     }
     return this.messages$
-      .pipe(...ops.concat(operations))
+      .pipe.apply(this.messages$, ops.concat(operations))
       .subscribe(subscriber);
   }
 

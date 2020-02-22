@@ -17,4 +17,6 @@
 
 const rollupUtils = require('../../util/rollup-utils');
 
-module.exports = rollupUtils.config('classes');
+module.exports = rollupUtils.config('classes', {
+  context: 'this'
+});

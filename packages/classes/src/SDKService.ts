@@ -20,20 +20,23 @@ import { map } from 'rxjs/operators';
 import { ajax, AjaxResponse } from 'rxjs/ajax';
 import 'url-search-params-polyfill';
 
-export class SDKService {
+export function httpGet(requestURL: string, params: Object = {}): Observable<any> {
+  const searchParams = new URLSearchParams(params as URLSearchParams);
 
-  static httpGet(requestURL: string, params: Object = {}): Observable<any> {
-    const searchParams = new URLSearchParams(params as URLSearchParams);
-      
-    return ajax.get(`${requestURL}?${searchParams.toString()}`)
-      .pipe(
-        map((ajaxResponse: AjaxResponse) => ajaxResponse.response)
-      );
-  }
-
-  static httpPost(requestURL: string, body: Object = {}): Observable<any> {
-    return ajax.post(requestURL, body, { 'Content-Type': 'application/json' })
-      .pipe(map((ajaxResponse: AjaxResponse) => ajaxResponse.response));
-  }
-
+  return ajax.get(`${requestURL}?${searchParams.toString()}`)
+    .pipe(
+      map((ajaxResponse: AjaxResponse) => ajaxResponse.response)
+    );
 }
+
+export function httpPost(requestURL: string, body: Object = {}): Observable<any> {
+  return ajax.post(requestURL, body, { 'Content-Type': 'application/json' })
+    .pipe(map((ajaxResponse: AjaxResponse) => ajaxResponse.response));
+}
+
+export const SDKService = {
+  httpGet,
+  httpPost
+};
+
+export default SDKService;

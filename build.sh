@@ -13,14 +13,16 @@ PACKAGES=(utils
   classes
   content
   search
-  redux)
+  redux
+  ice)
 
 TSC_PACKAGES=(utils
   models
   classes
   content
   search
-  redux)
+  redux
+  ice)
 
 NODE_PACKAGES=
 
@@ -36,6 +38,7 @@ NG_UPDATE_PACKAGE_GROUP=$(
     | sed 's/\//\\\//g'
 )
 
+ROLLUP_CONFIG_COMMON=${currentDir}/packages/rollup.config.js
 
 BUILD_ALL=true
 BUNDLE=true
@@ -146,8 +149,9 @@ rollupIndex() {
 
   BANNER_TEXT=`cat ${LICENSE_BANNER}`
   if [[ -f ${in_file} ]]; then
-    toRelative "===========           $ROLLUP -i ${in_file} -o ${out_file} --sourcemap -f es --banner BANNER_TEXT >/dev/null 2>&1"
-    $ROLLUP -i ${in_file} -o ${out_file} --sourcemap -f es --banner "$BANNER_TEXT" >/dev/null 2>&1
+    toRelative "===========           $ROLLUP -i ${in_file} -o ${out_file} --sourcemap -f es --banner BANNER_TEXT > /dev/null 2>&1"
+    $ROLLUP -c "$ROLLUP_CONFIG_COMMON" -i ${in_file} -o ${out_file} --sourcemap -f es --banner "$BANNER_TEXT" # > /dev/null 2>&1
+    echo ""
   fi
 
   # Recurse for sub directories
@@ -156,8 +160,7 @@ rollupIndex() {
     isIgnoredDirectory ${DIR} && continue
     local regex=".+/(.+)/${sub_package}.js"
     if [[ "${DIR}/${sub_package}.js" =~ $regex ]]; then
-
-      rollupIndex ${DIR} ${2}/${BASH_REMATCH[1]} ${sub_package} true
+      rollupIndex ${DIR} ${2}/${BASH_REMATCH[1]} ${sub_package}
     fi
   done
 }
@@ -174,7 +177,8 @@ runRollup() {
     cd ${1}
 
     toRelative "======           $ROLLUP -c ${1}/rollup.config.js --sourcemap"
-    $ROLLUP -c rollup.config.js --sourcemap >/dev/null 2>&1
+    $ROLLUP -c rollup.config.js --sourcemap # >/dev/null 2>&1
+    echo ""
 
     # Recurse for sub directories
     for DIR in ${1}/* ; do
@@ -199,6 +203,12 @@ addBanners() {
       mv ${file}.tmp ${file}
     fi
   done
+  # Recurse for sub directories
+  for DIR in ${1}/* ; do
+    if [[ -d ${DIR} ]]; then
+      addBanners ${DIR}
+    fi
+  done
 }
 
 #######################################
@@ -220,6 +230,12 @@ minify() {
       local out_file=$(dirname "${file}")/${BASH_REMATCH[1]}.min.js
       toRelative "======          $UGLIFY -c --comments -o ${out_file} --source-map "includeSources=true,content='${file}.map',filename='${out_file}.map'" ${file}"
       $UGLIFY -c --comments -o ${out_file} --source-map "includeSources=true,content='${file}.map',filename='${out_file}.map'" ${file}
+    fi
+  done
+  # Recurse for sub directories
+  for DIR in ${1}/* ; do
+    if [[ -d ${DIR} ]]; then
+      minify ${DIR}
     fi
   done
 }
@@ -463,8 +479,6 @@ do
     compilePackage ${SRC_DIR} ${OUT_DIR} ${PACKAGE}
   fi
 
-#  exit
-
   if [[ ${BUNDLE} == true ]]; then
     toRelative "======      BUNDLING ${PACKAGE}: ${SRC_DIR} ====="
     rm -rf ${NPM_DIR} && mkdir -p ${NPM_DIR}
@@ -479,7 +493,7 @@ do
         toRelative "======         Copy ESM2015 for ${PACKAGE}"
         rsync -a --exclude="locale/**" --exclude="**/*.d.ts" --exclude="**/*.metadata.json" ${OUT_DIR}/ ${ESM2015_DIR}
 
-        toRelative "======         Rollup ${PACKAGE}"
+        toRelative "======         Rollup ${PACKAGE} [rollupIndex ${OUT_DIR} ${FESM2015_DIR} ${PACKAGE}]"
         rollupIndex ${OUT_DIR} ${FESM2015_DIR} ${PACKAGE}
 
         echo "======         Produce ESM5 version"

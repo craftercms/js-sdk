@@ -13,3 +13,40 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+import { useEffect } from 'react';
+import {
+  DropZoneAttributes,
+  getDropZoneAttributes,
+  getICEAttributes, ICEAttributes,
+  repaintPencils, UseDropZoneConfig,
+  UseICEConfig
+} from '@craftercms/ice';
+
+interface ICEDropZoneProps {
+  props: DropZoneAttributes
+}
+
+interface ICEPencilProps {
+  props: ICEAttributes
+}
+
+export function useICE(config: UseICEConfig): ICEPencilProps {
+
+  useEffect(() => {
+    if (config.isAuthoring) {
+      repaintPencils();
+    }
+  });
+
+  return {
+    props: getICEAttributes(config)
+  };
+
+}
+
+export function useDropZone(config: UseDropZoneConfig): ICEDropZoneProps {
+  return {
+    props: getDropZoneAttributes(config)
+  };
+}

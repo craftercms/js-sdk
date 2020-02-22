@@ -22,24 +22,28 @@ import { CrafterConfig } from '@craftercms/models';
 import { composeUrl } from '@craftercms/utils';
 
 /**
+ * Transforms a URL, based on the current site's UrlTransformationEngine.
+ * @param {string} transformerName - Name of the transformer to apply
+ * @param {string} url - URL that will be transformed
+ */
+export function urlTransform(transformerName: string, url: string): Observable<any>;
+export function urlTransform(transformerName: string, url: string, config: CrafterConfig): Observable<any>;
+export function urlTransform(transformerName: string, url: string, config?: CrafterConfig): Observable<any> {
+  config = crafterConf.mix(config);
+  const requestURL = composeUrl(config, config.endpoints.TRANSFORM_URL);
+  return SDKService.httpGet(requestURL, {
+    crafterSite: config.site,
+    transformerName,
+    url
+  });
+}
+
+/**
  * URL Transformation Service API
  */
-export class UrlTransformationService extends SDKService {
+export const UrlTransformationService = {
+  transform: urlTransform,
+  urlTransform
+};
 
-  /**
-   * Transforms a URL, based on the current site's UrlTransformationEngine.
-   * @param {string} transformerName - Name of the transformer to apply
-   * @param {string} url - URL that will be transformed
-   */
-  static transform(transformerName: string, url: string): Observable<any>;
-  static transform(transformerName: string, url: string, config: CrafterConfig): Observable<any>;
-  static transform(transformerName: string, url: string, config: CrafterConfig = crafterConf.getConfig()): Observable<any> {
-    const requestURL = composeUrl(config, config.endpoints.TRANSFORM_URL);
-    return SDKService.httpGet(requestURL, {
-      crafterSite: config.site,
-      transformerName,
-      url
-    });
-  }
-
-}
+export default UrlTransformationService;

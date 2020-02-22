@@ -16,5 +16,5 @@
  */
 
 export * from './src/messenger';
-export * from './src/sdk-service';
+export * from './src/SDKService';
 export * from './src/config';

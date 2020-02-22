@@ -15,6 +15,7 @@
  * along with this program. If not, see http://www.gnu.org/licenses/.
  */
 
-export * from './src/content-store-service';
-export * from './src/navigation-service';
-export * from './src/url-transformation-service';
+export * from './src/ContentStoreService';
+export * from './src/NavigationService';
+export * from './src/UrlTransformationService';
+export * from './src/utils';

@@ -95,7 +95,8 @@ Creates an action to get an Item from the content store.
 
 | Parameters    |                |
 | ------------- |:--------------:|
-| url           | The item’s url in the content store |
+| 
+path           | The item’s path in the content store |
 
 ### Example
 
@@ -112,11 +113,11 @@ Creates an action to get an Item from the content store.
 ## getDescriptor
 Creates an action to get the descriptor data of an Item in the content store.
 
-`getDescriptor(url: string)`
+`getDescriptor(path: string)`
 
 | Parameters    |                |
 | ------------- |:--------------:|
-| url           | The item’s url in the content store |
+| path           | The item’s path in the content store |
 
 ### Example
 
@@ -133,11 +134,11 @@ Creates an action to get the descriptor data of an Item in the content store.
 ## getChildren
 Creates an action to get the list of Items directly under a folder into your store.
 
-`getChildren(url: string)`
+`getChildren(path: string)`
 
 | Parameters    |                |
 | ------------- |:--------------:|
-| url           | The folder’s url |
+| path           | The folder’s path |
 
 ### Example
 
@@ -146,20 +147,20 @@ Creates an action to get the list of Items directly under a folder into your sto
 ```ts
   import { getChildren } from '@craftercms/redux';
 
-  const url = '/site/website';
+  const path = '/site/website';
 
-  store.dispatch(getChildren(url));
+  store.dispatch(getChildren(path));
 ```
 
 
 ## getTree
 Creates an action to get the complete Item hierarchy under the specified folder in the content store.
 
-`getTree(url: string, depth: int)`
+`getTree(path: string, depth: int)`
 
 | Parameters    |                |
 | ------------- |:--------------:|
-| url           | The folder’s url |
+| path           | The folder’s path |
 | depth         | Amount of levels to include. Optional. Default is `1` |
 
 ### Example
@@ -169,19 +170,19 @@ Creates an action to get the complete Item hierarchy under the specified folder 
 ```ts
   import { getTree } from '@craftercms/redux';
 
-  const url = '/site/website';
+  const path = '/site/website';
 
-  store.dispatch(getTree(url, 2));
+  store.dispatch(getTree(path, 2));
 ```
 
 ## getNav
 Creates an action to return the navigation tree with the specified depth for the specified store URL.
 
-`getNav(url: string, depth: int, currentPageUrl: string)`
+`getNav(path: string, depth: int, currentPageUrl: string)`
 
 | Parameters     |                |
 | -------------- |:--------------:|
-| url            | The folder’s url |
+| path            | The folder’s path |
 | depth          | Amount of levels to include. Optional. Default is `1` |
 | currentPageUrl | The URL of the current page. Optional. Default is `''` |
 
@@ -192,19 +193,19 @@ Creates an action to return the navigation tree with the specified depth for the
 ```ts
   import { getNav } from '@craftercms/redux';
 
-  const url = '/site/website';
+  const path = '/site/website';
 
-  store.dispatch(getNav(url, 2));
+  store.dispatch(getNav(path, 2));
 ```
 
 ## getNavBreadcrumb
 Creates an action to return the navigation items that form the breadcrumb for the specified store URL.
 
-`getNavBreadcrumb(url: string, root: string)`
+`getNavBreadcrumb(path: string, root: string)`
 
 | Parameters     |                |
 | -------------- |:--------------:|
-| url            | The folder’s url |
+| path            | The folder’s path |
 | root           | the root URL, basically the starting point of the breadcrumb. Optional. Default is `''` |
 
 ### Example
@@ -214,9 +215,9 @@ Creates an action to return the navigation items that form the breadcrumb for th
 ```ts
   import { getNavBreadcrumb } from '@craftercms/redux';
 
-  const url = '/site/website/health';
+  const path = '/site/website/health';
 
-  store.dispatch(getNavBreadcrumb(url));
+  store.dispatch(getNavBreadcrumb(path));
 ```
 
 ## search
@@ -286,9 +287,9 @@ Resulting store state
 ```ts
   import { getTree } from '@craftercms/redux';
 
-  const url = '/site/website';
+  const path = '/site/website';
 
-  store.dispatch(getTree(url));
+  store.dispatch(getTree(path));
 ```
 
 Store state while loading tree
