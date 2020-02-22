@@ -1,6 +1,6 @@
 # @craftercms/content
 
-This package contains services for retrieving content and navigation using APIs offered by craftercms.
+This package contains services for retrieving content and navigation using APIs offered by Crafter CMS.
 
 ## Usage
 
@@ -28,6 +28,41 @@ This package contains services for retrieving content and navigation using APIs 
         // ...
       });
     ```
+
+## parseDescriptor
+Parse a [Descriptor](../models/src/descriptor.ts), [Item](../models/src/item.ts) or a GraphQL response into a [Content Instance](../models/src/ContentInstance.ts). It could also be a collection of any of these types.
+
+`parseDescriptor(response: Descriptor | Item | GraphQLResponse | Descriptor[] | Item[] | GraphQLResponse)`
+
+| Parameters    |                |
+| ------------- |:--------------:|
+| response      | The response of a getItem, getDescriptor or GraphQL fetch call |
+
+### Returns
+
+[ContentInstance](../models/src/ContentInstance.ts)
+
+### Examples
+
+- If you want a cleaner/parsed response, you may use `parseDescriptor` util to parse the response for you. You may use it to parse getItem, getDescriptor or GraphQL responses.
+
+```typescript
+  import { map } from 'rxjs/operators';
+  import { ContentInstance } from '@craftercms/models';
+  import { getChildren, getItem, parseDescriptor } from '@craftercms/content';
+  
+  getItem('/site/website/index.xml', { site: 'editorial' }).pipe(
+    map(parseDescriptor)
+  ).subscribe((content: ContentInstance) => {
+    // ...
+  });
+
+  getChildren('/site/website', { site: 'editorial' }).pipe(
+    map(parseDescriptor)
+  ).subscribe((content: ContentInstance[]) => {
+    // ...
+  });
+```
 
 ## Get Item
 Get an Item from the content store.
@@ -143,11 +178,11 @@ Get the list of Items directly under a folder in the content store.
 ## Get Tree
 Get the complete Item hierarchy under the specified folder in the content store.
 
-`getTree(path: string, depth: int, config: CrafterConfig)` 
+`getTree(path: string, depth: number, config: CrafterConfig)` 
 
 | Parameters    |                |
 | ------------- |:--------------:|
-| path           | The folder’s path |
+| path          | The folder’s path |
 | depth         | Amount of levels to include. Optional. Default is `1` |
 | config        | Crafter configuration. Optional. Default value in [here](../models/README.md#CrafterConfig). |
 
@@ -178,14 +213,14 @@ Get the complete Item hierarchy under the specified folder in the content store.
 ## Get Navigation Tree
 Returns the navigation tree with the specified depth for the specified store URL.
 
-`getNavTree(path: string, depth: string, currentPageUrl: string, config: CrafterConfig)`
+`getNavTree(path: string, depth: number, currentPageUrl: string, config: CrafterConfig)`
 
 | Parameters     |                |
 | -------------- |:--------------:|
-| path            | The folder’s path |
+| path           | The folder’s path |
 | depth          | Amount of levels to include. Optional. Default is `1` |
 | currentPageUrl | The URL of the current page. Optional. Default is `''` |
-| config        | Crafter configuration. Optional. Default value in [here](../models/README.md#CrafterConfig). |
+| config         | Crafter configuration. Optional. Default value in [here](../models/README.md#CrafterConfig). |
 
 ### Returns
 

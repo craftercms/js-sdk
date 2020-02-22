@@ -66,7 +66,9 @@ const systemProps = Object.keys(systemPropMap).concat(
 );
 
 export function parseDescriptor(data: DescriptorResponse | DescriptorResponse[]): ContentInstance | ContentInstance[] {
-  if (Array.isArray(data)) {
+  if (data == null) {
+    return null;
+  } else if (Array.isArray(data)) {
     return data.map((item) => parseDescriptor(item) as ContentInstance);
   } else if (data.descriptorDom) {
     return parseDescriptor(data.descriptorDom);
