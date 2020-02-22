@@ -19,8 +19,8 @@ const rollupUtils = require('../../../util/rollup-utils');
 module.exports = rollupUtils.config('', {
   input: '../../../dist/packages-dist/ice/fesm5/react/react.js',
   output: {
-    file: '../../../dist/packages-dist/ice/bundles/react/react.umd.js',
+    file: '../../../dist/packages-dist/ice/bundles/react/index.umd.js',
     name: 'craftercms.ice.react',
-    amd: { id: `@craftercms/react-ice` },
+    amd: { id: `@craftercms/react-ice` }
   },
 });

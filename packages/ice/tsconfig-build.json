@@ -13,6 +13,7 @@
   },
   "files": [
     "index.ts",
-    "react/react.ts"
+    "react/react.ts",
+    "react/index.ts"
   ]
 }

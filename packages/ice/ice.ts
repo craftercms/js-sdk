@@ -23,19 +23,18 @@ declare namespace window {
 
 let repaintPencilsTimeout;
 
-export interface UseICEConfig {
+export interface ICEConfig {
   model: ContentInstance;
   parentModelId?: string;
-  label: string;
-  group: string;
-  isAuthoring: boolean;
+  label?: string;
+  group?: string;
+  isAuthoring?: boolean;
 }
 
 export interface UseDropZoneConfig {
   model: ContentInstance;
   zoneName: string;
-  contentTypeId: string;
-  isAuthoring: boolean;
+  isAuthoring?: boolean;
 }
 
 export interface ICEAttributes {
@@ -53,7 +52,7 @@ export interface DropZoneAttributes {
   'data-studio-zone-content-type': string
 }
 
-export function getICEAttributes(config: UseICEConfig): ICEAttributes {
+export function getICEAttributes(config: ICEConfig): ICEAttributes {
 
   const {
     model,
@@ -83,13 +82,14 @@ export function getICEAttributes(config: UseICEConfig): ICEAttributes {
 
 export function getDropZoneAttributes(config: UseDropZoneConfig) {
 
-  const { model, zoneName, contentTypeId, isAuthoring = true } = config;
+  const { model, zoneName, isAuthoring = true } = config;
 
   if (!isAuthoring) {
     return ({ } as DropZoneAttributes);
   }
 
   const modelId = model?.craftercms.id;
+  const contentTypeId = model?.craftercms.contentTypeId;
   return {
     'data-studio-components-target': zoneName,
     'data-studio-components-objectid': modelId,

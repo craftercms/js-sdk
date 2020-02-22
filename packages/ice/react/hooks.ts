@@ -18,9 +18,11 @@ import { useEffect } from 'react';
 import {
   DropZoneAttributes,
   getDropZoneAttributes,
-  getICEAttributes, ICEAttributes,
-  repaintPencils, UseDropZoneConfig,
-  UseICEConfig
+  getICEAttributes,
+  ICEAttributes,
+  repaintPencils,
+  UseDropZoneConfig,
+  ICEConfig
 } from '@craftercms/ice';
 
 interface ICEDropZoneProps {
@@ -31,7 +33,7 @@ interface ICEPencilProps {
   props: ICEAttributes
 }
 
-export function useICE(config: UseICEConfig): ICEPencilProps {
+export function useICE(config: ICEConfig): ICEPencilProps {
 
   useEffect(() => {
     if (config.isAuthoring) {
