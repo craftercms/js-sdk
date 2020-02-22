@@ -104,7 +104,7 @@ export function repaintPencils(): void {
     window.crafterRequire?.(['guest'], function ({ iceRepaint }) {
       iceRepaint();
     });
-  }, 200);
+  }, 150);
 }
 
 export function fetchIsPreview(): Promise<boolean> {
