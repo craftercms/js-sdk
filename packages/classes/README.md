@@ -18,7 +18,7 @@ This package contains useful classes for developing craftercms websites & applic
 
 ## Examples
 
-```ts
+```typescript
   import { SDKService } from '@craftercms/classes';
 
   const requestURL = "/crafter-url";
