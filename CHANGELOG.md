@@ -7,6 +7,7 @@
 
 ### @craftercms/content
 - Services refactored as stand alone functions; no need to use as class now though you may still use in the same way as in previous release if you prefer (backward compatible).
+- New `parseDescriptor` that parse a getDescriptor, getItem or GraphQL response into a Content Instance.
 
 ### @craftercms/ice
 - First published
