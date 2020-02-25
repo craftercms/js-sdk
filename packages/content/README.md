@@ -25,7 +25,7 @@ This package contains services for retrieving content and navigation using APIs 
       // Second param "config" will use "http://authoring.company.com" as 
       // crafter base url and "editorial" as the site to query
       getItem('/site/website/index.xml').subscribe((item: Item) => {
-        // ...
+        console.log(item);
       });
     ```
 
@@ -54,13 +54,13 @@ Parse a [Descriptor](../models/src/descriptor.ts), [Item](../models/src/item.ts)
   getItem('/site/website/index.xml', { site: 'editorial' }).pipe(
     map(parseDescriptor)
   ).subscribe((content: ContentInstance) => {
-    // ...
+    console.log(content);
   });
 
   getChildren('/site/website', { site: 'editorial' }).pipe(
     map(parseDescriptor)
   ).subscribe((content: ContentInstance[]) => {
-    // ...
+    console.log(content);
   });
 ```
 
@@ -87,7 +87,7 @@ Get an Item from the content store.
   import { getItem } from '@craftercms/content'; 
   
   getItem('/site/website/index.xml', { site: 'editorial' }).subscribe((item: Item) => {
-    // ...
+    console.log(item);
   });
 ```
 
@@ -101,7 +101,7 @@ Get an Item from the content store.
   getItem('/site/website/index.xml', { site: 'editorial' }).pipe(
     map(parseDescriptor)
   ).subscribe((content: ContentInstance) => {
-    // ...
+    console.log(content);
   });
 ```
 
@@ -130,7 +130,7 @@ Get the descriptor data of an Item in the content store.
 
   // Example 1: Supplying config inline, Descriptor response...
   getDescriptor('/site/website/index.xml', { site: 'editorial' }).subscribe((descriptor: Descriptor) => {
-    // ...
+    console.log(descriptor);
   });
 
   // Example 2: 
@@ -139,7 +139,7 @@ Get the descriptor data of an Item in the content store.
   getDescriptor('/site/website/index.xml').pipe(
     map(parseDescriptor) // Optional. Use for a cleaner parsed response.
   ).subscribe((content: ContentInstance) => {
-    // ...
+    console.log(content);
   });
 ```
 
@@ -166,12 +166,12 @@ Get the list of Items directly under a folder in the content store.
 
   // Example 1: Supplying config inline
   getChildren('/site/website', { site: 'editorial' }).subscribe((children) => {
-    // ...
+    console.log(children);
   });
   
   // Example 2: Omits the config param (must have been previously configured, see Usage section above)
   getChildren('/site/website').subscribe((children) => {
-    // ...
+    console.log(children);
   });
 ```
 
@@ -201,12 +201,12 @@ Get the complete Item hierarchy under the specified folder in the content store.
 
   // Example 1: Config supplied inline
   getTree('/site/website', 3, { site: 'editorial' }).subscribe((tree) => {
-    // ...
+    console.log(tree);
   });
 
   // Example 2: Services pre-configured (see "Usage" section above), config param omitted.
   getTree('/site/website', 3).subscribe((tree) => {
-    // ...
+    console.log(tree);
   });
 ```
 
@@ -235,12 +235,12 @@ Returns the navigation tree with the specified depth for the specified store URL
 
   // Example 1: Config supplied inline
   getTree('/site/website', 3, { site: 'editorial' }).subscribe((tree) => {
-    // ...
+    console.log(tree);
   });
 
   // Example 2: Services pre-configured (see "Usage" section above), config param omitted.
   getTree('/site/website', 3).subscribe((tree) => {
-    // ...
+    console.log(tree);
   });
 ```
 
@@ -268,12 +268,12 @@ Returns the navigation items that form the breadcrumb for the specified store UR
 
   // Example 1: Config supplied inline
   getNavBreadcrumb('/site/website').subscribe((navBreadcrumb) => {
-    // ...
+    console.log(navBreadcrumb);
   });
 
   // Example 2: Services pre-configured (see "Usage" section above), config param omitted.
   getNavBreadcrumb('/site/website').subscribe((navBreadcrumb) => {
-    // ...
+    console.log(navBreadcrumb);
   });
 ```
 
@@ -301,12 +301,12 @@ string - URL transformed according to transformer applied.
 
   // Example 1: Config supplied inline
   urlTransform('storeUrlToRenderUrl', '/site/website/style/index.xml', { site: 'editorial' }).subscribe((webUrl) => {
-    console.log(webUrl) // "/style"
+    console.log(webUrl); // "/style"
   });
 
   // Example 2: Services pre-configured (see "Usage" section above), config param omitted.
   urlTransform('storeUrlToRenderUrl', '/site/website/style/index.xml').subscribe((webUrl) => {
-    console.log(webUrl) // "/style"
+    console.log(webUrl); // "/style"
   });
 ```
 

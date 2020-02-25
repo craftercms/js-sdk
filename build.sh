@@ -154,7 +154,7 @@ rollupIndex() {
 
   BANNER_TEXT=$(cat ${LICENSE_BANNER})
   if [[ -f ${in_file} ]]; then
-    toRelative "===========           $ROLLUP -i ${in_file} -o ${out_file} --sourcemap -f es --banner BANNER_TEXT > /dev/null 2>&1"
+    toRelative "===========           $ROLLUP -i ${in_file} -o ${out_file} --sourcemap -f esm --banner BANNER_TEXT > /dev/null 2>&1"
     $ROLLUP -c "$ROLLUP_CONFIG_COMMON" -i ${in_file} -o ${out_file} --sourcemap -f es --banner "$BANNER_TEXT" # > /dev/null 2>&1
     cp $out_file $out_dir/index.js
     cp $out_file.map $out_dir/index.js.map
