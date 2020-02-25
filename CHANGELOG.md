@@ -1,10 +1,14 @@
-
 # SDK Changelog
 
 ## 1.2.0
 
-### @craftercms/ice
+### @craftercms/classes
+- SDKService refactored as stand alone functions; no need to use as class now though you may still use in the same way as in previous release if you prefer (backward compatible).
 
+### @craftercms/content
+- Services refactored as stand alone functions; no need to use as class now though you may still use in the same way as in previous release if you prefer (backward compatible).
+
+### @craftercms/ice
 - First published
 - Publishing generic Crafter CMS In Context Editing (ICE) attribute retrieval functions for pencils and drop zones (drag and drop)
     - getIceAttributes, 
@@ -29,22 +33,24 @@
     - esm5 (module)
     - es2015 (esm2015)
 
-### @craftercms/content
-- Services refactored as stand alone functions; no need to use as class now though you may still use in the same way as in previous release if you prefer (backward compatible).
-
-### @craftercms/search
-- Service refactored as stand alone functions; no need to use as class now though you may still use in the same way as in previous release if you prefer (backward compatible).
+### @craftercms/models
+- Removed unpublished createLookupTable function; moved to @craftercms/utils
+- ContentInstance model added
 
 ### @craftercms/redux
 - redux, redux-observable & rxjs upgraded
 
-### @craftercms/models
-- removed unpublished createLookupTable function; moved to @craftercms/utils
+### @craftercms/search
+- Service refactored as stand alone functions; no need to use as class now though you may still use in the same way as in previous release if you prefer (backward compatible).
 
-## Global
+### @craftercms/utils
+- Publishes createLookupTable util
+
+### Global
 - Internal Yarn workspace set up
 - RxJS upgrade for all packages which have it as a dependency
 - Rollup config adjustments
 - Build script updates to print rollup output
 - Added `index.js` to fesm distributions
+- License updates
 
