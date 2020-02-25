@@ -15,70 +15,100 @@
  * along with this program. If not, see http://www.gnu.org/licenses/.
  */
 
-import { log } from '@craftercms/utils';
+import { ContentInstance } from '@craftercms/models';
 
 declare namespace window {
-  const studioICERepaint: Function;
+  const crafterRequire: Function;
 }
 
-/**
- * In Context Editing Utitly class
- */
-export class InContextEditing {
+let repaintPencilsTimeout;
 
-  /**
-   * Adds the appropiate attributes to display the pencil for an ICE Group.
-   * @param {string} id - ID of the HTML element
-   * @param {string} group - Name of the ICE Group
-   * @param {string} label - Label of the ICE Group
-   */
-  static addGroup(id, group, label) {
-    let element = document.getElementById(id);
-    if (element) {
-      element.setAttribute('data-studio-ice', group);
-      element.setAttribute('data-studio-ice-label', label || group);
-    } else {
-      log(`Could not add ICE group to element # ${id}`, log.ERROR);
-    }
+export interface ICEConfig {
+  model: ContentInstance;
+  parentModelId?: string;
+  label?: string;
+  group?: string;
+  isAuthoring?: boolean;
+}
+
+export interface UseDropZoneConfig {
+  model: ContentInstance;
+  zoneName: string;
+  isAuthoring?: boolean;
+}
+
+export interface ICEAttributes {
+  'data-studio-ice': string;
+  'data-studio-ice-path': string;
+  'data-studio-ice-label': string;
+  'data-studio-component': string;
+  'data-studio-component-path': string;
+  'data-studio-embedded-item-id'?: string;
+}
+
+export interface DropZoneAttributes {
+  'data-studio-components-target': string,
+  'data-studio-components-objectid': string,
+  'data-studio-zone-content-type': string
+}
+
+export function getICEAttributes(config: ICEConfig): ICEAttributes {
+
+  const {
+    model,
+    parentModelId = null,
+    label = '',
+    isAuthoring = true,
+    group = ''
+  } = config;
+
+  if (!isAuthoring) {
+    return ({ } as ICEAttributes);
   }
 
-  /**
-   * Adds the appropiate attributes to display the pencil for a site component.
-   * @param {string} id - ID of the HTML element
-   * @param {string} path - Path of the site component
-   * @param {string} label - Label of the site component
-   */
-  static addPath(id, path, label) {
-    let element = document.getElementById(id);
-    if (element) {
-      element.setAttribute('data-studio-ice', '');
-      element.setAttribute('data-studio-ice-path', path);
-      element.setAttribute('data-studio-ice-label', label || path);
-    } else {
-      log(`Could not add ICE path to element # ${id}`, log.ERROR);
-    }
+  const isEmbedded = model?.craftercms.path == null;
+  const path = model?.craftercms.path ?? parentModelId;
+  const modelId = model?.craftercms.id;
+  return {
+    ...isEmbedded ? { 'data-studio-embedded-item-id': modelId } : {},
+    'data-studio-ice': group,
+    'data-studio-ice-path': path,
+    'data-studio-ice-label': label,
+    'data-studio-component': path,
+    'data-studio-component-path': path
+  };
+
+}
+
+export function getDropZoneAttributes(config: UseDropZoneConfig): DropZoneAttributes {
+
+  const { model, zoneName, isAuthoring = true } = config;
+
+  if (!isAuthoring) {
+    return ({ } as DropZoneAttributes);
   }
 
-  /**
-   * Updates the pencils according to all HTML attributes present in the page.
-   * This method needs to be called after all changes to groups/components have been made.
-   */
-  static update() {
-    if ('studioICERepaint' in window) {
-      window.studioICERepaint();
-    }
-  }
+  const modelId = model?.craftercms.id;
+  const contentTypeId = model?.craftercms.contentTypeId;
+  return {
+    'data-studio-components-target': zoneName,
+    'data-studio-components-objectid': modelId,
+    'data-studio-zone-content-type': contentTypeId
+  };
 
-  /**
-   * Loads the scripts required for ICE group/components to work properly in the Crafter Studio Preview.
-   * This method needs to be called once the page is loaded.
-   * TODO: we should rather move all the guest.js logic into this lib
-   */
-  static addToolSupport() {
-    let element = document.createElement('script');
-    element.setAttribute('data-main', '/studio/overlayhook?cs.js');
-    element.src = '/studio/static-assets/libs/requirejs/require.js';
-    document.getElementsByTagName('body')[0].appendChild(element);
-  }
+}
 
+export function repaintPencils(): void {
+  clearTimeout(repaintPencilsTimeout);
+  repaintPencilsTimeout = setTimeout(() => {
+    window.crafterRequire?.(['guest'], function ({ iceRepaint }) {
+      iceRepaint();
+    });
+  }, 150);
+}
+
+export function fetchIsPreview(): Promise<boolean> {
+  return fetch('/api/1/config/preview.json')
+    .then((response) => response.json())
+    .then((response) => response.preview);
 }

@@ -13,3 +13,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+const rollupUtils = require('../../../util/rollup-utils');
+
+module.exports = rollupUtils.config('', {
+  input: '../../../dist/packages-dist/ice/fesm5/react/react.js',
+  output: {
+    file: '../../../dist/packages-dist/ice/bundles/react/index.umd.js',
+    name: 'craftercms.ice.react',
+    amd: { id: `@craftercms/react-ice` }
+  },
+});

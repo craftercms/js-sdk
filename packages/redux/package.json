@@ -26,8 +26,21 @@
     "test": "../../node_modules/mocha/bin/mocha --opts ../../default.opts \"test/*.spec.ts\""
   },
   "dependencies": {
-    "redux": "^4.0.0",
-    "redux-observable": "^0.18.0",
-    "rxjs": "^6.2.0"
+    "@craftercms/content": "0.0.0-PLACEHOLDER",
+    "redux": "^4.0.5",
+    "redux-observable": "^1.2.0",
+    "rxjs": "^6.5.4",
+    "tslib": "^1.10.0"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^11.0.2",
+    "@rollup/plugin-node-resolve": "^7.1.1",
+    "@types/mocha": "^7.0.1",
+    "mocha": "^7.0.1",
+    "rollup": "^1.31.1",
+    "rollup-plugin-sourcemaps": "^0.5.0",
+    "typescript": "^3.7.5",
+    "uglify-es": "^3.3.9",
+    "xhr-mock": "^2.5.1"
   }
 }

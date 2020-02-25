@@ -15,6 +15,8 @@
  * along with this program. If not, see http://www.gnu.org/licenses/.
  */
 
+import { LookupTable } from '@craftercms/models';
+
 export function composeUrl(baseUrl: string, endpoint: string): string;
 export function composeUrl(studioConfig: { baseUrl? }, endpoint: string): string;
 export function composeUrl(studioConfigOrBaseUrl: string | { baseUrl? }, endpoint: string): String {
@@ -61,4 +63,12 @@ export function nullOrUndefined(value: any) {
 
 export function notNullOrUndefined(value: any) {
   return !nullOrUndefined(value);
+}
+
+export function createLookupTable<T>(list: T[], idProp: string = 'id'): LookupTable<T> {
+  return list.reduce((table: object, item: T) => {
+    const id = item[idProp];
+    table[id] = item;
+    return table;
+  }, {});
 }

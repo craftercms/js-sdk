@@ -17,22 +17,26 @@
 
 'use strict';
 
-const resolvePlugin = require('rollup-plugin-node-resolve');
+const nodeResolve = require('@rollup/plugin-node-resolve');
+const commonjs = require('@rollup/plugin-commonjs');
 const sourcemaps = require('rollup-plugin-sourcemaps');
 
 const globals = {
 
   'rxjs': 'rxjs',
+  'react': 'React',
+  'react-dom': 'ReactDOM',
   'rxjs/ajax': 'rxjs.ajax',
   'rxjs/operators': 'rxjs.operators',
 
-  '@craftercms/utils': 'craftercms.utils',
   '@craftercms/classes': 'craftercms.classes',
+  '@craftercms/content': 'craftercms.content',
+  '@craftercms/ice': 'craftercms.ice',
   '@craftercms/models': 'craftercms.models',
-  '@craftercms/engine': 'craftercms.engine',
-  '@craftercms/search': 'craftercms.search',
   '@craftercms/redux': 'craftercms.redux',
-  '@craftercms/ice': 'craftercms.ice'
+  '@craftercms/search': 'craftercms.search',
+  '@craftercms/utils': 'craftercms.utils',
+  '@craftercms/ice/react': 'craftercms.iceReact'
 
 };
 
@@ -65,7 +69,47 @@ function createRollupConfig(pkg, opts) {
       globals,
     },
     plugins: [
-      resolvePlugin(),
+      nodeResolve({
+        preferBuiltins: false,
+        mainFields: ['module', 'main', 'browser']
+      }),
+      commonjs({
+        namedExports: {
+          'uuid': ['uuid'],
+          'react-dom': ['createPortal', 'findDOMNode', 'hydrate', 'render', 'unmountComponentAtNode', 'flushSync'],
+          'react-is': ['isValidElementType', 'ForwardRef'],
+          'prop-types': ['elementType'],
+          'react': [
+            'Children',
+            'createRef',
+            'Component',
+            'PureComponent',
+            'createContext',
+            'forwardRef',
+            'lazy',
+            'memo',
+            'useCallback',
+            'useContext',
+            'useEffect',
+            'useImperativeHandle',
+            'useDebugValue',
+            'useLayoutEffect',
+            'useMemo',
+            'useReducer',
+            'useRef',
+            'useState',
+            'Fragment',
+            'Profiler',
+            'StrictMode',
+            'Suspense',
+            'createElement',
+            'cloneElement',
+            'createFactory',
+            'isValidElement',
+            'version'
+          ]
+        }
+      }),
       sourcemaps()
     ],
     external: Object.keys(globals)

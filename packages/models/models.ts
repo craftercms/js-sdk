@@ -23,3 +23,4 @@ export * from './src/page';
 export * from './src/lookup-table';
 export * from './src/redux-store';
 export * from './src/message';
+export * from './src/ContentInstance';
