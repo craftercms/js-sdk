@@ -42,8 +42,9 @@
 - removed unpublished createLookupTable function; moved to @craftercms/utils
 
 ## Global
-- internal Yarn workspace
-- rxjs upgrade for all packages
-- rollup setup adjustments
-- build script prints rollup output
+- Internal Yarn workspace set up
+- RxJS upgrade for all packages which have it as a dependency
+- Rollup config adjustments
+- Build script updates to print rollup output
+- Added `index.js` to fesm distributions
 
