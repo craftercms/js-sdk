@@ -19,12 +19,13 @@ PACKAGES=(classes
 
 for P in ${PACKAGES[@]}; do
   cd packages/$P
-  echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
-  echo "Running yarn add on '$P' package"
   echo "--------------------------------------------"
+  echo "Running commands on '$P' package"
+  echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
   # yarn add somepackage
   # yarn remove somepackage
-  yarn
-  cd ../../
+  # yarn link
+  # yarn unlink
   echo "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
+  cd ../../
 done

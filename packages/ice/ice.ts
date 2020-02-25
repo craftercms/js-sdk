@@ -80,7 +80,7 @@ export function getICEAttributes(config: ICEConfig): ICEAttributes {
 
 }
 
-export function getDropZoneAttributes(config: UseDropZoneConfig) {
+export function getDropZoneAttributes(config: UseDropZoneConfig): DropZoneAttributes {
 
   const { model, zoneName, isAuthoring = true } = config;
 
