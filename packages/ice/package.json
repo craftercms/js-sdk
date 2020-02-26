@@ -35,7 +35,6 @@
   },
   "dependencies": {
     "@craftercms/models": "0.0.0-PLACEHOLDER",
-    "react": "^16.8.0",
     "tslib": "^1.10.0"
   },
   "peerDependencies": {

@@ -52,6 +52,26 @@ export interface DropZoneAttributes {
   'data-studio-zone-content-type': string
 }
 
+interface BaseCrafterConfig {
+  baseUrl?: string;
+}
+
+export function addAuthoringSupport(config?: BaseCrafterConfig): Promise<any> {
+  config = { baseUrl: '', ...(config || {}) };
+  return new Promise((resolve) => {
+    const script = document.createElement('script');
+    script.src = `${config.baseUrl}/studio/static-assets/libs/requirejs/require.js`;
+    script.addEventListener('load', () => {
+      window.crafterRequire([`${config.baseUrl}/studio/overlayhook?extensionless`], () => {
+        window.crafterRequire(['guest'], (guest) => {
+          resolve(guest);
+        });
+      });
+    });
+    document.head.appendChild(script);
+  });
+}
+
 export function getICEAttributes(config: ICEConfig): ICEAttributes {
 
   const {
@@ -107,8 +127,9 @@ export function repaintPencils(): void {
   }, 150);
 }
 
-export function fetchIsPreview(): Promise<boolean> {
-  return fetch('/api/1/config/preview.json')
+export function fetchIsAuthoring(config?: BaseCrafterConfig): Promise<boolean> {
+  config = { baseUrl: '', ...(config || {}) };
+  return fetch(`${config.baseUrl}/api/1/config/preview.json`)
     .then((response) => response.json())
     .then((response) => response.preview);
 }
