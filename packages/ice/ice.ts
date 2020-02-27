@@ -21,7 +21,9 @@ declare namespace window {
   const crafterRequire: Function;
 }
 
-let repaintPencilsTimeout;
+interface BaseCrafterConfig {
+  baseUrl?: string;
+}
 
 export interface ICEConfig {
   model: ContentInstance;
@@ -52,6 +54,22 @@ export interface DropZoneAttributes {
   'data-studio-zone-content-type': string
 }
 
+export function addAuthoringSupport(config?: BaseCrafterConfig): Promise<any> {
+  config = { baseUrl: '', ...(config || {}) };
+  return new Promise((resolve) => {
+    const script = document.createElement('script');
+    script.src = `${config.baseUrl}/studio/static-assets/libs/requirejs/require.js`;
+    script.addEventListener('load', () => {
+      window.crafterRequire([`${config.baseUrl}/studio/overlayhook?extensionless`], () => {
+        window.crafterRequire(['guest'], (guest) => {
+          resolve(guest);
+        });
+      });
+    });
+    document.head.appendChild(script);
+  });
+}
+
 export function getICEAttributes(config: ICEConfig): ICEAttributes {
 
   const {
@@ -63,7 +81,7 @@ export function getICEAttributes(config: ICEConfig): ICEAttributes {
   } = config;
 
   if (!isAuthoring) {
-    return ({ } as ICEAttributes);
+    return ({} as ICEAttributes);
   }
 
   const isEmbedded = model?.craftercms.path == null;
@@ -85,7 +103,7 @@ export function getDropZoneAttributes(config: UseDropZoneConfig): DropZoneAttrib
   const { model, zoneName, isAuthoring = true } = config;
 
   if (!isAuthoring) {
-    return ({ } as DropZoneAttributes);
+    return ({} as DropZoneAttributes);
   }
 
   const modelId = model?.craftercms.id;
@@ -98,17 +116,21 @@ export function getDropZoneAttributes(config: UseDropZoneConfig): DropZoneAttrib
 
 }
 
-export function repaintPencils(): void {
-  clearTimeout(repaintPencilsTimeout);
-  repaintPencilsTimeout = setTimeout(() => {
-    window.crafterRequire?.(['guest'], function ({ iceRepaint }) {
-      iceRepaint();
-    });
-  }, 150);
-}
+export const repaintPencils: (() => void) = (function () {
+  let repaintPencilsTimeout;
+  return () => {
+    clearTimeout(repaintPencilsTimeout);
+    repaintPencilsTimeout = setTimeout(() => {
+      window.crafterRequire?.(['guest'], function ({ iceRepaint }) {
+        iceRepaint();
+      });
+    }, 150);
+  };
+})();
 
-export function fetchIsPreview(): Promise<boolean> {
-  return fetch('/api/1/config/preview.json')
+export function fetchIsAuthoring(config?: BaseCrafterConfig): Promise<boolean> {
+  config = { baseUrl: '', ...(config || {}) };
+  return fetch(`${config.baseUrl}/api/1/config/preview.json`)
     .then((response) => response.json())
     .then((response) => response.preview);
 }

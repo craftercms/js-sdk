@@ -2,7 +2,9 @@
   "name": "@craftercms/sdk",
   "version": "1.2.0",
   "private": true,
-  "workspaces": ["packages/*"],
+  "workspaces": [
+    "packages/*"
+  ],
   "description": "Crafter CMS SDK for JavaScript",
   "scripts": {},
   "repository": {
@@ -20,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/craftercms/craftercms/issues"
   },
-  "homepage": "https://github.com/craftercms/craftercms-sdk-js#readme"
+  "homepage": "https://github.com/craftercms/craftercms-sdk-js#readme",
+  "devDependencies": {
+    "react": "^16.8.0"
+  }
 }

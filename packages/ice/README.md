@@ -4,6 +4,20 @@ Contains JavaScript utilities to use Crafter CMS In Context Editing in your Apps
 
 **Note**: All methods of this package work with [Content Instance](../models/src/ContentInstance.ts) as data structure they understand (the model param). Use in conjunction with `parseDescriptor` from `@craftercms/content` to obtain such data structure. 
 
+## fetchIsAuthoring
+
+Interrogates the current origin server to determine if the site/app is running in Crafter CMS authoring environment (Preview). Positive reply (`true`) means is authoring; assume you need to add pencils and import other authoring tools. False means is delivery and all authoring tools should be disabled.
+
+### Example
+
+```typescript
+import { fetchIsAuthoring } from '@craftercms/ice';
+
+fetchIsAuthoring().then((isAuthoring) => {
+  console.log(`You're currently in ${isAuthoring ? 'authoring' : 'delivery'}.`);
+});
+```  
+
 ## getIceAttributes
 
 Use this function to obtain the attributes that you need to add to your HTML element(s) to put pencils for In Context Editing.
@@ -13,11 +27,11 @@ Use this function to obtain the attributes that you need to add to your HTML ele
 ```typescript
   import { from, forkJoin } from 'rxjs';
   import { map } from 'rxjs/operators';
-  import { getICEAttributes, fetchIsPreview, repaintPencils } from '@craftercms/ice';
+  import { getICEAttributes, fetchIsAuthoring, repaintPencils } from '@craftercms/ice';
   import { getItem, parseDescriptor } from '@craftercms/content';
 
   forkJoin({
-    isAuthoring: from(fetchIsPreview()),
+    isAuthoring: from(fetchIsAuthoring()),
     model: getItem('/site/website/index.xml', { site: 'editorial' }).pipe(map(parseDescriptor))
   }).subscribe(({ isAuthoring, model }) => {
   
@@ -42,11 +56,11 @@ Use this function to obtain the attributes that you need to add to your HTML ele
 ```typescript
   import { from, forkJoin } from 'rxjs';
   import { map } from 'rxjs/operators';
-  import { getICEAttributes, getDropZoneAttributes, fetchIsPreview, repaintPencils } from '@craftercms/ice';
+  import { getICEAttributes, getDropZoneAttributes, fetchIsAuthoring, repaintPencils } from '@craftercms/ice';
   import { getItem, parseDescriptor } from '@craftercms/content';
 
   forkJoin({
-    isAuthoring: from(fetchIsPreview()),
+    isAuthoring: from(fetchIsAuthoring()),
     model: getItem('/site/website/index.xml', { site: 'editorial' }).pipe(map(parseDescriptor))
   }).subscribe(({ isAuthoring, model }) => {
   
@@ -73,6 +87,52 @@ Use this function to obtain the attributes that you need to add to your HTML ele
   });
 ```
 
+## addAuthoringSupport
+
+Use this method to include the necessary scripts to enable Crafter CMS authoring support (i.e. pencils, drag & drop, etc.) on your site/app. This function does not check whether you're in authoring or delivery. You should check that prior to invoking.
+
+### Example 
+
+```typescript jsx
+import React, { useEffect } from 'react';
+import { isAuthoring } from '../utils';
+import { addAuthoringSupport } from '@craftercms/ice';
+
+function App() {
+  useEffect(() => {
+    if (isAuthoring()) {
+      // This is a react example but you may use addAuthoringSupport outside of react
+      addAuthoringSupport().then(() => {
+        // Feel free to discard the promise if you don't need 
+        console.log('Authoring tools have loaded and are ready to use.');
+      });
+    }
+  }, []);
+  return (
+    {/* ... */}
+  );
+}
+```
+
+## repaintPencils
+
+Re-renders all pencils
+
+### Example
+
+```typescript jsx
+import { repaintPencils } from '@craftercms/ice';
+
+new Carousel({
+  element: '#myElement',
+  // ...other settings
+  onSlideChange: () => {
+    // Update pencils so current slide pencil is visible and prev slide is gone.
+    repaintPencils();
+  }
+});
+```
+
 ## @craftercms/ice/react
 
 React bindings for pencils and drop zones. Requires React 16.8.0 or above (hooks release). Not available for class components, use the plain methods described above part of this same package.
@@ -87,7 +147,7 @@ Use this function to obtain the attributes that you need to add to your HTML ele
   import React, { useEffect, useState } from 'react';
   import { from, forkJoin } from 'rxjs';
   import { map } from 'rxjs/operators';
-  import { fetchIsPreview } from '@craftercms/ice';
+  import { fetchIsAuthoring } from '@craftercms/ice';
   import { useICE } from '@craftercms/ice/esm5/react';
   import { getItem, parseDescriptor } from '@craftercms/content';
   
@@ -95,7 +155,7 @@ Use this function to obtain the attributes that you need to add to your HTML ele
     const [state, setState] = useState();
     useEffect(() => {
       forkJoin({
-        isAuthoring: from(fetchIsPreview()),
+        isAuthoring: from(fetchIsAuthoring()),
         model: getItem('/site/website/index.xml', { site: 'editorial' }).pipe(map(parseDescriptor))
       }).subscribe(({ isAuthoring, model }) => {
         setState({ isAuthoring, model });
@@ -126,7 +186,7 @@ Use this function to obtain the attributes that you need to add to your HTML ele
   import React, { useEffect, useState } from 'react';
   import { from, forkJoin } from 'rxjs';
   import { map } from 'rxjs/operators';
-  import { fetchIsPreview } from '@craftercms/ice';
+  import { fetchIsAuthoring } from '@craftercms/ice';
   import { useICE, useDropZone } from '@craftercms/ice/esm5/react';
   import { getItem, parseDescriptor } from '@craftercms/content';
   
@@ -134,7 +194,7 @@ Use this function to obtain the attributes that you need to add to your HTML ele
     const [state, setState] = useState();
     useEffect(() => {
       forkJoin({
-        isAuthoring: from(fetchIsPreview()),
+        isAuthoring: from(fetchIsAuthoring()),
         model: getItem('/site/website/index.xml', { site: 'editorial' }).pipe(map(parseDescriptor))
       }).subscribe(({ isAuthoring, model }) => {
         setState({ isAuthoring, model });

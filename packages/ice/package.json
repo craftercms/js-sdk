@@ -12,7 +12,9 @@
     "url": "https://github.com/craftercms/craftercms-sdk-js.git"
   },
   "keywords": [
+    "In context editing",
     "content management",
+    "crafter cms",
     "craftercms",
     "crafter"
   ],
@@ -35,7 +37,6 @@
   },
   "dependencies": {
     "@craftercms/models": "0.0.0-PLACEHOLDER",
-    "react": "^16.8.0",
     "tslib": "^1.10.0"
   },
   "peerDependencies": {
