@@ -6,7 +6,17 @@ Contains JavaScript utilities to use Crafter CMS In Context Editing in your Apps
 
 ## fetchIsAuthoring
 
-Interrogates the current origin server to determine if the site/app is running in Crafter CMS authoring environment (Preview). Positive reply (`true`) means is authoring; assume you need to add pencils and import other authoring tools. False means is delivery and all authoring tools should be disabled.  
+Interrogates the current origin server to determine if the site/app is running in Crafter CMS authoring environment (Preview). Positive reply (`true`) means is authoring; assume you need to add pencils and import other authoring tools. False means is delivery and all authoring tools should be disabled.
+
+### Example
+
+```typescript
+import { fetchIsAuthoring } from '@craftercms/ice';
+
+fetchIsAuthoring().then((isAuthoring) => {
+  console.log(`You're currently in ${isAuthoring ? 'authoring' : 'delivery'}.`);
+});
+```  
 
 ## getIceAttributes
 
