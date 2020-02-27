@@ -21,7 +21,9 @@ declare namespace window {
   const crafterRequire: Function;
 }
 
-let repaintPencilsTimeout;
+interface BaseCrafterConfig {
+  baseUrl?: string;
+}
 
 export interface ICEConfig {
   model: ContentInstance;
@@ -52,10 +54,6 @@ export interface DropZoneAttributes {
   'data-studio-zone-content-type': string
 }
 
-interface BaseCrafterConfig {
-  baseUrl?: string;
-}
-
 export function addAuthoringSupport(config?: BaseCrafterConfig): Promise<any> {
   config = { baseUrl: '', ...(config || {}) };
   return new Promise((resolve) => {
@@ -83,7 +81,7 @@ export function getICEAttributes(config: ICEConfig): ICEAttributes {
   } = config;
 
   if (!isAuthoring) {
-    return ({ } as ICEAttributes);
+    return ({} as ICEAttributes);
   }
 
   const isEmbedded = model?.craftercms.path == null;
@@ -105,7 +103,7 @@ export function getDropZoneAttributes(config: UseDropZoneConfig): DropZoneAttrib
   const { model, zoneName, isAuthoring = true } = config;
 
   if (!isAuthoring) {
-    return ({ } as DropZoneAttributes);
+    return ({} as DropZoneAttributes);
   }
 
   const modelId = model?.craftercms.id;
@@ -118,14 +116,17 @@ export function getDropZoneAttributes(config: UseDropZoneConfig): DropZoneAttrib
 
 }
 
-export function repaintPencils(): void {
-  clearTimeout(repaintPencilsTimeout);
-  repaintPencilsTimeout = setTimeout(() => {
-    window.crafterRequire?.(['guest'], function ({ iceRepaint }) {
-      iceRepaint();
-    });
-  }, 150);
-}
+export const repaintPencils: (() => void) = (function () {
+  let repaintPencilsTimeout;
+  return () => {
+    clearTimeout(repaintPencilsTimeout);
+    repaintPencilsTimeout = setTimeout(() => {
+      window.crafterRequire?.(['guest'], function ({ iceRepaint }) {
+        iceRepaint();
+      });
+    }, 150);
+  };
+})();
 
 export function fetchIsAuthoring(config?: BaseCrafterConfig): Promise<boolean> {
   config = { baseUrl: '', ...(config || {}) };

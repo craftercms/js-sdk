@@ -77,6 +77,52 @@ Use this function to obtain the attributes that you need to add to your HTML ele
   });
 ```
 
+## addAuthoringSupport
+
+Use this method to include the necessary scripts to enable Crafter CMS authoring support (i.e. pencils, drag & drop, etc.) on your site/app. This function does not check whether you're in authoring or delivery. You should check that prior to invoking.
+
+### Example 
+
+```typescript jsx
+import React, { useEffect } from 'react';
+import { isAuthoring } from '../utils';
+import { addAuthoringSupport } from '@craftercms/ice';
+
+function App() {
+  useEffect(() => {
+    if (isAuthoring()) {
+      // This is a react example but you may use addAuthoringSupport outside of react
+      addAuthoringSupport().then(() => {
+        // Feel free to discard the promise if you don't need 
+        console.log('Authoring tools have loaded and are ready to use.');
+      });
+    }
+  }, []);
+  return (
+    {/* ... */}
+  );
+}
+```
+
+## repaintPencils
+
+Re-renders all pencils
+
+### Example
+
+```typescript jsx
+import { repaintPencils } from '@craftercms/ice';
+
+new Carousel({
+  element: '#myElement',
+  // ...other settings
+  onSlideChange: () => {
+    // Update pencils so current slide pencil is visible and prev slide is gone.
+    repaintPencils();
+  }
+});
+```
+
 ## @craftercms/ice/react
 
 React bindings for pencils and drop zones. Requires React 16.8.0 or above (hooks release). Not available for class components, use the plain methods described above part of this same package.

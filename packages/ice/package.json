@@ -12,7 +12,9 @@
     "url": "https://github.com/craftercms/craftercms-sdk-js.git"
   },
   "keywords": [
+    "In context editing",
     "content management",
+    "crafter cms",
     "craftercms",
     "crafter"
   ],
