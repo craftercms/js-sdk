@@ -19,14 +19,13 @@ This package contains useful classes for developing craftercms websites & applic
 ## Examples
 
 ```typescript
-  import { SDKService } from '@craftercms/classes';
+  import { httpGet } from '@craftercms/classes';
 
-  const requestURL = "/crafter-url";
+  const requestURL = "/some-url";
 
-  SDKService.httpGet(requestURL, { 
+  httpGet(requestURL, { 
     crafterSite: "editorial"
-  })
-  .subscribe((response) => {
-    ...
+  }).subscribe((response) => {
+    console.log(response);
   })
 ```
