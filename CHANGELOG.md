@@ -1,5 +1,13 @@
 # SDK Changelog
 
+## 1.2.2
+
+### @craftercms/ice
+- Adds `reportNavigation` util for SPAs to report the current URL as the app navigates.
+
+### misc
+- [internal] Bumps acorn version
+
 ## 1.2.1
 
 ### @craftercms/ice

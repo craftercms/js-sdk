@@ -73,9 +73,8 @@ export function parseDescriptor(data: DescriptorResponse | DescriptorResponse[])
   } else if (data.children) {
     return parseDescriptor(extractChildren(data.children));
   } else if (data.descriptorDom === null && data.descriptorUrl) {
-    // This path catches calls to getChildren
-    // /api/1/site/content_store/children.json?url=&crafterSite=
-    // The getChildren call only certain items can be parsed as content items
+    // This path catches calls to getChildren (/api/1/site/content_store/children.json?url=&crafterSite=)
+    // The getChildren call contains certain items that can't be parsed into content items.
     throw new Error(
       '[parseDescriptor] Invalid descriptor supplied. Did you call ' +
       'parseDescriptor with a `getChildren` API response? The `getChildren` API ' +
