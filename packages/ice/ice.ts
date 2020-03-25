@@ -54,13 +54,20 @@ export interface DropZoneAttributes {
   'data-studio-zone-content-type': string
 }
 
+const pathRegExp = /^\/(.*?)\.xml$/;
+const printedErrorCache = {
+  nullParentId: {},
+  invalidParentId: {},
+  invalidPath: {}
+};
+
 export function addAuthoringSupport(config?: BaseCrafterConfig): Promise<any> {
   config = { baseUrl: '', ...(config || {}) };
   return new Promise((resolve) => {
     const script = document.createElement('script');
     script.src = `${config.baseUrl}/studio/static-assets/libs/requirejs/require.js`;
     script.addEventListener('load', () => {
-      window.crafterRequire([`${config.baseUrl}/studio/overlayhook?extensionless`], () => {
+      window.crafterRequire?.([`${config.baseUrl}/studio/overlayhook?extensionless`], () => {
         window.crafterRequire(['guest'], (guest) => {
           resolve(guest);
         });
@@ -70,12 +77,16 @@ export function addAuthoringSupport(config?: BaseCrafterConfig): Promise<any> {
   });
 }
 
-export function getICEAttributes(config: ICEConfig): ICEAttributes {
+export function getICEAttributes(config: ICEConfig);
+export function getICEAttributes(
+  config: ICEConfig,
+  wrapperUtility: string = '[Error @ getICEAttributes]'
+): ICEAttributes {
 
-  const {
+  let {
     model,
     parentModelId = null,
-    label = '',
+    label,
     isAuthoring = true,
     group = ''
   } = config;
@@ -84,9 +95,63 @@ export function getICEAttributes(config: ICEConfig): ICEAttributes {
     return ({} as ICEAttributes);
   }
 
+  if (label === null || label === undefined) {
+    label = (model?.craftercms.label || '');
+  }
+
+  let error = false;
   const isEmbedded = model?.craftercms.path == null;
   const path = model?.craftercms.path ?? parentModelId;
   const modelId = model?.craftercms.id;
+
+  if (isEmbedded && parentModelId == null) {
+    error = true;
+    (!modelId) || (printedErrorCache.nullParentId[modelId] == null) &&
+    console?.error?.(
+      wrapperUtility +
+      'The "parentModelId" argument is required for embedded components. ' +
+      'Note the value of "parentModelId" should be the *path* of it\'s top parent component. ' +
+      'The error occurred with the model attached to this error.',
+      model
+    );
+    modelId && (printedErrorCache.nullParentId[modelId] = true);
+  }
+
+  if (parentModelId != null && !pathRegExp.test(parentModelId)) {
+    error = true;
+    (!modelId) || (printedErrorCache.invalidParentId[modelId] == null) &&
+    console?.error?.(
+      wrapperUtility +
+      'The "parentModelId" argument should be the "path" of it\'s top parent component. ' +
+      `Provided value was "${parentModelId}" which doesn't comply with the expected format ` +
+      '(i.e. \'/a/**/b.xml\'). The error occurred with the model attached to this error. ' +
+      'Did you send the id (objectId) instead of the path?',
+      model
+    );
+    modelId && (printedErrorCache.invalidParentId[modelId] = true);
+  }
+
+  // Only run this if it's not embedded. When is embedded, the prior parentModelId
+  // validations would have thrown already.
+  if (!isEmbedded && !pathRegExp.test(path)) {
+    error = true;
+    (modelId) && (printedErrorCache.invalidPath[modelId] == null) &&
+    console?.error?.(
+      wrapperUtility +
+      'The model.craftercms.path property to be the "path" of page/component. ' +
+      `Provided value was "${path}" which doesn't comply with the expected format ` +
+      '(i.e. \'/a/**/b.xml\'). The error occurred with the model attached to this error. ' +
+      'Check that your query includes this value and you\'re using parseDescriptor to supply ' +
+      'the expected data structure for this utility.',
+      model
+    );
+    modelId && (printedErrorCache.invalidPath[modelId] = true);
+  }
+
+  if (error) {
+    return ({} as ICEAttributes);
+  }
+
   return {
     ...isEmbedded ? { 'data-studio-embedded-item-id': modelId } : {},
     'data-studio-ice': group,

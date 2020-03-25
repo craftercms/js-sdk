@@ -42,7 +42,11 @@ export function useICE(config: ICEConfig): ICEPencilProps {
   });
 
   return {
-    props: getICEAttributes(config)
+    props: getICEAttributes(
+      config,
+      // @ts-ignore
+      '[Error @ useICE] '
+    )
   };
 
 }
