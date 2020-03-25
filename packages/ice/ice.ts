@@ -181,6 +181,21 @@ export function getDropZoneAttributes(config: UseDropZoneConfig): DropZoneAttrib
 
 }
 
+export const reportNavigation: (url: string) => void = (function () {
+  let reportNavigation;
+  reportNavigation = (location: string, url: string) => {
+    window.crafterRequire?.(['guest'], (guest) => {
+      reportNavigation = guest.reportNavigation;
+      __report(url);
+    });
+  };
+  function __report(url: string) {
+    // @ts-ignore
+    reportNavigation(window.location.origin, url);
+  }
+  return __report;
+}) ();
+
 export const repaintPencils: (() => void) = (function () {
   let repaintPencilsTimeout;
   return () => {
