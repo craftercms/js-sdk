@@ -18,11 +18,11 @@
 import { LookupTable } from '@craftercms/models';
 
 export function composeUrl(baseUrl: string, endpoint: string): string;
-export function composeUrl(studioConfig: { baseUrl? }, endpoint: string): string;
-export function composeUrl(studioConfigOrBaseUrl: string | { baseUrl? }, endpoint: string): String {
-  const base = (typeof studioConfigOrBaseUrl === 'string')
-    ? studioConfigOrBaseUrl
-    : (studioConfigOrBaseUrl.baseUrl ? studioConfigOrBaseUrl.baseUrl + '/' : '');
+export function composeUrl(crafterConfig: { baseUrl? }, endpoint: string): string;
+export function composeUrl(crafterConfigOrBaseUrl: string | { baseUrl? }, endpoint: string): String {
+  const base = (typeof crafterConfigOrBaseUrl === 'string')
+    ? crafterConfigOrBaseUrl
+    : (crafterConfigOrBaseUrl.baseUrl ? crafterConfigOrBaseUrl.baseUrl + '/' : '');
 
   return `${base}${endpoint}`.replace(/([^:]\/)\/+/g, "$1");
 }

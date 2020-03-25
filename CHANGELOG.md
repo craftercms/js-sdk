@@ -1,5 +1,24 @@
 # SDK Changelog
 
+## 1.2.1
+
+### @craftercms/ice
+- Added validation addAuthoringSupport require.js load event
+- `getICEAttributes`
+  - Auto calculates the label if not supplied based on the model param
+  - Validates parentModelId and path (model.craftercms.path) and throws console errors to help developers use the right values
+  - Adds a _secret_ second argument so that wrapping utilities can identify themselves and errors as the entry point of the error
+
+### @craftercms/utils
+- Renames misc/composeUrl param renamed for more accurate semantics
+
+### @craftercms/content
+- `parseDescriptor`
+  - Fixes issue  where repeat group items with inner node selectors weren't parsed
+  - Improvements in `getItem` service parsing and component detection algorithms for `getItem` and `getDescriptor`
+  - Adds ability to parse a `getTree` response into a flat content instance array
+  - Adds `getChildren` response recognition and throws with non-parsable responses
+
 ## 1.2.0
 
 ### @craftercms/classes

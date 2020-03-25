@@ -70,12 +70,19 @@ export function parseDescriptor(data: DescriptorResponse | DescriptorResponse[])
     return null;
   } else if (Array.isArray(data)) {
     return data.map((item) => parseDescriptor(item) as ContentInstance);
-  } else if (data.descriptorDom) {
-    return parseDescriptor(data.descriptorDom);
-  } else if (data.page) {
-    return parseDescriptor(data.page);
-  } else if (data.component) {
-    return parseDescriptor(data.component);
+  } else if (data.children) {
+    return parseDescriptor(extractChildren(data.children));
+  } else if (data.descriptorDom === null && data.descriptorUrl) {
+    // This path catches calls to getChildren
+    // /api/1/site/content_store/children.json?url=&crafterSite=
+    // The getChildren call only certain items can be parsed as content items
+    throw new Error(
+      '[parseDescriptor] Invalid descriptor supplied. Did you call ' +
+      'parseDescriptor with a `getChildren` API response? The `getChildren` API ' +
+      'response may contain certain items that are not parsable into ContentInstances. ' +
+      'Try a different API (getItem, getDescriptor or getTree) or filter out the metadata ' +
+      'items which descriptorDom property has a `page` or `component` property with the content item.'
+    );
   }
   let parsed: ContentInstance = {
     craftercms: {
@@ -87,24 +94,72 @@ export function parseDescriptor(data: DescriptorResponse | DescriptorResponse[])
       dateModified: null
     }
   };
-  Object.entries(data).forEach(([prop, value]) => {
+  return parseProps(extractContent(data), parsed);
+}
+
+export function parseProps<Props = object, Target = object>(props: Props, parsed: Target = {} as Target): Target {
+  Object.entries(props).forEach(([prop, value]) => {
+    if (ignoreProps.includes(prop)) {
+      return; // continue, skip prop.
+    }
     if (systemProps.includes(prop)) {
+      // @ts-ignore
       parsed.craftercms[systemPropMap[prop] ?? prop] = value;
+      // Is there a risk prop name that matches what's considered a system prop?
+      // In that case, here, parsed.craftercms might not be in the target object
+      // and throw. We could do the below to de-risk but feels this needs assessment.
+      // if (parsed.craftercms) {
+      //   parsed.craftercms[systemPropMap[prop] ?? prop] = value;
+      // } else {
+      //   parsed[prop] = value;
+      // }
     } else if (prop.endsWith('_o')) {
       parsed[prop] = value?.item ?? [];
-      if (parsed[prop][0]?.component) {
-        parsed[prop] = parsed[prop].map(({ key, value, component }) => {
+      parsed[prop] = parsed[prop].map((item) => {
+        const { key, value, component } = item;
+        if ((item.component) || (item.key && item.value)) {
+          // Components
           const newComponent = {
             label: value,
             ...component,
             path: key.startsWith('/') ? key : null
           };
           return parseDescriptor(newComponent);
-        });
-      }
+        } else {
+          // Repeat group items
+          return parseProps(item);
+        }
+      });
     } else {
       parsed[prop] = value ?? null;
     }
   });
   return parsed;
+}
+
+/**
+ * Inspects the data for getItem or getDescriptor responses and returns the inner content object
+ * */
+function extractContent(data) {
+  let output = data;
+  if (data.descriptorDom) {
+    return {
+      ...(data.descriptorDom.page || data.descriptorDom.component),
+      path: data.url
+    };
+  } else if (data.page) {
+    return data.page;
+  } else if (data.component) {
+    return data.component;
+  }
+  return output;
+}
+
+/**
+ * Flattens a getChildren response into a flat list of content items
+ * */
+function extractChildren(children) {
+  return children.flatMap((child) => {
+    return child.children ? extractChildren(child.children) : child;
+  });
 }
