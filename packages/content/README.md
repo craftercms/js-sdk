@@ -1,6 +1,6 @@
 # @craftercms/content
 
-This package contains services for retrieving content and navigation using APIs offered by craftercms.
+This package contains services for retrieving content and navigation using APIs offered by Crafter CMS.
 
 ## Usage
 
@@ -8,18 +8,70 @@ This package contains services for retrieving content and navigation using APIs 
   - Yarn: `yarn add @craftercms/content`
   - npm: `npm install @craftercms/content`
 - Import and use the service(s) you need
+- You may pre-configure content services to a certain configuration and then you may omit the config param on subsequent calls
 
-## Services - Content Store
----
+    ```typescript
+      import { Item } from '@craftercms/models';
+      import { getItem } from '@craftercms/content';
+      import { crafterConf } from '@craftercms/classes';
+    
+      // Configure crafter services "globally". Your config will be cached. 
+      // All content services use the specified configuration on subsequent calls.
+      crafterConf.configure({
+        baseUrl: 'http://authoring.company.com',
+        site: 'editorial'
+      });
+     
+      // Second param "config" will use "http://authoring.company.com" as 
+      // crafter base url and "editorial" as the site to query
+      getItem('/site/website/index.xml').subscribe((item: Item) => {
+        console.log(item);
+      });
+    ```
+
+## parseDescriptor
+Parse a [Descriptor](../models/src/descriptor.ts), [Item](../models/src/item.ts) or a GraphQL response into a [Content Instance](../models/src/ContentInstance.ts). It could also be a collection of any of these types.
+
+`parseDescriptor(response: Descriptor | Item | GraphQLResponse | Descriptor[] | Item[] | GraphQLResponse)`
+
+| Parameters    |                |
+| ------------- |:--------------:|
+| response      | The response of a getItem, getDescriptor or GraphQL fetch call |
+
+### Returns
+
+[ContentInstance](../models/src/ContentInstance.ts)
+
+### Examples
+
+- If you want a cleaner/parsed response, you may use `parseDescriptor` util to parse the response for you. You may use it to parse getItem, getDescriptor or GraphQL responses.
+
+```typescript
+  import { map } from 'rxjs/operators';
+  import { ContentInstance } from '@craftercms/models';
+  import { getChildren, getItem, parseDescriptor } from '@craftercms/content';
+  
+  getItem('/site/website/index.xml', { site: 'editorial' }).pipe(
+    map(parseDescriptor)
+  ).subscribe((content: ContentInstance) => {
+    console.log(content);
+  });
+
+  getChildren('/site/website', { site: 'editorial' }).pipe(
+    map(parseDescriptor)
+  ).subscribe((content: ContentInstance[]) => {
+    console.log(content);
+  });
+```
 
 ## Get Item
 Get an Item from the content store.
 
-`getItem(url: string, config: CrafterConfig)`
+`getItem(path: string, config?: CrafterConfig)`
 
 | Parameters    |                |
 | ------------- |:--------------:|
-| url           | The item’s url in the content store |
+| path          | The item’s path in the content store |
 | config        | Crafter configuration. Optional. Default value in [here](../models/README.md#CrafterConfig). |
 
 ### Returns
@@ -30,49 +82,38 @@ Get an Item from the content store.
 
 - Get the index page from the site:
 
-```ts
-  import { crafterConf } from '@craftercms/classes';
-  import { ContentStoreService } from '@craftercms/content';
-
-  //First, set the Crafter configuration to _cache_ your config. 
-  //All subsequent calls to `getConfig` will use that configuration.
-  crafterConf.configure({
-    baseUrl: 'http://localhost:8090',  //by default - http://localhost:8080
-    site: 'editorial'
-  })
-
-  ContentStoreService.getItem('/site/website/index.xml')
-    .subscribe(item => {
-      // ...
-    });
+```typescript
+  import { Item } from '@craftercms/models';
+  import { getItem } from '@craftercms/content'; 
+  
+  getItem('/site/website/index.xml', { site: 'editorial' }).subscribe((item: Item) => {
+    console.log(item);
+  });
 ```
 
-You may alternatively use a different config by supplying the config object at the service call invoking time
+- If you want a cleaner/parsed response, you may use `parseDescriptor` util to parse the response for you.
 
-```ts
-  import { ContentStoreService } from '@craftercms/content';
-
-  ContentStoreService
-    .getItem('/site/website/index.xml', {
-      baseUrl: 'http://localhost:8080',
-      site: 'editorial'
-    })
-    .subscribe(item => {
-      // ...
-    });
+```typescript
+  import { map } from 'rxjs/operators';
+  import { ContentInstance } from '@craftercms/models';
+  import { getItem, parseDescriptor } from '@craftercms/content';
+  
+  getItem('/site/website/index.xml', { site: 'editorial' }).pipe(
+    map(parseDescriptor)
+  ).subscribe((content: ContentInstance) => {
+    console.log(content);
+  });
 ```
-
 
 ## Get Descriptor
 Get the descriptor data of an Item in the content store.
 
-`getDescriptor(url: string, config: CrafterConfig)` 
+`getDescriptor(path: string, config?: CrafterConfig)` 
 
 | Parameters    |                |
 | ------------- |:--------------:|
-| url           | The item’s url in the content store |
+| path          | The item’s path in the content store |
 | config        | Crafter configuration. Optional. Default value in [here](../models/README.md#CrafterConfig). |
-
 
 ### Returns
 
@@ -82,28 +123,35 @@ Get the descriptor data of an Item in the content store.
 
 - Get the index page from the site:
 
-```ts
-  import { ContentStoreService } from '@craftercms/content';
+```typescript
+  import { map } from 'rxjs/operators';
+  import { getDescriptor, parseDescriptor } from '@craftercms/content';
+  import { Descriptor, ContentInstance } from '@craftercms/models';
 
-  // Assuming that you already set the configuration (as explained above)
+  // Example 1: Supplying config inline, Descriptor response...
+  getDescriptor('/site/website/index.xml', { site: 'editorial' }).subscribe((descriptor: Descriptor) => {
+    console.log(descriptor);
+  });
 
-  ContentStoreService.getDescriptor('/site/website/index.xml')
-    .subscribe(descriptor => {
-      // ...
-    });
+  // Example 2: 
+  // - Omit config (must have configured earlier @see Usage section above)
+  // - Parse the response
+  getDescriptor('/site/website/index.xml').pipe(
+    map(parseDescriptor) // Optional. Use for a cleaner parsed response.
+  ).subscribe((content: ContentInstance) => {
+    console.log(content);
+  });
 ```
-
 
 ## Get Children
 Get the list of Items directly under a folder in the content store.
 
-`getChildren(url: string, config: CrafterConfig)` 
+`getChildren(path: string, config?: CrafterConfig)` 
 
 | Parameters    |                |
 | ------------- |:--------------:|
-| url           | The folder’s url |
+| path          | The folder’s path |
 | config        | Crafter configuration. Optional. Default value in [here](../models/README.md#CrafterConfig). |
-
 
 ### Returns
 
@@ -113,29 +161,30 @@ Get the list of Items directly under a folder in the content store.
 
 - Get the children items under root folder from the site:
 
-```ts
-  import { ContentStoreService } from '@craftercms/content';
+```typescript
+  import { getChildren } from '@craftercms/content';
 
-  // Assuming that you already set the configuration (as explained above)
-
-  ContentStoreService.getChildren('/site/website')
-    .subscribe(children => {
-      // ...
-    });
+  // Example 1: Supplying config inline
+  getChildren('/site/website', { site: 'editorial' }).subscribe((children) => {
+    console.log(children);
+  });
+  
+  // Example 2: Omits the config param (must have been previously configured, see Usage section above)
+  getChildren('/site/website').subscribe((children) => {
+    console.log(children);
+  });
 ```
-
 
 ## Get Tree
 Get the complete Item hierarchy under the specified folder in the content store.
 
-`getTree(url: string, depth: int, config: CrafterConfig)` 
+`getTree(path: string, depth: number, config: CrafterConfig)` 
 
 | Parameters    |                |
 | ------------- |:--------------:|
-| url           | The folder’s url |
+| path          | The folder’s path |
 | depth         | Amount of levels to include. Optional. Default is `1` |
 | config        | Crafter configuration. Optional. Default value in [here](../models/README.md#CrafterConfig). |
-
 
 ### Returns
 
@@ -145,33 +194,33 @@ Get the complete Item hierarchy under the specified folder in the content store.
 
 - Get the items tree under root folder from the site:
 
-```ts
-  import { ContentStoreService } from '@craftercms/content';
+```typescript
+  import { getTree } from '@craftercms/content';
 
-  // Assuming that you already set the configuration (as explained above)
+  // This call will get 3 levels of the tree under the specified folder
 
-  //This call will get 3 levels of the tree under the specified folder
-  ContentStoreService.getTree('/site/website', 3)
-    .subscribe(tree => {
-      // ...
-    });
+  // Example 1: Config supplied inline
+  getTree('/site/website', 3, { site: 'editorial' }).subscribe((tree) => {
+    console.log(tree);
+  });
+
+  // Example 2: Services pre-configured (see "Usage" section above), config param omitted.
+  getTree('/site/website', 3).subscribe((tree) => {
+    console.log(tree);
+  });
 ```
-
-
-## Services - Navigation
----
 
 ## Get Navigation Tree
 Returns the navigation tree with the specified depth for the specified store URL.
 
-`getNavTree(url: string, depth: string, currentPageUrl: string, config: CrafterConfig)`
+`getNavTree(path: string, depth: number, currentPageUrl: string, config: CrafterConfig)`
 
 | Parameters     |                |
 | -------------- |:--------------:|
-| url            | The folder’s url |
+| path           | The folder’s path |
 | depth          | Amount of levels to include. Optional. Default is `1` |
 | currentPageUrl | The URL of the current page. Optional. Default is `''` |
-| config        | Crafter configuration. Optional. Default value in [here](../models/README.md#CrafterConfig). |
+| config         | Crafter configuration. Optional. Default value in [here](../models/README.md#CrafterConfig). |
 
 ### Returns
 
@@ -181,27 +230,28 @@ Returns the navigation tree with the specified depth for the specified store URL
 
 - Get the navigation tree of the root folder from the site (depth = 3):
 
-```ts
-  import { NavigationService } from '@craftercms/content';
+```typescript
+  import { getTree } from '@craftercms/content';
 
-  // Assuming that you already set the configuration (as explained above)
+  // Example 1: Config supplied inline
+  getTree('/site/website', 3, { site: 'editorial' }).subscribe((tree) => {
+    console.log(tree);
+  });
 
-  //This call will get 3 levels of the tree under the specified folder
-  NavigationService.getTree('/site/website', 3)
-    .subscribe(tree => {
-      // ...
-    });
+  // Example 2: Services pre-configured (see "Usage" section above), config param omitted.
+  getTree('/site/website', 3).subscribe((tree) => {
+    console.log(tree);
+  });
 ```
-
 
 ## Get Navigation Breadcrumb
 Returns the navigation items that form the breadcrumb for the specified store URL.
 
-`getNavBreadcrumb(url: string, root: string, config: CrafterConfig)`
+`getNavBreadcrumb(path: string, root: string, config: CrafterConfig)`
 
 | Parameters     |                |
 | -------------- |:--------------:|
-| url            | The folder’s url |
+| path            | The folder’s path |
 | root           | the root URL, basically the starting point of the breadcrumb. Optional. Default is `''` |
 | config        | Crafter configuration. Optional. Default value in [here](../models/README.md#CrafterConfig). |
 
@@ -213,30 +263,29 @@ Returns the navigation items that form the breadcrumb for the specified store UR
 
 - Get the breadcrumb for the root folder from the site:
 
-```ts
-  import { NavigationService } from '@craftercms/content';
+```typescript
+  import { getNavBreadcrumb } from '@craftercms/content';
 
-  // Assuming that you already set the configuration (as explained above)
+  // Example 1: Config supplied inline
+  getNavBreadcrumb('/site/website').subscribe((navBreadcrumb) => {
+    console.log(navBreadcrumb);
+  });
 
-  NavigationService.getNavBreadcrumb('/site/website')
-    .subscribe(navBreadcrumb => {
-      // ...
-    });
+  // Example 2: Services pre-configured (see "Usage" section above), config param omitted.
+  getNavBreadcrumb('/site/website').subscribe((navBreadcrumb) => {
+    console.log(navBreadcrumb);
+  });
 ```
-
-
-## Services - URL Transformation
----
 
 ## Transform
 Transforms a URL, based on the current site’s configuration. 
 
-- `transform(transformerName: string, url: string, config: CrafterConfig)` 
+- `transform(transformerName: string, path: string, config: CrafterConfig)` 
 
 | Parameters      |                |
 | --------------- |:--------------:|
 | transformerName | Name of the transformer to apply |
-| url             | URL that will be transformed |
+| path             | URL that will be transformed |
 | config        | Crafter configuration. Optional. Default value in [here](../models/README.md#CrafterConfig). |
 
 ### Returns
@@ -245,28 +294,36 @@ string - URL transformed according to transformer applied.
 
 ### Examples
 
-- Transform a store url into a render url
+- Transform a store path into a render path
 
-```ts
-  import { UrlTransformationService } from '@craftercms/content';
+```typescript
+  import { urlTransform } from '@craftercms/content';
 
-  // Assuming that you already set the configuration (as explained above)
+  // Example 1: Config supplied inline
+  urlTransform('storeUrlToRenderUrl', '/site/website/style/index.xml', { site: 'editorial' }).subscribe((webUrl) => {
+    console.log(webUrl); // "/style"
+  });
 
-  UrlTransformationService.transform("storeUrlToRenderUrl", "/site/website/style/index.xml")
-    .subscribe((url) => {
-      // url = '/style'
-    })
+  // Example 2: Services pre-configured (see "Usage" section above), config param omitted.
+  urlTransform('storeUrlToRenderUrl', '/site/website/style/index.xml').subscribe((webUrl) => {
+    console.log(webUrl); // "/style"
+  });
 ```
 
-- Transform a render url into a store url
+- Transform a render path into a store path
 
-```js
-  import { UrlTransformationService } from '@craftercms/content';
+```typescript
+  import { transform } from '@craftercms/content';
 
   // Assuming that you already set the configuration (as explained above)
+  
+  // Example 1: Config supplied inline
+  transform('renderUrlToStoreUrl', '/technology', { site: 'editorial' }).subscribe((path) => {
+    console.log(path); // "/site/website/technology/index.xml"
+  });
 
-  UrlTransformationService.transform("renderUrlToStoreUrl", "/technology")
-    .subscribe((url) => {
-      // url = '/site/website/technology/index.xml'
-    })
+  // Example 2: Services pre-configured (see "Usage" section above), config param omitted.
+  transform('renderUrlToStoreUrl', '/technology').subscribe((path) => {
+    console.log(path); // "/site/website/technology/index.xml"
+  })
 ```

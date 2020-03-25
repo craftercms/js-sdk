@@ -17,7 +17,7 @@
 
 import { Observable, of } from 'rxjs';
 import { mergeMap, map, catchError } from 'rxjs/operators';
-import { AnyAction, Store } from 'redux';
+import { AnyAction } from 'redux';
 import { ofType } from 'redux-observable';
 
 import { crafterConf } from '@craftercms/classes';
@@ -26,7 +26,6 @@ import {
   SEARCH,
   searchComplete
 } from '../actions/search';
-import { CrafterNamespacedState } from '@craftercms/models';
 
 export const searchEpic =
   (action$: Observable<AnyAction>) => action$.pipe(
@@ -38,7 +37,7 @@ export const searchEpic =
             response: response.response ? response.response : response,
             queryId: payload.uuid
           })),
-          catchError(() => Observable.of(searchComplete({
+          catchError(() => of(searchComplete({
             queryId: payload.uuid
           })))
         ))

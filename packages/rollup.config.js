@@ -13,3 +13,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+const rollupUtils = require('../util/rollup-utils');
+
+let config = rollupUtils.config('', { context: 'this' });
+
+delete config.input;
+
+config.output = { globals: config.output.globals };
+
+module.exports = config;

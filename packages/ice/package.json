@@ -3,6 +3,7 @@
   "version": "0.0.0-PLACEHOLDER",
   "description": "Crafter CMS in-context editing library",
   "main": "./bundles/ice.umd.js",
+  "browser": "./bundles/ice.umd.js",
   "module": "./esm5/ice.js",
   "es2015": "./esm2015/ice.js",
   "typings": "./ice.d.ts",
@@ -11,7 +12,9 @@
     "url": "https://github.com/craftercms/craftercms-sdk-js.git"
   },
   "keywords": [
+    "In context editing",
     "content management",
+    "crafter cms",
     "craftercms",
     "crafter"
   ],
@@ -23,5 +26,20 @@
     "build:ts": "tsc -p tsconfig.build.json",
     "clean:ts": "../../node_modules/rimraf/bin.js ts-out",
     "build": "npm run build:ts && npm run rollup && npm run clean:ts"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^11.0.2",
+    "@rollup/plugin-node-resolve": "^7.1.1",
+    "rollup": "^1.31.1",
+    "rollup-plugin-sourcemaps": "^0.5.0",
+    "typescript": "^3.7.5",
+    "uglify-es": "^3.3.9"
+  },
+  "dependencies": {
+    "@craftercms/models": "0.0.0-PLACEHOLDER",
+    "tslib": "^1.10.0"
+  },
+  "peerDependencies": {
+    "react": "^16.8.0"
   }
 }

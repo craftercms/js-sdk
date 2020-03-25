@@ -4,12 +4,16 @@
     "baseUrl": ".",
     "rootDir": ".",
     "paths": {
+      "react": ["../../node_modules/react"],
+      "@craftercms/models": ["../../dist/packages/models"],
       "@craftercms/utils": ["../../dist/packages/utils"],
       "@craftercms/ice": ["."]
     },
     "outDir": "../../dist/packages/ice"
   },
   "files": [
-    "index.ts"
+    "index.ts",
+    "react/react.ts",
+    "react/index.ts"
   ]
 }

@@ -13,3 +13,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+export interface ContentInstance {
+  craftercms: {
+    id: string
+    path: string
+    label: string // Internal name
+    dateCreated: string
+    dateModified: string
+    contentTypeId: string
+  }
+  [prop: string]: any
+}
