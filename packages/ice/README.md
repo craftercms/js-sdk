@@ -202,7 +202,7 @@ Use this function to obtain the attributes that you need to add to your HTML ele
   import { from, forkJoin } from 'rxjs';
   import { map } from 'rxjs/operators';
   import { fetchIsAuthoring } from '@craftercms/ice';
-  import { useICE } from '@craftercms/ice/esm5/react';
+  import { useICE } from '@craftercms/ice/react';
   import { getItem, parseDescriptor } from '@craftercms/content';
   
   function App() {
@@ -241,7 +241,7 @@ Use this function to obtain the attributes that you need to add to your HTML ele
   import { from, forkJoin } from 'rxjs';
   import { map } from 'rxjs/operators';
   import { fetchIsAuthoring } from '@craftercms/ice';
-  import { useICE, useDropZone } from '@craftercms/ice/esm5/react';
+  import { useICE, useDropZone } from '@craftercms/ice/react';
   import { getItem, parseDescriptor } from '@craftercms/content';
   
   function App() {
