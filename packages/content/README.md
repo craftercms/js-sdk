@@ -106,6 +106,35 @@ Parse a [Descriptor](../models/src/descriptor.ts), [Item](../models/src/item.ts)
   });
 ```
 
+## preParseSearchResults
+Inspects and parses elasticsearch hits and pre-parses objects before they can be sent to parseDescriptor
+@see https://github.com/craftercms/craftercms/issues/4057 
+
+```js
+import { createQuery, search } from '@craftercms/search';
+import { parseDescriptor, preParseSearchResults } from '@craftercms/content';
+
+search(
+  createQuery('elasticsearch', {
+    query: {
+      bool: {
+        filter: [/*...*/]
+      }
+    }
+  }),
+  { baseUrl: 'http://localhost:8080', site: 'editorial' }
+).pipe(
+  map(({ hits, ...rest }) => ({
+    ...rest,
+    hits: hits.map(({ _source }) => parseDescriptor(
+      preParseSearchResults(_source)
+    ))
+  }))
+).subscribe((results) => {
+  // Do stuff with results...
+});
+```
+
 ## Get Item
 Get an Item from the content store.
 
