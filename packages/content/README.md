@@ -1,8 +1,12 @@
+![npm (scoped)](https://img.shields.io/npm/v/@craftercms/content?style=plastic)
+
 # @craftercms/content
 
 This package contains services for retrieving content and navigation using APIs offered by Crafter CMS.
 
 ## Usage
+
+### Via npm
 
 - Install module using `yarn` or `npm`
   - Yarn: `yarn add @craftercms/content`
@@ -10,24 +14,62 @@ This package contains services for retrieving content and navigation using APIs 
 - Import and use the service(s) you need
 - You may pre-configure content services to a certain configuration and then you may omit the config param on subsequent calls
 
-    ```typescript
-      import { Item } from '@craftercms/models';
-      import { getItem } from '@craftercms/content';
-      import { crafterConf } from '@craftercms/classes';
-    
-      // Configure crafter services "globally". Your config will be cached. 
-      // All content services use the specified configuration on subsequent calls.
-      crafterConf.configure({
-        baseUrl: 'http://authoring.company.com',
-        site: 'editorial'
+```typescript
+  import { Item } from '@craftercms/models';
+  import { getItem } from '@craftercms/content';
+  import { crafterConf } from '@craftercms/classes';
+
+  // Configure crafter services "globally". Your config will be cached. 
+  // All content services use the specified configuration on subsequent calls.
+  crafterConf.configure({
+    baseUrl: 'http://authoring.company.com',
+    site: 'editorial'
+  });
+ 
+  // Second param "config" will use "http://authoring.company.com" as 
+  // crafter base url and "editorial" as the site to query
+  getItem('/site/website/index.xml').subscribe((item: Item) => {
+    console.log(item);
+  });
+```
+
+## Via html script imports
+
+- Download the bundle and import them in your page.
+- The bundle declare a global variable named `craftercms`. You can access all craftercms' packages and functions under this root.
+- The `content` package depends on `rxjs`, `@craftercms/utils`, `@craftercms/classes`; make sure to import those too before the `content` script.
+ 
+ **Tip**: Once you've imported the scripts, type `craftercms` on your browser's dev tools console to inspect the package(s)
+ 
+ ### Vanilla html/js example
+ ```html
+<div id="myFeature"></div>
+<script src="https://unpkg.com/rxjs"></script>
+<script src="https://unpkg.com/@craftercms/utils"></script>
+<script src="https://unpkg.com/@craftercms/classes"></script>
+<script src="https://unpkg.com/@craftercms/content"></script>
+<script>
+  (function ({ content }, { operators }) {
+
+    content.getItem(
+      '/site/website/index.xml',
+      { baseUrl: 'http://localhost:8080', site: 'editorial' }
+    ).pipe(
+      operators.map(content.parseDescriptor)
+    ).subscribe((model) => {
+      const elem = document.querySelector('#myFeature');
+      Object.entries(model).forEach(([fieldId, value]) => {
+        if (fieldId !== 'craftercms') {
+          const el = document.createElement('div');
+          el.innerText = `${fieldId}: ${value}`;
+          elem.appendChild(el);
+        }
       });
-     
-      // Second param "config" will use "http://authoring.company.com" as 
-      // crafter base url and "editorial" as the site to query
-      getItem('/site/website/index.xml').subscribe((item: Item) => {
-        console.log(item);
-      });
-    ```
+    });
+
+  })(craftercms, rxjs);
+</script>
+```
 
 ## parseDescriptor
 Parse a [Descriptor](../models/src/descriptor.ts), [Item](../models/src/item.ts) or a GraphQL response into a [Content Instance](../models/src/ContentInstance.ts). It could also be a collection of any of these types.

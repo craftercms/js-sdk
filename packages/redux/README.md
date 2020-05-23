@@ -1,3 +1,5 @@
+![npm (scoped)](https://img.shields.io/npm/v/@craftercms/redux?style=plastic)
+
 # @craftercms/redux
 
 This package contains tools for integrating your application with Crafter Engine and Crafter Search using Redux as the state container.

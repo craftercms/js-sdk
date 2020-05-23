@@ -1,3 +1,4 @@
+![npm (scoped)](https://img.shields.io/npm/v/@craftercms/utils?style=plastic)
 
 # @craftercms/utils
 

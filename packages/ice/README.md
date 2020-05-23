@@ -1,8 +1,62 @@
+![npm (scoped)](https://img.shields.io/npm/v/@craftercms/ice?style=plastic)
+
 # @craftercms/ice
 
 Contains JavaScript utilities to use Crafter CMS In Context Editing in your Apps and Sites
 
-**Note**: All methods of this package work with [Content Instance](../models/src/ContentInstance.ts) as data structure they understand (the model param). Use in conjunction with `parseDescriptor` from `@craftercms/content` to obtain such data structure. 
+**Note**: All methods of this package work with [Content Instance](../models/src/ContentInstance.ts) as data structure they understand (the model param). Use in conjunction with `parseDescriptor` from `@craftercms/content` to obtain such data structure.
+
+## Usage
+
+## Via npm
+
+- `yarn add @craftercms/ice` or `npm install @craftercms/ice`
+- `import` or `require` the functions you wish.
+
+The examples below assume usage via npm. 
+
+## Via html script imports
+
+- Download the bundle and import them in your page.
+- The bundles declare a global variable named `craftercms`. You can access all craftercms' packages and functions under this root.
+- The `ice` package depends on rxjs, make sure to import rxjs too before the `ice` script.
+ 
+ **Tip**: Once you've imported the scripts, type `craftercms` on your browser's dev tools console to inspect the package(s)
+ 
+ ### Vanilla html/js example
+ ```html
+<div id="myFeature"></div>
+<script src="https://unpkg.com/rxjs"></script>
+<script src="https://unpkg.com/@craftercms/utils"></script>
+<script src="https://unpkg.com/@craftercms/classes"></script>
+<script src="https://unpkg.com/@craftercms/content"></script>
+<script src="https://unpkg.com/@craftercms/ice"></script>
+<script>
+  (function ({ content, ice }, { operators }) {
+
+    content.getItem(
+      '/site/website/index.xml',
+      { baseUrl: 'http://localhost:8080', site: 'editorial' }
+    ).pipe(
+      operators.map(content.parseDescriptor)
+    ).subscribe((model) => {
+      const attrs = ice.getICEAttributes({ model, parentModelId: '/site/website/index.xml' });
+      const elem = document.querySelector('#myFeature');
+      Object.entries(attrs).forEach(([attr, value]) => {
+        elem.setAttribute(attr, value);
+      });
+      Object.entries(model).forEach(([fieldId, value]) => {
+        if (fieldId !== 'craftercms') {
+          const el = document.createElement('div');
+          el.innerText = `${fieldId}: ${value}`;
+          elem.appendChild(el);
+        }
+      });
+    });
+
+  })(craftercms, rxjs);
+</script>
+```
 
 ## fetchIsAuthoring
 

@@ -1,5 +1,17 @@
 # SDK Changelog
 
+## 1.2.3
+
+### @craftercms/ice
+- Add `package.json` to `react` folder for prettier import usage and module bundler support 
+
+### @craftercms/content
+- Improve robustness of `parseDescriptor` function
+
+### misc
+- Added docs to package readme files for plain html/js usage
+- Removed the `browser` field from `package.json` files so bundlers can make use of es6 modules and tree shaking
+
 ## 1.2.2
 
 ### @craftercms/ice

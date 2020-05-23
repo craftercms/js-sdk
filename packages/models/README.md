@@ -1,3 +1,5 @@
+![npm (scoped)](https://img.shields.io/npm/v/@craftercms/models?style=plastic)
+
 # @craftercms/models
 
 This package contains data model definitions of different structures of Crafter CMS. This interfaces are useful when developing in TypeScript.
