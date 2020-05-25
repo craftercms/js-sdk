@@ -6,22 +6,25 @@ This package contains tools for integrating your application with Crafter Search
 
 ## Usage
 
-## Via npm
+All of Crafter CMS packages can be used either via npm or in plain html/javascript via regular script imports.
+
+### Via npm
 
 - Install module using `yarn` or `npm`
-  - Yarn: `yarn add @craftercms/search`
-  - npm: `npm install @craftercms/search`
+  - `yarn add @craftercms/search` or
+  - `npm install @craftercms/search`
 - Import and use the service(s) you need
 
-## Via html script imports
+### Via html script imports
 
 - Download the bundle and import them in your page.
 - The bundles declare a global variable named `craftercms`. You can access all craftercms' packages and functions under this root.
 - The `search` package depends on `rxjs`, `@craftercms/utils`, `@craftercms/classes`; make sure to import those too before the `search` script.
  
- **Tip**: Once you've imported the scripts, type `craftercms` on your browser's dev tools console to inspect the package(s)
+**Tip**: Once you've imported the scripts, type `craftercms` on your browser's dev tools console to inspect the package(s)
  
- ### Vanilla html/js example
+#### Vanilla html/js example
+
  ```html
 <script src="https://unpkg.com/rxjs"></script>
 <script src="https://unpkg.com/@craftercms/utils"></script>
@@ -59,10 +62,13 @@ This package contains tools for integrating your application with Crafter Search
 </script>
 ```
 
-## Services
----
+## Package Index
 
-## Search
+The examples below assume usage in the style of using via npm. If you're using the bundles, 
+directly importing as a script in the browser, these functions will be under the global variable
+named `craftercms.search` (i.e. `window.craftercms.search`).
+
+### search
 Returns the result for a given query.
 
 `search(query: Query)` 
@@ -72,35 +78,54 @@ Returns the result for a given query.
 | query         | The query object |
 | config        | Crafter configuration. Optional. Default value in [here](../models/README.md#CrafterConfig). |
 
-### Returns
+#### Returns
 
 Map model
 
-### Examples
+#### Examples
 
 - Connect to Crafter Search to query for content with ELASTIC SEARCH (crafter version: 3.1.x):
 
 ```typescript
   import { crafterConf } from '@craftercms/classes';
   import { search, createQuery } from '@craftercms/search';
+  import { map } from 'rxjs/operators';
+  import { parseDescriptor, preParseSearchResults } from '@craftercms/content';
 
-  //First, set the Crafter configuration to _cache_ your config. 
-  //All subsequent calls to `getConfig` will use that configuration.
+  // First, set the Crafter configuration to cache your config. 
+  // All subsequent calls to `getConfig` will use that configuration.
   crafterConf.configure({
     baseUrl: 'http://localhost:8080',
-    site: 'editorial'
+    site: 'wordify'
   });
 
-  //Create elastic query
-  const query = createQuery('elasticsearch');
-  query.query = {
-    "query" : {
-        "match_all" : {}
-    }
-  }
-
-  search(query).subscribe((results) => {
-    // Do stuff with results...
+  const query = 'lorem';
+  const fields = ['headline_s', 'blurb_t'];
+  const contentTypes = ['/page/post', '/component/post'];
+  search(
+    createQuery('elasticsearch', {
+      query: {
+        'bool': {
+          'filter': [
+            { 'bool': { 'should': contentTypes.map(id => ({ 'match': { 'content-type': id } })) } },
+            { 'multi_match': { 'query': query, 'fields': fields } }
+          ]
+        }
+      }
+    }),
+    // If you didn't pre-configure, you may send config values as second param here
+    // { baseUrl: 'http://localhost:8080', site: 'wordify' }
+  ).pipe(
+    map(({ hits, ...rest }) => {
+      return { 
+        ...rest, 
+        hits: hits.map(({ _source }) => parseDescriptor(
+          preParseSearchResults(_source)
+        )) 
+      };
+    })
+  ).subscribe((results) => {
+    console.log(results);
   });
 ```
 

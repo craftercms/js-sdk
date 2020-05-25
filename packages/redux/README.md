@@ -6,6 +6,8 @@ This package contains tools for integrating your application with Crafter Engine
 
 ## Usage
 
+All of Crafter CMS packages can be used either via npm or in plain html/javascript via regular script imports.
+
 - Install module using `yarn` or `npm`
   - Yarn: `yarn add @craftercms/redux`
   - npm: `npm install @craftercms/redux`
@@ -13,10 +15,13 @@ This package contains tools for integrating your application with Crafter Engine
 - Import and use the redux store provided by the library, or implement your own store.
 - Import and use the action(s) you need.
 
-## Utils
----
+The examples below assume usage in the style of using via npm. If you're using the bundles, 
+directly importing as a script in the browser, these functions will be under the global variable
+named `craftercms.redux` (i.e. `window.craftercms.redux`).
 
-## createReduxStore
+## Utilities
+
+### createReduxStore
 Creates a redux store with all the crafter-redux details attached. Optionally, custom app reducers and/or epics may be supplied to create the store as required by client application.
 
 `createReduxStore(config: Object)`
@@ -35,7 +40,7 @@ Default config:
   }
 ```
 
-### Example
+#### Example
 
 - Set the configuration for the redux store
 
@@ -67,7 +72,7 @@ Default config:
 
 ```
 
-## getState
+### getState
 Retrieves the current redux store state.
 
 `getState(store: Store)`
@@ -76,7 +81,7 @@ Retrieves the current redux store state.
 | ------------- |:--------------:|
 | store           | Redux store where the state is going to be retrieved from |
 
-### Example
+#### Example
 
 ```typescript
   import { getState } from '@craftercms/redux';
@@ -88,9 +93,8 @@ Retrieves the current redux store state.
 ```
 
 ## Action Creators
----
 
-## getItem
+### getItem
 Creates an action to get an Item from the content store.
 
 `getItem(itemUrl: string)`
@@ -100,7 +104,7 @@ Creates an action to get an Item from the content store.
 | 
 path           | The item’s path in the content store |
 
-### Example
+#### Example
 
 - Dispatch action to get the index page from the site into your store
 
@@ -112,7 +116,7 @@ path           | The item’s path in the content store |
   store.dispatch(getItem(itemUrl));
 ```
 
-## getDescriptor
+### getDescriptor
 Creates an action to get the descriptor data of an Item in the content store.
 
 `getDescriptor(path: string)`
@@ -121,7 +125,7 @@ Creates an action to get the descriptor data of an Item in the content store.
 | ------------- |:--------------:|
 | path           | The item’s path in the content store |
 
-### Example
+#### Example
 
 - Dispatch action to get the index page descriptor from the site into your store
 
@@ -133,7 +137,7 @@ Creates an action to get the descriptor data of an Item in the content store.
   store.dispatch(getDescriptor(itemUrl));
 ```
 
-## getChildren
+### getChildren
 Creates an action to get the list of Items directly under a folder into your store.
 
 `getChildren(path: string)`
@@ -142,7 +146,7 @@ Creates an action to get the list of Items directly under a folder into your sto
 | ------------- |:--------------:|
 | path           | The folder’s path |
 
-### Example
+#### Example
 
 - Dispatch action to get the children under a folder into your store
 
@@ -154,8 +158,7 @@ Creates an action to get the list of Items directly under a folder into your sto
   store.dispatch(getChildren(path));
 ```
 
-
-## getTree
+### getTree
 Creates an action to get the complete Item hierarchy under the specified folder in the content store.
 
 `getTree(path: string, depth: int)`
@@ -165,7 +168,7 @@ Creates an action to get the complete Item hierarchy under the specified folder 
 | path           | The folder’s path |
 | depth         | Amount of levels to include. Optional. Default is `1` |
 
-### Example
+#### Example
 
 - Dispatch action to get the items tree under the root folder into your store
 
@@ -177,7 +180,7 @@ Creates an action to get the complete Item hierarchy under the specified folder 
   store.dispatch(getTree(path, 2));
 ```
 
-## getNav
+### getNav
 Creates an action to return the navigation tree with the specified depth for the specified store URL.
 
 `getNav(path: string, depth: int, currentPageUrl: string)`
@@ -188,7 +191,7 @@ Creates an action to return the navigation tree with the specified depth for the
 | depth          | Amount of levels to include. Optional. Default is `1` |
 | currentPageUrl | The URL of the current page. Optional. Default is `''` |
 
-### Example
+#### Example
 
 - Dispatch action to get the navigation tree of the root folder from the site (depth = 2)
 
@@ -200,7 +203,7 @@ Creates an action to return the navigation tree with the specified depth for the
   store.dispatch(getNav(path, 2));
 ```
 
-## getNavBreadcrumb
+### getNavBreadcrumb
 Creates an action to return the navigation items that form the breadcrumb for the specified store URL.
 
 `getNavBreadcrumb(path: string, root: string)`
@@ -210,7 +213,7 @@ Creates an action to return the navigation items that form the breadcrumb for th
 | path            | The folder’s path |
 | root           | the root URL, basically the starting point of the breadcrumb. Optional. Default is `''` |
 
-### Example
+#### Example
 
 - Dispatch action to get the breadcrumb for the root folder from the site
 
@@ -222,7 +225,7 @@ Creates an action to return the navigation items that form the breadcrumb for th
   store.dispatch(getNavBreadcrumb(path));
 ```
 
-## search
+### search
 Creates an action to return the result for a given query.
 
 `search(query: Query)` 
@@ -231,7 +234,7 @@ Creates an action to return the result for a given query.
 | ------------- |:--------------:|
 | query         | The query object |
 
-### Example
+#### Example
 
 - Dispatch action to query for content
 
@@ -245,10 +248,6 @@ Creates an action to return the result for a given query.
 
   store.dispatch(search(query));
 ```
-
-
-
-
 
 Store state while loading item
 
