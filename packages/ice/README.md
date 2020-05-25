@@ -2,7 +2,7 @@
 
 # @craftercms/ice
 
-Contains JavaScript utilities to use Crafter CMS' in-context editing in your Apps and Sites
+Contains JavaScript utilities to use Crafter CMS' in-context editing in your apps and sites
 
 **Note**: All methods of this package work with [Content Instance](../models/src/ContentInstance.ts) as data structure they understand (the model param). Use in conjunction with `parseDescriptor` and `preParseSearchResults` from `@craftercms/content` to obtain such data structure.
 
