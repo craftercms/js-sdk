@@ -1,0 +1,6 @@
+{
+  "main": "../bundles/react/index.umd.js",
+  "module": "../esm5/react/index.js",
+  "es2015": "../esm2015/react/index.js",
+  "typings": "./index.d.ts"
+}
