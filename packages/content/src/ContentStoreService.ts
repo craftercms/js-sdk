@@ -32,16 +32,25 @@ export function getItem(path: string, config?: CrafterConfig): Observable<Item> 
   return SDKService.httpGet(requestURL, { url: path, crafterSite: config.site });
 }
 
+export interface GetDescriptorConfig {
+  flatten: boolean;
+}
+
 /**
  * Returns the descriptor data of an Item in the content store.
  * @param {string} path - The item’s path
+ * @param {CrafterConfig & GetDescriptorConfig} config? - The config override options to use
  */
 export function getDescriptor(path: string): Observable<Descriptor>;
-export function getDescriptor(path: string, config: CrafterConfig): Observable<Descriptor>;
-export function getDescriptor(path: string, config?: CrafterConfig): Observable<Descriptor> {
+export function getDescriptor(path: string, config: Partial<CrafterConfig & GetDescriptorConfig>): Observable<Descriptor>;
+export function getDescriptor(path: string, config?: Partial<CrafterConfig & GetDescriptorConfig>): Observable<Descriptor> {
   config = crafterConf.mix(config);
   const requestURL = composeUrl(config, config.endpoints.GET_DESCRIPTOR);
-  return SDKService.httpGet(requestURL, { url: path, crafterSite: config.site });
+  return SDKService.httpGet(requestURL, {
+    url: path,
+    crafterSite: config.site,
+    flatten: Boolean(config.flatten)
+  });
 }
 
 /**

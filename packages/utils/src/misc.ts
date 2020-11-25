@@ -21,7 +21,7 @@ export function composeUrl(crafterConfig: { baseUrl? }, endpoint: string): strin
 export function composeUrl(crafterConfigOrBaseUrl: string | { baseUrl? }, endpoint: string): String {
   const base = (typeof crafterConfigOrBaseUrl === 'string')
     ? crafterConfigOrBaseUrl
-    : (crafterConfigOrBaseUrl.baseUrl ? crafterConfigOrBaseUrl.baseUrl + '/' : '');
+    : (crafterConfigOrBaseUrl.baseUrl ? `${crafterConfigOrBaseUrl.baseUrl}/` : '');
 
   return `${base}${endpoint}`.replace(/([^:]\/)\/+/g, "$1");
 }

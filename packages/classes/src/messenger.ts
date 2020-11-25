@@ -129,7 +129,7 @@ export abstract class Messenger {
           data: any = null,
           scope: MessageScope = MessageScope.Broadcast): void {
     let message: Message;
-    if (topicOrMessage in MessageTopic) {
+    if (typeof topicOrMessage === 'string' && topicOrMessage in MessageTopic) {
       message = {
         topic: <MessageTopic>topicOrMessage,
         data,
