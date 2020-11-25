@@ -27,7 +27,6 @@
   "dependencies": {
     "@craftercms/models": "0.0.0-PLACEHOLDER",
     "@craftercms/utils": "0.0.0-PLACEHOLDER",
-    "tslib": "^1.10.0",
     "url-search-params-polyfill": "^5.0.0"
   },
   "devDependencies": {
@@ -35,7 +34,6 @@
     "@rollup/plugin-node-resolve": "^7.1.1",
     "rollup": "^1.31.1",
     "rollup-plugin-sourcemaps": "^0.5.0",
-    "typescript": "^3.7.5",
     "uglify-es": "^3.3.9"
   }
 }
