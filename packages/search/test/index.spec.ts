@@ -1,10 +1,9 @@
 /*
- * Copyright (C) 2007-2019 Crafter Software Corporation. All rights reserved.
+ * Copyright (C) 2007-2020 Crafter Software Corporation. All Rights Reserved.
  *
  * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as published
- * by the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * it under the terms of the GNU Lesser General Public License version 3
+ * as published by the Free Software Foundation.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -43,7 +42,7 @@ describe('Search Client', () => {
   describe('search', () => {
 
     it('should find all documents', done => {
-      mock.get("http://localhost:8080/crafter-search/api/2/search/search.json?uuid=12345&q=*%3A*&index_id=editorial", 
+      mock.get("http://localhost:8080/crafter-search/api/2/search/search.json?uuid=12345&q=*%3A*&index_id=editorial",
       (req: MockRequest, res: MockResponse) => {
         res.body(JSON.stringify(searchResponse));
         return res;
@@ -60,7 +59,7 @@ describe('Search Client', () => {
     });
 
     it('should apply all filters', done => {
-      mock.get("http://localhost:8080/crafter-search/api/2/search/search.json?uuid=12345&q=*%3A*&fq=content-type%3A%2Fpage%2Farticle&fq=featured_b%3Atrue&index_id=editorial", 
+      mock.get("http://localhost:8080/crafter-search/api/2/search/search.json?uuid=12345&q=*%3A*&fq=content-type%3A%2Fpage%2Farticle&fq=featured_b%3Atrue&index_id=editorial",
       (req: MockRequest, res: MockResponse) => {
         res.body(JSON.stringify(searchResponse));
         return res;

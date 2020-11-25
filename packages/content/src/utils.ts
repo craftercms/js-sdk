@@ -2,16 +2,16 @@
  * Copyright (C) 2007-2020 Crafter Software Corporation. All Rights Reserved.
  *
  * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 3 as published by
- * the Free Software Foundation.
+ * it under the terms of the GNU Lesser General Public License version 3
+ * as published by the Free Software Foundation.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program. If not, see http://www.gnu.org/licenses/.
  */
 
 import { ContentInstance, Descriptor, Item } from '@craftercms/models';
@@ -114,14 +114,17 @@ export function parseProps<Props = object, Target = object>(props: Props, parsed
       // }
     } else if (prop.endsWith('_o')) {
       parsed[prop] = value?.item ?? [];
+      if (!Array.isArray(parsed[prop])) {
+        parsed[prop] = [parsed[prop]];
+      }
       parsed[prop] = parsed[prop].map((item) => {
-        const { key, value, component } = item;
+        const { key, value, component, include } = item;
         if ((item.component) || (item.key && item.value)) {
           // Components
           const newComponent = {
             label: value,
             ...component,
-            path: key.startsWith('/') ? key : null
+            path: key?.startsWith('/') ? key : (include?.startsWith('/') ? include : null)
           };
           return parseDescriptor(newComponent);
         } else {
@@ -161,4 +164,31 @@ function extractChildren(children) {
   return children.flatMap((child) => {
     return child.children ? extractChildren(child.children) : child;
   });
+}
+
+const propsToRemove = [
+  'rootId',
+  'crafterSite',
+  'crafterPublishedDate',
+  'crafterPublishedDate_dt',
+  'inheritsFrom_smv'
+];
+export function preParseSearchResults<T extends object = {}>(source: T): ContentInstance {
+  Object.entries(source).forEach(([prop, value]) => {
+    if (propsToRemove.includes(prop)) {
+      delete source[prop];
+    } else if (prop.endsWith('_o')) {
+      const collection = value as { item: any | any[] };
+      if (!Array.isArray(collection.item)) {
+        source[prop] = { item: [collection.item] };
+      }
+      source[prop].item.forEach((item, i) => {
+        source[prop].item[i] = preParseSearchResults(item);
+        if (item.component) {
+          source[prop].item[i].component = preParseSearchResults(item.component);
+        }
+      });
+    }
+  });
+  return source as ContentInstance;
 }
