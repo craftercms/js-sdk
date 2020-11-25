@@ -22,6 +22,7 @@ export interface ContentInstance {
     dateCreated: string
     dateModified: string
     contentTypeId: string
+    sourceMap?: { [path: string]: string } // path: contentTypeId
   }
   [prop: string]: any
 }

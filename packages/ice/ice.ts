@@ -17,7 +17,7 @@
 import { ContentInstance } from '@craftercms/models';
 
 declare namespace window {
-  const crafterRequire: Function;
+  const crafterRequire: any;
 }
 
 interface BaseCrafterConfig {
@@ -200,7 +200,7 @@ export const repaintPencils: (() => void) = (function () {
   return () => {
     clearTimeout(repaintPencilsTimeout);
     repaintPencilsTimeout = setTimeout(() => {
-      window.crafterRequire?.(['guest'], function ({ iceRepaint }) {
+      window.crafterRequire?.defined('guest') && window.crafterRequire(['guest'], function ({ iceRepaint }) {
         iceRepaint();
       });
     }, 150);

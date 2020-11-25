@@ -1,6 +1,6 @@
 {
   "name": "@craftercms/sdk",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "private": true,
   "workspaces": [
     "packages/*"
@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/craftercms/craftercms-sdk-js#readme",
   "devDependencies": {
-    "react": "^16.8.0"
+    "react": "^17.0.1",
+    "typescript": "^4.1.2"
   }
 }
