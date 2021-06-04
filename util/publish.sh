@@ -15,9 +15,9 @@ PACKAGES=(classes
   search
   utils)
 
-#PACKAGES=()
+# PACKAGES=()
 
-npm login
+# npm login
 
 for P in ${PACKAGES[@]}; do
   cd $P
