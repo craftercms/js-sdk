@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2020 Crafter Software Corporation. All Rights Reserved.
+ * Copyright (C) 2007-2021 Crafter Software Corporation. All Rights Reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License version 3
@@ -18,14 +18,19 @@ import { Observable } from 'rxjs';
 import { pluck } from 'rxjs/operators';
 import { ajax, AjaxResponse } from 'rxjs/ajax';
 import 'url-search-params-polyfill';
+import { LookupTable } from '@craftercms/models';
 
-export function httpGet<T extends any = any>(requestURL: string, params: Object = {}): Observable<T> {
+export function httpGet<T extends any = any>(requestURL: string, params: Object = {}, headers?: LookupTable): Observable<T> {
   const searchParams = new URLSearchParams(params as URLSearchParams);
-  return ajax.get(`${requestURL}?${searchParams.toString()}`).pipe(pluck<AjaxResponse, T>('response'));
+  return ajax.get(`${requestURL}?${searchParams.toString()}`, headers).pipe(
+    pluck<AjaxResponse, T>('response')
+  );
 }
 
-export function httpPost<T extends any = any>(requestURL: string, body: Object = {}): Observable<T> {
-  return ajax.post(requestURL, body, { 'Content-Type': 'application/json' }).pipe(pluck<AjaxResponse, T>('response'));
+export function httpPost<T extends any = any>(requestURL: string, body: Object = {}, headers?: LookupTable): Observable<T> {
+  return ajax.post(requestURL, body, { 'Content-Type': 'application/json', ...headers }).pipe(
+    pluck<AjaxResponse, T>('response')
+  );
 }
 
 export const SDKService = {

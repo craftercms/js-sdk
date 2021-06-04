@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2020 Crafter Software Corporation. All Rights Reserved.
+ * Copyright (C) 2007-2021 Crafter Software Corporation. All Rights Reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License version 3
@@ -135,7 +135,13 @@ export function parseProps<Props = object, Target = object>(props: Props, parsed
           const newComponent = {
             label: value,
             ...component,
-            path: key?.startsWith('/') ? key : (include?.startsWith('/') ? include : null)
+            path: key?.startsWith('/')
+              ? key
+              : (
+                include?.startsWith('/')
+                  ? include
+                  : component?.path ? component.path : null
+              )
           };
           return parseDescriptor(newComponent);
         } else {

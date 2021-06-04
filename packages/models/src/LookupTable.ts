@@ -14,23 +14,8 @@
  * along with this program. If not, see http://www.gnu.org/licenses/.
  */
 
-import { CrafterConfig, Endpoints } from '@craftercms/models';
+export interface LookupTable<T = any> {
+  [id: string]: T;
+}
 
-/**
- * @deprecated
- * Please import CrafterConfig from 'CrafterConfig.ts' instead of 'crafter-config.ts'
- * or directly from the package root. File will be removed on future release.
- **/
-type DeprecatedCrafterConfig<T> = CrafterConfig;
-
-/**
- * @deprecated
- * Please import { Endpoints } from 'CrafterConfig.ts' instead of 'crafter-config.ts'
- * or directly from the package root. File will be removed on future release.
- **/
-type DeprecatedEndpoints<T> = Endpoints;
-
-export {
-  DeprecatedCrafterConfig as CrafterConfig,
-  DeprecatedEndpoints as Endpoints
-};
+export default LookupTable;

@@ -193,6 +193,31 @@ new Carousel({
 });
 ```
 
+### reportNavigation
+
+Report up to Crafter Studio that navigation has occurred.
+
+Useful primarily for SPAs when there's no page reload, but the page context changes.
+
+### Example
+
+```typescript
+import { reportNavigation } from '@craftercms/ice';
+
+function DynamicRoute(props) {
+  const { match, location } = props;
+  let url = match.path.includes(':')
+    ? match.path.substring(0, match.path.indexOf(':') -1)
+    : match.url;
+  useEffect(() => {
+    reportNavigation(url);
+  }, [url]);
+  return (
+    ...
+  );
+}
+```
+
 ## @craftercms/ice/react
 
 React bindings for pencils and drop zones. Requires React 16.8.0 or above (hooks release). Not available for class components, use the plain methods described above part of this same package.
