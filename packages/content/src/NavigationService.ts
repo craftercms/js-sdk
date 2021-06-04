@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2020 Crafter Software Corporation. All Rights Reserved.
+ * Copyright (C) 2007-2021 Crafter Software Corporation. All Rights Reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License version 3
@@ -42,7 +42,7 @@ export function getNavTree(path: string, depth: number = 1, currentPageUrl: stri
     currentPageUrl,
     url: path,
     depth
-  });
+  }, config.headers);
 }
 
 /**
@@ -60,7 +60,7 @@ export function getNavBreadcrumb(path: string, root: string = '', config?: Craft
     crafterSite: config.site,
     url: path,
     root
-  });
+  }, config.headers);
 }
 
 /**

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2020 Crafter Software Corporation. All Rights Reserved.
+ * Copyright (C) 2007-2021 Crafter Software Corporation. All Rights Reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License version 3
@@ -14,20 +14,29 @@
  * along with this program. If not, see http://www.gnu.org/licenses/.
  */
 
-import { Item, LookupTable } from '@craftercms/models';
+import { CrafterNamespacedState, StateContainer, CrafterState } from './ReduxStore';
 
-export interface StateContainer<T> {
-  entries: LookupTable<T>;
-  loading: LookupTable<boolean>;
-  childIds?: LookupTable<string | number>;
-}
+/**
+ * @deprecated
+ * Please import from 'ReduxStore.ts' instead or directly from the
+ * package root. File will be removed on future release.
+ **/
+type DeprecatedStateContainer<T> = StateContainer<T>;
+/**
+ * @deprecated
+ * Please import from 'ReduxStore.ts' instead or directly from the
+ * package root. File will be removed on future release.
+ **/
+type DeprecatedCrafterState = CrafterState;
+/**
+ * @deprecated
+ * Please import from 'ReduxStore.ts' instead or directly from the
+ * package root. File will be removed on future release.
+ **/
+type DeprecatedCrafterNamespacedState = CrafterNamespacedState;
 
-export interface CrafterState {
-  items?: StateContainer<Item>;
-  [prop: string]: any;
-}
-
-export interface CrafterNamespacedState extends CrafterState {
-  craftercms?: CrafterState;
-  [prop: string]: any;
+export {
+  DeprecatedStateContainer as StateContainer,
+  DeprecatedCrafterState as CrafterState,
+  DeprecatedCrafterNamespacedState as CrafterNamespacedStatepero
 }

@@ -14,4 +14,27 @@
  * along with this program. If not, see http://www.gnu.org/licenses/.
  */
 
-export * from './hooks';
+import { LookupTable } from '@craftercms/models';
+
+export interface CrafterConfig {
+  site: string;
+  baseUrl: string;
+  searchId?: string;
+  endpoints?: Endpoints;
+  contentTypeRegistry?: LookupTable;
+  headers: LookupTable;
+}
+
+export interface Endpoints {
+  GET_ITEM_URL: string;
+  GET_DESCRIPTOR: string;
+  GET_CHILDREN: string;
+  GET_TREE: string;
+  GET_NAV_TREE: string;
+  GET_BREADCRUMB: string;
+  TRANSFORM_URL: string;
+  SEARCH: string;
+  ELASTICSEARCH: string;
+}
+
+export default CrafterConfig;
