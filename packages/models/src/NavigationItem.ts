@@ -14,13 +14,11 @@
  * along with this program. If not, see http://www.gnu.org/licenses/.
  */
 
-import NavigationItem from './NavigationItem';
+export interface NavigationItem {
+  url: string;
+  active: boolean;
+  subItems: Array<NavigationItem>;
+  [prop: string]: any;
+}
 
-/**
- * @deprecated
- * Please import from 'NavigationItem.ts' instead or directly from the
- * package root. File will be removed on future release.
- **/
-type DeprecatedNavigationItem = NavigationItem;
-
-export { DeprecatedNavigationItem as NavigationItem };
+export default NavigationItem;

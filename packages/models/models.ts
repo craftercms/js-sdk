@@ -14,12 +14,12 @@
  * along with this program. If not, see http://www.gnu.org/licenses/.
  */
 
-export * from './src/crafter-config';
+export * from './src/CrafterConfig';
 export * from './src/descriptor';
 export * from './src/item';
-export * from './src/navigation-item';
+export * from './src/NavigationItem';
 export * from './src/page';
-export * from './src/lookup-table';
-export * from './src/redux-store';
+export * from './src/LookupTable';
+export * from './src/ReduxStore';
 export * from './src/message';
 export * from './src/ContentInstance';

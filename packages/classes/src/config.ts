@@ -33,7 +33,8 @@ const DEFAULTS: CrafterConfig = {
     SEARCH: 'crafter-search/api/2/search/search.json',
     ELASTICSEARCH: 'api/1/site/elasticsearch/search'
   },
-  contentTypeRegistry: {}
+  contentTypeRegistry: {},
+  headers: {}
 };
 
 class ConfigManager {
@@ -97,15 +98,11 @@ class ConfigManager {
   }
 
   mix(mixin: Partial<CrafterConfig> = {}): CrafterConfig {
-    return {
-      ...this.config,
-      ...mixin
-    };
+    return extendDeepExistingProps({ ...this.config }, mixin);
   }
 
   configure(nextConfig: Partial<CrafterConfig>): void {
-    const newConfig: CrafterConfig = extendDeepExistingProps({ ...this.config }, nextConfig);
-    this.publishConfig(newConfig);
+    this.publishConfig(this.mix(nextConfig));
   }
 }
 

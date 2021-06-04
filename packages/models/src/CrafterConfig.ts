@@ -14,13 +14,27 @@
  * along with this program. If not, see http://www.gnu.org/licenses/.
  */
 
-import NavigationItem from './NavigationItem';
+import { LookupTable } from '@craftercms/models';
 
-/**
- * @deprecated
- * Please import from 'NavigationItem.ts' instead or directly from the
- * package root. File will be removed on future release.
- **/
-type DeprecatedNavigationItem = NavigationItem;
+export interface CrafterConfig {
+  site: string;
+  baseUrl: string;
+  searchId?: string;
+  endpoints?: Endpoints;
+  contentTypeRegistry?: LookupTable;
+  headers: LookupTable;
+}
 
-export { DeprecatedNavigationItem as NavigationItem };
+export interface Endpoints {
+  GET_ITEM_URL: string;
+  GET_DESCRIPTOR: string;
+  GET_CHILDREN: string;
+  GET_TREE: string;
+  GET_NAV_TREE: string;
+  GET_BREADCRUMB: string;
+  TRANSFORM_URL: string;
+  SEARCH: string;
+  ELASTICSEARCH: string;
+}
+
+export default CrafterConfig;

@@ -14,13 +14,20 @@
  * along with this program. If not, see http://www.gnu.org/licenses/.
  */
 
-import NavigationItem from './NavigationItem';
+import { Item, LookupTable } from '@craftercms/models';
 
-/**
- * @deprecated
- * Please import from 'NavigationItem.ts' instead or directly from the
- * package root. File will be removed on future release.
- **/
-type DeprecatedNavigationItem = NavigationItem;
+export interface StateContainer<T> {
+  entries: LookupTable<T>;
+  loading: LookupTable<boolean>;
+  childIds?: LookupTable<string | number>;
+}
 
-export { DeprecatedNavigationItem as NavigationItem };
+export interface CrafterState {
+  items?: StateContainer<Item>;
+  [prop: string]: any;
+}
+
+export interface CrafterNamespacedState extends CrafterState {
+  craftercms?: CrafterState;
+  [prop: string]: any;
+}

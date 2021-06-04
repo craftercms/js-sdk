@@ -42,7 +42,7 @@ export function getNavTree(path: string, depth: number = 1, currentPageUrl: stri
     currentPageUrl,
     url: path,
     depth
-  });
+  }, config.headers);
 }
 
 /**
@@ -60,7 +60,7 @@ export function getNavBreadcrumb(path: string, root: string = '', config?: Craft
     crafterSite: config.site,
     url: path,
     root
-  });
+  }, config.headers);
 }
 
 /**

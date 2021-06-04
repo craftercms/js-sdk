@@ -34,7 +34,7 @@ export function urlTransform(transformerName: string, url: string, config?: Craf
     crafterSite: config.site,
     transformerName,
     url
-  });
+  }, config.headers);
 }
 
 /**

@@ -44,14 +44,14 @@ export function search(queryOrParams: Query | Object, config?: CrafterConfig): T
     searchParams = new URLSearchParams();
 
   if (queryOrParams instanceof ElasticQuery) {
-    requestURL = composeUrl(config, crafterConf.getConfig().endpoints.ELASTICSEARCH) + '?crafterSite=' + config.site;
+    requestURL = composeUrl(config, config.endpoints.ELASTICSEARCH) + '?crafterSite=' + config.site;
 
     return SDKService.httpPost(requestURL, params)
       .pipe(map((response: any) => {
         return response.hits;
       }));
   } else {
-    requestURL = composeUrl(config, crafterConf.getConfig().endpoints.SEARCH);
+    requestURL = composeUrl(config, config.endpoints.SEARCH);
 
     for (let param in params) {
       if (params.hasOwnProperty(param)) {
@@ -67,7 +67,7 @@ export function search(queryOrParams: Query | Object, config?: CrafterConfig): T
 
     searchParams.append('index_id', config.searchId ? config.searchId : config.site);
 
-    return SDKService.httpGet(requestURL, searchParams);
+    return SDKService.httpGet(requestURL, searchParams, config.headers);
   }
 
 }

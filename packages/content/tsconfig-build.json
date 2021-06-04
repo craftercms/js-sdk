@@ -7,9 +7,9 @@
     "paths": {
       "rxjs/*": ["../../node_modules/rxjs/*"],
       "@craftercms/content": ["."],
-      "@craftercms/models": ["../../dist/packages/models"],
-      "@craftercms/utils": ["../../dist/packages/utils"],
-      "@craftercms/classes": ["../../dist/packages/classes"]
+      "@craftercms/models": ["../../dist/packages-dist/models"],
+      "@craftercms/utils": ["../../dist/packages-dist/utils"],
+      "@craftercms/classes": ["../../dist/packages-dist/classes"]
     },
     "outDir": "../../dist/packages/content"
   },
