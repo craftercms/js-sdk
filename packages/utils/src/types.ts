@@ -14,7 +14,7 @@
  * along with this program. If not, see http://www.gnu.org/licenses/.
  */
 
-import { PartialObserver } from 'rxjs/index';
+import { PartialObserver } from 'rxjs';
 
 export declare type ObserverOrNext<T> = (value: T) => void | PartialObserver<T>;
 
