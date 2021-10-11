@@ -32,7 +32,8 @@ export const searchEpic =
     mergeMap(({ payload }) =>
       SearchService.search(payload, crafterConf.getConfig())
         .pipe(
-          map(response => searchComplete({
+          // TODO: Add search return type, and remove SOLR
+          map((response: any) => searchComplete({
             response: response.response ? response.response : response,
             queryId: payload.uuid
           })),
