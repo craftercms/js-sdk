@@ -25,6 +25,7 @@ import {
   SEARCH,
   searchComplete
 } from '../actions/search';
+import {SearchResult} from "@craftercms/models/src/search";
 
 export const searchEpic =
   (action$: Observable<AnyAction>) => action$.pipe(
@@ -32,9 +33,8 @@ export const searchEpic =
     mergeMap(({ payload }) =>
       SearchService.search(payload, crafterConf.getConfig())
         .pipe(
-          // TODO: Add search return type, and remove SOLR
-          map((response: any) => searchComplete({
-            response: response.response ? response.response : response,
+          map((response: SearchResult) => searchComplete({
+            response,
             queryId: payload.uuid
           })),
           catchError(() => of(searchComplete({

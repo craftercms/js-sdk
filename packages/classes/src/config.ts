@@ -30,7 +30,6 @@ const DEFAULTS: CrafterConfig = {
     GET_NAV_TREE: '/api/1/site/navigation/tree.json',
     GET_BREADCRUMB: '/api/1/site/navigation/breadcrumb.json',
     TRANSFORM_URL: '/api/1/site/url/transform.json',
-    SEARCH: 'crafter-search/api/2/search/search.json',
     ELASTICSEARCH: 'api/1/site/elasticsearch/search'
   },
   contentTypeRegistry: {},
