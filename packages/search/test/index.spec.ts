@@ -19,7 +19,7 @@ import { SearchService } from '@craftercms/search';
 import { crafterConf } from '@craftercms/classes';
 import 'mocha';
 import 'url-search-params-polyfill';
-import { SolrQuery } from '../src/solr-query';
+import { ElasticQuery } from '../src/elastic-query';
 
 import mock from 'xhr-mock';
 import MockRequest from "xhr-mock/lib/MockRequest";
@@ -42,14 +42,18 @@ describe('Search Client', () => {
   describe('search', () => {
 
     it('should find all documents', done => {
-      mock.get("http://localhost:8080/crafter-search/api/2/search/search.json?uuid=12345&q=*%3A*&index_id=editorial",
+      mock.post("http://localhost:8080/api/1/site/elasticsearch/search",
       (req: MockRequest, res: MockResponse) => {
         res.body(JSON.stringify(searchResponse));
         return res;
       });
 
-      const query = SearchService.createQuery<SolrQuery>('solr', { 'uuid': '12345' });
-      query.query = "*:*";
+      const query = SearchService.createQuery<ElasticQuery>({ 'uuid': '12345' });
+      query.query = {
+        "query" : {
+          "match_all" : {}
+        }
+      };
       SearchService.search(query, crafterConf.getConfig()).toPromise().then(result => {
         assert.equal(result.response.numFound, searchResponse.response.numFound);
         done();
@@ -59,15 +63,37 @@ describe('Search Client', () => {
     });
 
     it('should apply all filters', done => {
-      mock.get("http://localhost:8080/crafter-search/api/2/search/search.json?uuid=12345&q=*%3A*&fq=content-type%3A%2Fpage%2Farticle&fq=featured_b%3Atrue&index_id=editorial",
-      (req: MockRequest, res: MockResponse) => {
-        res.body(JSON.stringify(searchResponse));
-        return res;
-      });
+      mock.post("http://localhost:8080/api/1/site/elasticsearch/search",
+        (req: MockRequest, res: MockResponse) => {
+          res.body(JSON.stringify(searchResponse));
+          return res;
+        });
 
-      var query = SearchService.createQuery<SolrQuery>('solr', { 'uuid': '12345' });
-      query.query = "*:*";
-      query.filterQueries = ["content-type:/page/article", "featured_b:true"];
+      var query = SearchService.createQuery<ElasticQuery>({ 'uuid': '12345' });
+      query.query = {
+        "query" : {
+          "bool": {
+            "filter": [
+              {
+                "bool": {
+                  "should": [
+                    {
+                      "match": {
+                        "content-type": "/page/article"
+                      }
+                    }
+                  ],
+                }
+              },
+              {
+                "match": {
+                  "featured_b": true
+                }
+              }
+            ]
+          }
+        }
+      };
       SearchService.search(query, crafterConf.getConfig()).toPromise().then(result => {
         assert.equal(result.response.numFound, searchResponse.response.numFound);
         done();
