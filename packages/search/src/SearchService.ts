@@ -53,7 +53,7 @@ export function search(queryOrParams: Query | Object, config?: CrafterConfig): O
  * Returns a new Query object
  */
 
-export function createQuery<T extends Query>(params: Object): T {
+export function createQuery<T extends Query>(params?: Object): T {
   let
     query,
     queryId = (params && params['uuid'])
