@@ -16,7 +16,7 @@
 
 import { LookupTable } from "@craftercms/models";
 
-export interface resultHit {
+export interface SearchResultHit {
   _id: string;
   _index: string;
   _score: string;
@@ -25,7 +25,7 @@ export interface resultHit {
 }
 
 export interface SearchResult {
-  hits: resultHit[];
+  hits: SearchResultHit[];
   max_score: number;
   total: {
     relation: string;

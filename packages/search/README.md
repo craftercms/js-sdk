@@ -103,7 +103,7 @@ Map model
   const fields = ['headline_s', 'blurb_t'];
   const contentTypes = ['/page/post', '/component/post'];
   search(
-    createQuery('elasticsearch', {
+    createQuery({
       query: {
         'bool': {
           'filter': [
@@ -135,7 +135,7 @@ You may alternatively use a different config by supplying the config object at t
   import { search, createQuery } from '@craftercms/search';
 
   //Create query
-  const query = createQuery('elasticsearch');
+  const query = createQuery();
   query.query = {
     "query" : {
         "match_all" : {}

@@ -25,7 +25,7 @@ import {
   SEARCH,
   searchComplete
 } from '../actions/search';
-import {SearchResult} from "@craftercms/models/src/search";
+import { SearchResult } from "@craftercms/models";
 
 export const searchEpic =
   (action$: Observable<AnyAction>) => action$.pipe(
