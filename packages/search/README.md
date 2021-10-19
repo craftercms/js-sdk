@@ -84,7 +84,7 @@ Map model
 
 #### Examples
 
-- Connect to Crafter Search to query for content with ELASTIC SEARCH (crafter version: 3.1.x):
+- Connect to Crafter Search to query for content with ELASTIC SEARCH:
 
 ```typescript
   import { crafterConf } from '@craftercms/classes';
@@ -129,18 +129,17 @@ Map model
   });
 ```
 
-You may alternatively use a different config by supplying the config object at the service call invoking time
+You may use a different config by supplying the config object at the service call invoking time.
 
 ```typescript
   import { search, createQuery } from '@craftercms/search';
 
   //Create query
-  const query = createQuery();
-  query.query = {
+  const query = createQuery({
     "query" : {
         "match_all" : {}
     }
-  };
+  });
 
   search(query, { baseUrl: 'http://localhost:8080', site: 'editorial' }).subscribe((results) => {
     // ...
