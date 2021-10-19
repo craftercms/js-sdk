@@ -17,12 +17,11 @@
 import { Observable } from 'rxjs';
 
 import { crafterConf, SDKService } from '@craftercms/classes';
-import { CrafterConfig } from '@craftercms/models';
+import { CrafterConfig, NavigationItem } from '@craftercms/models';
 import { composeUrl } from '@craftercms/utils';
 
-// TODO: Add correct return types
-type ToDoGetNavTreeReturnType = Observable<any>;
-type ToDoGetNavBreadcrumbReturnType = Observable<any>;
+type NavTreeReturnType = Observable<NavigationItem>;
+type NavBreadcrumbReturnType = Observable<NavigationItem[]>;
 
 /**
  * Returns the navigation tree with the specified depth for the specified store URL.
@@ -30,11 +29,11 @@ type ToDoGetNavBreadcrumbReturnType = Observable<any>;
  * @param {int} depth - the depth of the tree
  * @param {string} currentPageUrl - the URL of the current page
  */
-export function getNavTree(path: string): ToDoGetNavTreeReturnType;
-export function getNavTree(path: string, depth: number): ToDoGetNavTreeReturnType;
-export function getNavTree(path: string, depth: number, currentPageUrl: string): ToDoGetNavTreeReturnType;
-export function getNavTree(path: string, depth: number, currentPageUrl: string, config: CrafterConfig): ToDoGetNavTreeReturnType;
-export function getNavTree(path: string, depth: number = 1, currentPageUrl: string = '', config?: CrafterConfig): ToDoGetNavTreeReturnType {
+export function getNavTree(path: string): NavTreeReturnType;
+export function getNavTree(path: string, depth: number): NavTreeReturnType;
+export function getNavTree(path: string, depth: number, currentPageUrl: string): NavTreeReturnType;
+export function getNavTree(path: string, depth: number, currentPageUrl: string, config: CrafterConfig): NavTreeReturnType;
+export function getNavTree(path: string, depth: number = 1, currentPageUrl: string = '', config?: CrafterConfig): NavTreeReturnType {
   config = crafterConf.mix(config);
   const requestURL = composeUrl(config, config.endpoints.GET_NAV_TREE);
   return SDKService.httpGet(requestURL, {
@@ -50,10 +49,10 @@ export function getNavTree(path: string, depth: number = 1, currentPageUrl: stri
  * @param {string} path - the current URL used to build the breadcrumb
  * @param {string} root - the root URL, basically the starting point of the breadcrumb
  */
-export function getNavBreadcrumb(path: string): ToDoGetNavBreadcrumbReturnType;
-export function getNavBreadcrumb(path: string, root: string): ToDoGetNavBreadcrumbReturnType;
-export function getNavBreadcrumb(path: string, root: string, config: CrafterConfig): ToDoGetNavBreadcrumbReturnType;
-export function getNavBreadcrumb(path: string, root: string = '', config?: CrafterConfig): ToDoGetNavBreadcrumbReturnType {
+export function getNavBreadcrumb(path: string): NavBreadcrumbReturnType;
+export function getNavBreadcrumb(path: string, root: string): NavBreadcrumbReturnType;
+export function getNavBreadcrumb(path: string, root: string, config: CrafterConfig): NavBreadcrumbReturnType;
+export function getNavBreadcrumb(path: string, root: string = '', config?: CrafterConfig): NavBreadcrumbReturnType {
   config = crafterConf.mix(config);
   const requestURL = composeUrl(config, config.endpoints.GET_BREADCRUMB);
   return SDKService.httpGet(requestURL, {

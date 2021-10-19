@@ -49,10 +49,7 @@ export function createReduxStore(config: {
     namespaceCrafterState: false
   }, config);
 
-  const epicMiddleware = createEpicMiddleware(
-    config.epicsArray
-      ? combineEpics(...allEpics.concat(config.epicsArray))
-      : combineEpics(...allEpics));
+  const epicMiddleware = createEpicMiddleware();
 
   const enhancers = config.reduxDevTools
     ? ((typeof window !== "undefined" && window['__REDUX_DEVTOOLS_EXTENSION_COMPOSE__']) || compose)
@@ -68,13 +65,18 @@ export function createReduxStore(config: {
     ? [ epicMiddleware, ...config.additionalMiddleWare ]
     : [ epicMiddleware ];
 
-  return createStore(
+  const store = createStore(
     config.reducerMixin
       ? combineReducers({ ...reducer, ...config.reducerMixin })
       : combineReducers(reducer),
     enhancers(applyMiddleware(...middlewares))
   );
 
+  epicMiddleware.run(config.epicsArray
+    ? combineEpics(...allEpics.concat(config.epicsArray))
+    : combineEpics(...allEpics));
+
+  return store;
 }
 
 /**

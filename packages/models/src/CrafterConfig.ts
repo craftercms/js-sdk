@@ -33,7 +33,6 @@ export interface Endpoints {
   GET_NAV_TREE: string;
   GET_BREADCRUMB: string;
   TRANSFORM_URL: string;
-  SEARCH: string;
   ELASTICSEARCH: string;
 }
 
