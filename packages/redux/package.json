@@ -29,7 +29,7 @@
     "@craftercms/content": "0.0.0-PLACEHOLDER",
     "redux": "^4.0.5",
     "redux-observable": "^1.2.0",
-    "rxjs": "^6.5.4"
+    "rxjs": "^7.0.0"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^11.0.2",

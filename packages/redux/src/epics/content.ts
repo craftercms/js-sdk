@@ -34,6 +34,7 @@ import {
   GET_NAV_BREADCRUMB,
   getNavBreadcrumbComplete
 } from '../actions/content';
+import { Item, NavigationItem } from "@craftercms/models";
 
 export const getItemEpic =
   (action$: Observable<AnyAction>) => action$.pipe(
@@ -41,7 +42,7 @@ export const getItemEpic =
     mergeMap(({ payload }) =>
       ContentStoreService.getItem(payload)
         .pipe(
-          map(item => getItemComplete({
+          map((item: Item) => getItemComplete({
             item,
             url: payload
           })),
@@ -74,7 +75,7 @@ export const getChildrenEpic =
       mergeMap(({ payload }) =>
       ContentStoreService.getChildren(payload)
           .pipe(
-              map(children => getChildrenComplete({
+              map((children: Item[]) => getChildrenComplete({
                 children,
                 url: payload
               })),
@@ -90,7 +91,7 @@ export const getTreeEpic =
       mergeMap(({ payload }) =>
       ContentStoreService.getTree(payload.url, payload.depth)
           .pipe(
-              map(tree => getTreeComplete({
+              map((tree: Item) => getTreeComplete({
                 tree,
                 url: payload.url
               })),
@@ -106,7 +107,7 @@ export const getNavEpic =
       mergeMap(({ payload }) =>
       NavigationService.getNavTree(payload.url, payload.depth, payload.currentPageUrl)
           .pipe(
-              map(nav => getNavComplete({
+              map((nav: NavigationItem) => getNavComplete({
                 nav,
                 url: payload.url
               })),
@@ -122,7 +123,7 @@ export const getNavBreadcrumbEpic =
       mergeMap(({ payload }) =>
       NavigationService.getNavBreadcrumb(payload.url, payload.root)
           .pipe(
-              map(breadcrumb => getNavBreadcrumbComplete({
+              map((breadcrumb: NavigationItem[]) => getNavBreadcrumbComplete({
                 breadcrumb,
                 url: payload.url
               })),

@@ -14,13 +14,21 @@
  * along with this program. If not, see http://www.gnu.org/licenses/.
  */
 
-export * from './src/CrafterConfig';
-export * from './src/descriptor';
-export * from './src/item';
-export * from './src/NavigationItem';
-export * from './src/page';
-export * from './src/LookupTable';
-export * from './src/ReduxStore';
-export * from './src/message';
-export * from './src/ContentInstance';
-export * from './src/search';
+import { LookupTable } from "@craftercms/models";
+
+export interface SearchResultHit {
+  _id: string;
+  _index: string;
+  _score: string;
+  _source: LookupTable<any>;
+  _type: string;
+}
+
+export interface SearchResult {
+  hits: SearchResultHit[];
+  max_score: number;
+  total: {
+    relation: string;
+    value: number;
+  }
+}
