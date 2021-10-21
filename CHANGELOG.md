@@ -1,5 +1,13 @@
 # SDK Changelog
 
+## 2.0.0
+
+### All packages
+- Update to rxjs @ ^7
+
+### @craftercms/search
+- Remove support for Solr
+
 ## 1.2.4
 
 ### @craftercms/content
