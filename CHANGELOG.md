@@ -1,5 +1,10 @@
 # SDK Changelog
 
+## 2.0.1
+
+### @craftercms/redux
+- Upgrade to redux-observable 2
+
 ## 2.0.0
 
 ### All packages
