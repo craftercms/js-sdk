@@ -14,14 +14,14 @@
  * along with this program. If not, see http://www.gnu.org/licenses/.
  */
 
-import { ContentInstance } from '@craftercms/models';
+import { ContentInstance, CrafterConfig } from '@craftercms/models';
+import { crafterConf } from '@craftercms/classes';
 
 declare namespace window {
   const crafterRequire: any;
 }
 
-interface BaseCrafterConfig {
-  baseUrl?: string;
+export interface BaseCrafterConfig extends Pick<CrafterConfig, 'site' | 'baseUrl'> {
 }
 
 export interface ICEConfig {
@@ -60,13 +60,13 @@ const printedErrorCache = {
   invalidPath: {}
 };
 
-export function addAuthoringSupport(config?: BaseCrafterConfig): Promise<any> {
-  config = { baseUrl: '', ...(config || {}) };
+export function addAuthoringSupport(config?: Partial<BaseCrafterConfig>): Promise<any> {
+  config = crafterConf.mix(config);
   return new Promise((resolve) => {
     const script = document.createElement('script');
     script.src = `${config.baseUrl}/studio/static-assets/libs/requirejs/require.js`;
     script.addEventListener('load', () => {
-      window.crafterRequire?.([`${config.baseUrl}/studio/overlayhook?extensionless`], () => {
+      window.crafterRequire?.([`${config.baseUrl}/studio/overlayhook?.js`], () => {
         window.crafterRequire(['guest'], (guest) => {
           resolve(guest);
         });
@@ -207,9 +207,9 @@ export const repaintPencils: (() => void) = (function () {
   };
 })();
 
-export function fetchIsAuthoring(config?: BaseCrafterConfig): Promise<boolean> {
-  config = { baseUrl: '', ...(config || {}) };
-  return fetch(`${config.baseUrl}/api/1/config/preview.json`)
+export function fetchIsAuthoring(config?: Partial<BaseCrafterConfig>): Promise<boolean> {
+  let cfg = crafterConf.mix(config);
+  return fetch(`${cfg.baseUrl}/api/1/config/preview.json?crafterSite=${cfg.site}`, cfg.cors ? { mode: 'cors' } : {})
     .then((response) => response.json())
     .then((response) => response.preview);
 }

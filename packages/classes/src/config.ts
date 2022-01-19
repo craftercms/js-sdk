@@ -20,6 +20,7 @@ import { CrafterConfig } from '@craftercms/models';
 
 const DEFAULTS: CrafterConfig = {
   site: '',
+  cors: false,
   baseUrl: '',
   searchId: null,
   endpoints: {
