@@ -19,7 +19,7 @@ import { pluck } from 'rxjs/operators';
 import { ajax } from 'rxjs/ajax';
 import 'url-search-params-polyfill';
 import { LookupTable } from '@craftercms/models';
-import { crafterConf } from '@craftercms/classes';
+import { crafterConf } from './config';
 
 export function httpGet<T extends any = any>(requestURL: string, params: Object = {}, headers?: LookupTable): Observable<T> {
   const searchParams = new URLSearchParams(params as URLSearchParams);
