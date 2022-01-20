@@ -1,5 +1,10 @@
 # SDK Changelog
 
+## 2.0.2
+- Allow CORs
+  - Use `crafterConf.configure({ cors: true, ... })` to enable CORs mode.
+- Fix `fetchIsAuthoring` and `addAuthoringSupport` not retrieving for baseUrl from `crafterConf`.
+
 ## 2.0.1
 
 ### @craftercms/redux
