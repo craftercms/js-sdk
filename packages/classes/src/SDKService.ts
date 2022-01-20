@@ -16,15 +16,19 @@
 
 import { Observable } from 'rxjs';
 import { pluck } from 'rxjs/operators';
-import { ajax, AjaxResponse } from 'rxjs/ajax';
+import { ajax } from 'rxjs/ajax';
 import 'url-search-params-polyfill';
 import { LookupTable } from '@craftercms/models';
+import { crafterConf } from './config';
 
 export function httpGet<T extends any = any>(requestURL: string, params: Object = {}, headers?: LookupTable): Observable<T> {
   const searchParams = new URLSearchParams(params as URLSearchParams);
-  return ajax.get(`${requestURL}?${searchParams.toString()}`, headers).pipe(
-    pluck('response')
-  );
+  return ajax({
+    url: `${requestURL}?${searchParams.toString()}`,
+    method: 'GET',
+    headers: headers,
+    crossDomain: crafterConf.getConfig().cors
+  }).pipe(pluck('response'));
 }
 
 export function httpPost<T extends any = any>(requestURL: string, body: Object = {}, headers?: LookupTable): Observable<T> {
