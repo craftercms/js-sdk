@@ -14,24 +14,7 @@
  * along with this program. If not, see http://www.gnu.org/licenses/.
  */
 
-import { ContentInstance, Descriptor, Item } from '@craftercms/models';
-
-interface GraphQLResponse {
-  [root: string]: {
-    // Repeating groups & node selectors collection root
-    item?:
-      object[] |
-      Array<{
-        key: string;
-        value: string;
-        component: unknown;
-      }>
-    // Other field types
-    [contentTypeField: string]: unknown
-  }
-}
-
-type DescriptorResponse = Descriptor | Item | GraphQLResponse;
+import { ContentInstance, DescriptorResponse } from '@craftercms/models';
 
 const systemPropMap = {
   guid: 'id',

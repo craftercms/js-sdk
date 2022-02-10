@@ -24,3 +24,4 @@ export * from './src/ReduxStore';
 export * from './src/message';
 export * from './src/ContentInstance';
 export * from './src/search';
+export * from './src/GraphQLResponse';
