@@ -48,13 +48,18 @@ const systemProps = Object.keys(systemPropMap).concat(
   Object.values(systemPropMap)
 );
 
-export function parseDescriptor(data: DescriptorResponse | DescriptorResponse[]): ContentInstance | ContentInstance[] {
+export interface ParseDescriptorOptions {
+  /** Whether to parse the field values to their respective data type based on postfix (e.g. _i number, _b boolean, etc) */
+  parseFieldValueTypes: boolean;
+}
+
+export function parseDescriptor(data: DescriptorResponse | DescriptorResponse[], options?: ParseDescriptorOptions): ContentInstance | ContentInstance[] {
   if (data == null) {
     return null;
   } else if (Array.isArray(data)) {
-    return data.map((item) => parseDescriptor(item) as ContentInstance);
+    return data.map((item) => parseDescriptor(item, options) as ContentInstance);
   } else if (data.children) {
-    return parseDescriptor(extractChildren(data.children));
+    return parseDescriptor(extractChildren(data.children), options);
   } else if (data.descriptorDom === null && data.descriptorUrl) {
     // This path catches calls to getChildren (/api/1/site/content_store/children.json?url=&crafterSite=)
     // The getChildren call contains certain items that can't be parsed into content items.
@@ -77,10 +82,10 @@ export function parseDescriptor(data: DescriptorResponse | DescriptorResponse[])
       sourceMap: {}
     }
   };
-  return parseProps(extractContent(data), parsed);
+  return parseProps(extractContent(data), parsed, options);
 }
 
-export function parseProps<Props = object, Target = object>(props: Props, parsed: Target = {} as Target): Target {
+export function parseProps<Props = object, Target = object>(props: Props, parsed: Target = {} as Target, options: ParseDescriptorOptions = { parseFieldValueTypes: false }): Target {
   Object.entries(props).forEach(([prop, value]) => {
     if (ignoreProps.includes(prop)) {
       return; // continue, skip prop.
@@ -113,7 +118,7 @@ export function parseProps<Props = object, Target = object>(props: Props, parsed
       }
       parsed[prop] = parsed[prop].map((item) => {
         const { key, value, component, include } = item;
-        if ((item.component) || (item.key && item.value)) {
+        if ((item.component) || (item.key && item.include)) {
           // Components
           const newComponent = {
             label: value,
@@ -126,17 +131,42 @@ export function parseProps<Props = object, Target = object>(props: Props, parsed
                   : component?.path ? component.path : null
               )
           };
-          return parseDescriptor(newComponent);
+          return parseDescriptor(newComponent, options);
         } else {
-          // Repeat group items
-          return parseProps(item);
+          // Repeat group items or key/value pairs
+          return parseProps(item, void 0, options);
         }
       });
     } else {
-      parsed[prop] = value ?? null;
+      parsed[prop] = value != null
+        ? options.parseFieldValueTypes ? parseFieldValue(prop, value) : value
+        : null;
     }
   });
   return parsed;
+}
+
+export function parseFieldValue(propName: string, propValue: any): number | string | boolean {
+  let postFix = propName.substr(propName.lastIndexOf('_'));
+  switch (postFix) {
+    /*
+    _i  For integer number.
+    _l  For long integer number.
+    _f  For floating point number.
+    _d  For long floating point number.
+    _to For time
+    _dt For date in ISO 8601
+    */
+    case '_b':
+      return propValue.toLowerCase().trim() === 'true';
+    case '_i':
+    case '_l':
+    case '_f':
+    case '_d':
+      return parseFloat(propValue);
+    default:
+      return propValue;
+  }
 }
 
 /**
