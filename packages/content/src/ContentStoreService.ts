@@ -32,7 +32,7 @@ export function getItem(path: string, config?: CrafterConfig): Observable<Item> 
   return SDKService.httpGet(requestURL, { url: path, crafterSite: config.site }, config.headers);
 }
 
-export interface GetDescriptorConfig {
+export interface GetDescriptorConfig extends CrafterConfig {
   flatten: boolean;
 }
 
@@ -42,10 +42,10 @@ export interface GetDescriptorConfig {
  * @param {CrafterConfig & GetDescriptorConfig} config? - The config override options to use
  */
 export function getDescriptor(path: string): Observable<Descriptor>;
-export function getDescriptor(path: string, config: Partial<CrafterConfig & GetDescriptorConfig>): Observable<Descriptor>;
-export function getDescriptor(path: string, config?: Partial<CrafterConfig & GetDescriptorConfig>): Observable<Descriptor> {
+export function getDescriptor(path: string, config: Partial<GetDescriptorConfig>): Observable<Descriptor>;
+export function getDescriptor(path: string, config?: Partial<GetDescriptorConfig>): Observable<Descriptor> {
   let cfg = crafterConf.mix(config);
-  return SDKService.httpGet(composeUrl(cfg, cfg.endpoints.GET_DESCRIPTOR), {
+  return SDKService.httpGet<Descriptor>(composeUrl(cfg, cfg.endpoints.GET_DESCRIPTOR), {
     url: path,
     crafterSite: cfg.site,
     flatten: Boolean(config.flatten)

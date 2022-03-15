@@ -1,10 +1,10 @@
 {
   "extends": "../tsconfig-build.json",
-
   "compilerOptions": {
     "baseUrl": ".",
     "rootDir": ".",
     "paths": {
+      "rxjs": ["../../node_modules/rxjs"],
       "rxjs/*": ["../../node_modules/rxjs/*"],
       "redux": ["../../node_modules/redux"],
       "redux-observable": ["../../node_modules/redux-observable"],
@@ -17,7 +17,6 @@
     },
     "outDir": "../../dist/packages/redux"
   },
-
   "files": [
     "index.ts"
   ]
