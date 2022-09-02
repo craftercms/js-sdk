@@ -15,6 +15,10 @@
  */
 
 import { ContentInstance, DescriptorResponse } from '@craftercms/models';
+import { urlTransform } from './UrlTransformationService';
+import { getDescriptor, GetDescriptorConfig } from './ContentStoreService';
+import { map, switchMap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 const systemPropMap = {
   guid: 'id',
@@ -53,6 +57,8 @@ export interface ParseDescriptorOptions {
   parseFieldValueTypes: boolean;
 }
 
+export function parseDescriptor(data: DescriptorResponse, options?: ParseDescriptorOptions): ContentInstance;
+export function parseDescriptor(data: DescriptorResponse[], options?: ParseDescriptorOptions): ContentInstance[];
 export function parseDescriptor(data: DescriptorResponse | DescriptorResponse[], options?: ParseDescriptorOptions): ContentInstance | ContentInstance[] {
   if (data == null) {
     return null;
@@ -167,6 +173,23 @@ export function parseFieldValue(propName: string, propValue: any): number | stri
     default:
       return propValue;
   }
+}
+
+export function fetchModelByPath(path: string): Observable<ContentInstance>;
+export function fetchModelByPath(path: string, options?: GetDescriptorConfig & ParseDescriptorOptions): Observable<ContentInstance>;
+export function fetchModelByPath(path: string, options?: GetDescriptorConfig & ParseDescriptorOptions): Observable<ContentInstance> {
+  return getDescriptor(path, { flatten: options?.flatten ?? true }).pipe(
+    map((descriptor) => parseDescriptor(descriptor, { parseFieldValueTypes: options?.parseFieldValueTypes ?? true }))
+  );
+}
+
+export function fetchModelByUrl(webUrl: string): Observable<ContentInstance>;
+export function fetchModelByUrl(webUrl: string, options?: GetDescriptorConfig & ParseDescriptorOptions): Observable<ContentInstance>;
+export function fetchModelByUrl(webUrl: string, options?: GetDescriptorConfig & ParseDescriptorOptions): Observable<ContentInstance> {
+  return urlTransform('renderUrlToStoreUrl', webUrl).pipe(
+    switchMap((path) => getDescriptor(path as string, { flatten: options?.flatten ?? true })),
+    map((descriptor) => parseDescriptor(descriptor, { parseFieldValueTypes: options?.parseFieldValueTypes ?? true }))
+  );
 }
 
 /**

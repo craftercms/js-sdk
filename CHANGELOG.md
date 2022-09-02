@@ -1,5 +1,17 @@
 # SDK Changelog
 
+## 2.0.6
+
+### @craftercms/content
+
+- Add `fetchModelByPath` and `fetchModelByUrl` shortcuts methods
+- Improve `parseDescriptor` typings
+- Improve `urlTransform` typings
+
+### @craftercms/classes
+
+- Add basic `crafterConf` docs
+
 ## 2.0.5
 
 ### @craftercms/content
