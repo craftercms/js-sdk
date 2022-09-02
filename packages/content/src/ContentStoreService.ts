@@ -48,7 +48,7 @@ export function getDescriptor(path: string, config?: Partial<GetDescriptorConfig
   return SDKService.httpGet<Descriptor>(composeUrl(cfg, cfg.endpoints.GET_DESCRIPTOR), {
     url: path,
     crafterSite: cfg.site,
-    flatten: Boolean(config.flatten)
+    flatten: Boolean(config?.flatten)
   }, cfg.headers).pipe(
     // Manually introduce the path into the response as descriptor endpoint does not return it.
     map((descriptor: Descriptor) => {

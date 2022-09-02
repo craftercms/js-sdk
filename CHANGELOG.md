@@ -1,5 +1,10 @@
 # SDK Changelog
 
+## 2.0.7
+
+### @craftercms/content
+- Fix `getDescriptor` crashing when `config` isn't supplied.
+
 ## 2.0.6
 
 ### @craftercms/content
