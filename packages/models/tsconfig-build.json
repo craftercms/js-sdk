@@ -4,7 +4,9 @@
     "baseUrl": ".",
     "rootDir": ".",
     "paths": {
-      "@craftercms/models": ["."]
+      "@craftercms/models": ["."],
+      "rxjs": ["../../node_modules/rxjs"],
+      "rxjs/*": ["../../node_modules/rxjs/*"]
     },
     "outDir": "../../dist/packages/models"
   },

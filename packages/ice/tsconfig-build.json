@@ -7,7 +7,9 @@
       "react": ["../../node_modules/react"],
       "@craftercms/models": ["../../dist/packages/models"],
       "@craftercms/utils": ["../../dist/packages/utils"],
-      "@craftercms/ice": ["."]
+      "@craftercms/ice": ["."],
+      "rxjs": ["../../node_modules/rxjs"],
+      "rxjs/*": ["../../node_modules/rxjs/*"]
     },
     "outDir": "../../dist/packages/ice"
   },

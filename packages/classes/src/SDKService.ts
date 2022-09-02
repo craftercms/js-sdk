@@ -15,20 +15,21 @@
  */
 
 import { Observable } from 'rxjs';
+import { fromFetch } from 'rxjs/fetch';
 import { pluck } from 'rxjs/operators';
 import { ajax } from 'rxjs/ajax';
-import 'url-search-params-polyfill';
 import { LookupTable } from '@craftercms/models';
+import { stringify } from 'query-string';
 import { crafterConf } from './config';
 
-export function httpGet<T extends any = any>(requestURL: string, params: Object = {}, headers?: LookupTable): Observable<T> {
-  const searchParams = new URLSearchParams(params as URLSearchParams);
-  return ajax({
-    url: `${requestURL}?${searchParams.toString()}`,
+export function httpGet<T extends any = any>(requestURL: string, params: Record<string, any> = {}, headers?: LookupTable): Observable<T> {
+  const mode = crafterConf.getConfig().cors;
+  return fromFetch(`${requestURL}?${stringify(params)}`, {
     method: 'GET',
     headers: headers,
-    crossDomain: crafterConf.getConfig().cors
-  }).pipe(pluck('response'));
+    mode: typeof mode === 'boolean' ? mode ? 'cors' : 'no-cors' : mode,
+    selector: response => response.json()
+  });
 }
 
 export function httpPost<T extends any = any>(requestURL: string, body: Object = {}, headers?: LookupTable): Observable<T> {

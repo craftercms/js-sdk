@@ -14,23 +14,35 @@
  * along with this program. If not, see http://www.gnu.org/licenses/.
  */
 
-import { Observable } from 'rxjs';
-
 import { crafterConf, SDKService } from '@craftercms/classes';
 import { CrafterConfig } from '@craftercms/models';
 import { composeUrl } from '@craftercms/utils';
+import { Observable } from 'rxjs';
+
+export type UrlTransformers =
+  | 'storeUrlToRenderUrl'
+  | 'renderUrlToStoreUrl'
+  | 'renderUrlToTargetedStoreUrl'
+  | 'storeUrlToFullRenderUrl'
+  | 'toWebAppRelativeUrl'
+  | 'toServletRelativeUrl'
+  | 'toFullUrl'
+  | 'toFullHttpsUrl'
+  | 'folderToIndexUrl'
+  | 'toTargetedUrl'
+  | 'toCurrentTargetedUrl';
 
 /**
  * Transforms a URL, based on the current site's UrlTransformationEngine.
  * @param {string} transformerName - Name of the transformer to apply
  * @param {string} url - URL that will be transformed
  */
-export function urlTransform(transformerName: string, url: string): Observable<any>;
-export function urlTransform(transformerName: string, url: string, config: CrafterConfig): Observable<any>;
-export function urlTransform(transformerName: string, url: string, config?: CrafterConfig): Observable<any> {
+export function urlTransform(transformerName: UrlTransformers, url: string): Observable<string>;
+export function urlTransform(transformerName: UrlTransformers, url: string, config: CrafterConfig): Observable<string>;
+export function urlTransform(transformerName: UrlTransformers, url: string, config?: CrafterConfig): Observable<string> {
   config = crafterConf.mix(config);
   const requestURL = composeUrl(config, config.endpoints.TRANSFORM_URL);
-  return SDKService.httpGet(requestURL, {
+  return SDKService.httpGet<string>(requestURL, {
     crafterSite: config.site,
     transformerName,
     url
