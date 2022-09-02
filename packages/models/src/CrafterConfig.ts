@@ -18,7 +18,7 @@ import { LookupTable } from '@craftercms/models';
 
 export interface CrafterConfig {
   site: string;
-  cors: boolean;
+  cors: boolean | RequestInit['mode'];
   baseUrl: string;
   searchId?: string;
   endpoints?: Endpoints;
