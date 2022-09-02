@@ -16,8 +16,10 @@
 
 export interface NavigationItem {
   url: string;
+  label: string;
   active: boolean;
   subItems: Array<NavigationItem>;
+  attributes: Record<string, string>;
   [prop: string]: any;
 }
 

@@ -25,6 +25,7 @@ import { composeUrl } from '@craftercms/utils';
  * @param {string} transformerName - Name of the transformer to apply
  * @param {string} url - URL that will be transformed
  */
+// TODO: transformerName: 'storeUrlToRenderUrl' | 'renderUrlToStoreUrl' | ???
 export function urlTransform(transformerName: string, url: string): Observable<any>;
 export function urlTransform(transformerName: string, url: string, config: CrafterConfig): Observable<any>;
 export function urlTransform(transformerName: string, url: string, config?: CrafterConfig): Observable<any> {

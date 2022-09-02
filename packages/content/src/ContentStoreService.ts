@@ -15,10 +15,10 @@
  */
 
 import { Observable } from 'rxjs';
-
 import { crafterConf, SDKService } from '@craftercms/classes';
 import { CrafterConfig, Descriptor, Item } from '@craftercms/models';
 import { composeUrl } from '@craftercms/utils';
+import { map } from 'rxjs/operators';
 
 /**
  * Returns an Item from the content store.
@@ -44,13 +44,23 @@ export interface GetDescriptorConfig {
 export function getDescriptor(path: string): Observable<Descriptor>;
 export function getDescriptor(path: string, config: Partial<CrafterConfig & GetDescriptorConfig>): Observable<Descriptor>;
 export function getDescriptor(path: string, config?: Partial<CrafterConfig & GetDescriptorConfig>): Observable<Descriptor> {
-  config = crafterConf.mix(config);
-  const requestURL = composeUrl(config, config.endpoints.GET_DESCRIPTOR);
-  return SDKService.httpGet(requestURL, {
+  let cfg = crafterConf.mix(config);
+  return SDKService.httpGet(composeUrl(cfg, cfg.endpoints.GET_DESCRIPTOR), {
     url: path,
-    crafterSite: config.site,
+    crafterSite: cfg.site,
     flatten: Boolean(config.flatten)
-  }, config.headers);
+  }, cfg.headers).pipe(
+    // Manually introduce the path into the response as descriptor endpoint does not return it.
+    map((descriptor: Descriptor) => {
+      let prop = typeof descriptor.page === 'undefined' ? 'component' : 'page';
+      return {
+        [prop]: {
+          ...descriptor[prop],
+          localId: path
+        }
+      };
+    })
+  );
 }
 
 /**
