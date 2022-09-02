@@ -19,6 +19,11 @@ import { crafterConf } from '@craftercms/classes';
 
 declare namespace window {
   const crafterRequire: any;
+  const craftercms: {
+    xb: {
+      initInContextEditing(props: { path: string; props: Record<string, any> }): { unmount(): void }
+    }
+  };
 }
 
 export interface BaseCrafterConfig extends Pick<CrafterConfig, 'site' | 'baseUrl'> {
@@ -60,17 +65,24 @@ const printedErrorCache = {
   invalidPath: {}
 };
 
-export function addAuthoringSupport(config?: Partial<BaseCrafterConfig>): Promise<any> {
+export function addAuthoringSupport(config?: Partial<BaseCrafterConfig & { xb?: boolean }>): Promise<any> {
+  const isV4 = Boolean(config?.xb);
   config = crafterConf.mix(config);
   return new Promise((resolve) => {
     const script = document.createElement('script');
-    script.src = `${config.baseUrl}/studio/static-assets/libs/requirejs/require.js`;
+    script.src = isV4
+      ? `${config.baseUrl}/studio/static-assets/scripts/craftercms-xb.umd.js`
+      : `${config.baseUrl}/studio/static-assets/libs/requirejs/require.js`;
     script.addEventListener('load', () => {
-      window.crafterRequire?.([`${config.baseUrl}/studio/overlayhook?.js`], () => {
-        window.crafterRequire(['guest'], (guest) => {
-          resolve(guest);
+      if (isV4) {
+        resolve(window.craftercms?.xb);
+      } else {
+        window.crafterRequire?.([`${config.baseUrl}/studio/overlayhook?.js`], () => {
+          window.crafterRequire(['guest'], (guest) => {
+            resolve(guest);
+          });
         });
-      });
+      }
     });
     document.head.appendChild(script);
   });
