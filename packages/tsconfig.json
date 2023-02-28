@@ -18,7 +18,7 @@
     },
     "rootDir": ".",
     "inlineSourceMap": true,
-    "lib": ["es5", "dom", "es2015", "es2017"],
+    "lib": ["dom", "es2019"],
     "skipDefaultLibCheck": true,
     "skipLibCheck": true,
     "target": "es5"

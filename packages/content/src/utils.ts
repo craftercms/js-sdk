@@ -14,13 +14,13 @@
  * along with this program. If not, see http://www.gnu.org/licenses/.
  */
 
-import { ContentInstance, DescriptorResponse } from '@craftercms/models';
+import { ContentInstance, Descriptor, DescriptorResponse, Item } from '@craftercms/models';
 import { urlTransform } from './UrlTransformationService';
 import { getDescriptor, GetDescriptorConfig } from './ContentStoreService';
 import { map, switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
-const systemPropMap = {
+export const systemPropMap = {
   guid: 'id',
   cmsId: 'id',
   objectId: 'id',
@@ -34,11 +34,11 @@ const systemPropMap = {
   content__type: 'contentTypeId',
   createdDate_dt: 'dateCreated',
   lastModifiedDate_dt: 'dateModified',
-  disabled: 'disabled'
+  disabled: 'disabled',
+  orderDefault_f: 'orderInNav'
 };
 
-const ignoreProps = [
-  'orderDefault_f',
+export const ignoredProps = [
   'merge-strategy',
   'display-template',
   'objectGroupId',
@@ -48,18 +48,37 @@ const ignoreProps = [
   'no-template-required'
 ];
 
-const systemProps = Object.keys(systemPropMap).concat(
-  Object.values(systemPropMap)
-);
+export const systemProps = Object.keys(systemPropMap).concat(Object.values(systemPropMap));
 
-export interface ParseDescriptorOptions {
-  /** Whether to parse the field values to their respective data type based on postfix (e.g. _i number, _b boolean, etc) */
-  parseFieldValueTypes: boolean;
+function mixParseDescriptorOptions(options: ParseDescriptorOptions = {}): ParseDescriptorOptions {
+  return Object.assign({
+    systemPropMap,
+    ignoredProps,
+    systemProps,
+    parseFieldValueTypes: false
+  }, options);
 }
 
-export function parseDescriptor(data: DescriptorResponse, options?: ParseDescriptorOptions): ContentInstance;
-export function parseDescriptor(data: DescriptorResponse[], options?: ParseDescriptorOptions): ContentInstance[];
-export function parseDescriptor(data: DescriptorResponse | DescriptorResponse[], options?: ParseDescriptorOptions): ContentInstance | ContentInstance[] {
+export type ParseDescriptorOptions = Partial<{
+  /** Whether to parse the field values to their respective data type based on postfix (e.g. _i number, _b boolean, etc) */
+  parseFieldValueTypes: boolean;
+  /** Defines the parsed names that go inside the `.craftercms` property of the ContentInstance */
+  systemPropMap: Record<string, string>;
+  /** Defines the list of properties that aren't included in the parsed ContentInstance */
+  ignoredProps: string[];
+  /** List of all props considered "system" that will be routed to the `.craftercms` prop of the parsed ContentInstances */
+  systemProps: string[];
+}>;
+
+export function parseDescriptor(data: DescriptorResponse): ContentInstance;
+export function parseDescriptor(data: DescriptorResponse, options: ParseDescriptorOptions): ContentInstance;
+export function parseDescriptor(data: DescriptorResponse[]): ContentInstance[];
+export function parseDescriptor(data: DescriptorResponse[], options: ParseDescriptorOptions): ContentInstance[];
+export function parseDescriptor(
+  data: DescriptorResponse | DescriptorResponse[],
+  options?: ParseDescriptorOptions
+): ContentInstance | ContentInstance[] {
+  options = mixParseDescriptorOptions(options);
   if (data == null) {
     return null;
   } else if (Array.isArray(data)) {
@@ -85,15 +104,26 @@ export function parseDescriptor(data: DescriptorResponse | DescriptorResponse[],
       contentTypeId: null,
       dateCreated: null,
       dateModified: null,
+      disabled: false,
       sourceMap: {}
     }
   };
   return parseProps(extractContent(data), parsed, options);
 }
 
-export function parseProps<Props = object, Target = object>(props: Props, parsed: Target = {} as Target, options: ParseDescriptorOptions = { parseFieldValueTypes: false }): Target {
+export function parseProps<Props = object, Target = object>(
+  props: Props,
+  parsed: Target = {} as Target,
+  options?: ParseDescriptorOptions
+): Target {
+  options = mixParseDescriptorOptions(options);
+  let {
+    systemPropMap,
+    ignoredProps,
+    systemProps
+  } = options;
   Object.entries(props).forEach(([prop, value]) => {
-    if (ignoreProps.includes(prop)) {
+    if (ignoredProps.includes(prop)) {
       return; // continue, skip prop.
     }
     if (value?.['crafter-source-content-type-id']) {
@@ -107,8 +137,20 @@ export function parseProps<Props = object, Target = object>(props: Props, parsed
       }
     }
     if (systemProps.includes(prop)) {
+      let propName = systemPropMap[prop] ?? prop;
+      let parsedValue = value;
+      switch (propName) {
+        case 'disabled':
+          parsedValue = value === 'true';
+          break;
+        case 'orderInNav':
+          parsedValue = parseFloat(value);
+          // Should never happen but just in case the value is not numeric, rollback to original string
+          if (isNaN(parsedValue)) parsedValue = value;
+          break;
+      }
       // @ts-ignore
-      parsed.craftercms[systemPropMap[prop] ?? prop] = value;
+      parsed.craftercms[propName] = parsedValue;
       // Is there a risk prop name that matches what's considered a system prop?
       // In that case, here, parsed.craftercms might not be in the target object
       // and throw. We could do the below to de-risk but feels this needs assessment.
@@ -153,8 +195,8 @@ export function parseProps<Props = object, Target = object>(props: Props, parsed
 }
 
 export function parseFieldValue(propName: string, propValue: any): number | string | boolean {
-  let postFix = propName.substr(propName.lastIndexOf('_'));
-  switch (postFix) {
+  let suffix = propName.substr(propName.lastIndexOf('_'));
+  switch (suffix) {
     /*
     _i  For integer number.
     _l  For long integer number.
@@ -176,26 +218,34 @@ export function parseFieldValue(propName: string, propValue: any): number | stri
 }
 
 export function fetchModelByPath(path: string): Observable<ContentInstance>;
-export function fetchModelByPath(path: string, options?: GetDescriptorConfig & ParseDescriptorOptions): Observable<ContentInstance>;
-export function fetchModelByPath(path: string, options?: GetDescriptorConfig & ParseDescriptorOptions): Observable<ContentInstance> {
-  return getDescriptor(path, { flatten: options?.flatten ?? true }).pipe(
-    map((descriptor) => parseDescriptor(descriptor, { parseFieldValueTypes: options?.parseFieldValueTypes ?? true }))
+export function fetchModelByPath(path: string, options: Partial<GetDescriptorConfig & ParseDescriptorOptions>): Observable<ContentInstance>;
+export function fetchModelByPath(
+  path: string,
+  options?: Partial<GetDescriptorConfig & ParseDescriptorOptions>
+): Observable<ContentInstance> {
+  let pdo = mixParseDescriptorOptions({ parseFieldValueTypes: true, ...options });
+  return getDescriptor(path, { flatten: true, ...options }).pipe(
+    map((descriptor) => parseDescriptor(descriptor, pdo))
   );
 }
 
 export function fetchModelByUrl(webUrl: string): Observable<ContentInstance>;
-export function fetchModelByUrl(webUrl: string, options?: GetDescriptorConfig & ParseDescriptorOptions): Observable<ContentInstance>;
-export function fetchModelByUrl(webUrl: string, options?: GetDescriptorConfig & ParseDescriptorOptions): Observable<ContentInstance> {
+export function fetchModelByUrl(webUrl: string, options: Partial<GetDescriptorConfig & ParseDescriptorOptions>): Observable<ContentInstance>;
+export function fetchModelByUrl(
+  webUrl: string,
+  options?: Partial<GetDescriptorConfig & ParseDescriptorOptions>
+): Observable<ContentInstance> {
+  let pdo = mixParseDescriptorOptions({ parseFieldValueTypes: true, ...options });
   return urlTransform('renderUrlToStoreUrl', webUrl).pipe(
-    switchMap((path) => getDescriptor(path as string, { flatten: options?.flatten ?? true })),
-    map((descriptor) => parseDescriptor(descriptor, { parseFieldValueTypes: options?.parseFieldValueTypes ?? true }))
+    switchMap((path) => getDescriptor(path as string, { flatten: true, ...options })),
+    map((descriptor) => parseDescriptor(descriptor, pdo))
   );
 }
 
 /**
  * Inspects the data for getItem or getDescriptor responses and returns the inner content object
- * */
-function extractContent(data) {
+ */
+export function extractContent(data: Descriptor | Item) {
   let output = data;
   if (data.descriptorDom) {
     return {
@@ -210,10 +260,14 @@ function extractContent(data) {
   return output;
 }
 
+export interface ItemWithChildren extends Record<string, any> {
+  children?: Array<ItemWithChildren>;
+}
+
 /**
  * Flattens a getChildren response into a flat list of content items
- * */
-function extractChildren(children) {
+ */
+export function extractChildren(children: Array<ItemWithChildren>) {
   return children.flatMap((child) => {
     return child.children ? extractChildren(child.children) : child;
   });
