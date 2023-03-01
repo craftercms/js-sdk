@@ -1,6 +1,6 @@
 {
   "name": "@craftercms/sdk",
-  "version": "2.0.7",
+  "version": "4.0.3",
   "private": true,
   "workspaces": [
     "packages/*"

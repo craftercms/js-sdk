@@ -1,5 +1,19 @@
 # SDK Changelog
 
+## 4.0.3
+
+### All packages
+- Switching SDK versioning to follow the CrafterCMS release version 
+
+### @craftercms/content
+- Update `parseProps` (internally used by `parseDescriptor`) to include `orderDefault_f` (parsed as `orderInNav`) in the resulting ContentInstance.
+- Update `parseProps` and `parseDescriptor` options to receive `systemPropMap`, `ignoredProps`, `systemProps` to be used during parsing.
+  - Note: modifying these props will require you to _open_ the `ContentInstance` interface and extend it accordingly.
+- Improve `parseDescriptor` signatures definitions
+- Parse values of `orderInNav` and `disabled` to their target data types (float and boolean, respectively).
+- Export `extractContent` and `extractChildren` functions.
+- Export the default `systemPropMap`, `ignoredProps`, `systemProps`.
+
 ## 2.0.7
 
 ### @craftercms/content
