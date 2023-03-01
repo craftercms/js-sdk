@@ -3,7 +3,7 @@
 ## 4.0.3
 
 ### All packages
-- Switching sdk versioning to follow CrafterCMS release version 
+- Switching SDK versioning to follow the CrafterCMS release version 
 
 ### @craftercms/content
 - Update `parseProps` (internally used by `parseDescriptor`) to include `orderDefault_f` (parsed as `orderInNav`) in the resulting ContentInstance.
