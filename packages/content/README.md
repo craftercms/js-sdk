@@ -125,7 +125,7 @@ import { createQuery, search } from '@craftercms/search';
 import { parseDescriptor, preParseSearchResults } from '@craftercms/content';
 
 search(
-  createQuery('elasticsearch', {
+  createQuery({
     query: {
       bool: {
         filter: [/*...*/]

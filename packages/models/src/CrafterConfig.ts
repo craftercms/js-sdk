@@ -34,7 +34,7 @@ export interface Endpoints {
   GET_NAV_TREE: string;
   GET_BREADCRUMB: string;
   TRANSFORM_URL: string;
-  ELASTICSEARCH: string;
+  SEARCH: string;
 }
 
 export default CrafterConfig;

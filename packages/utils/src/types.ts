@@ -17,5 +17,3 @@
 import { PartialObserver } from 'rxjs';
 
 export declare type ObserverOrNext<T> = (value: T) => void | PartialObserver<T>;
-
-export declare type SearchEngines = 'elasticsearch';

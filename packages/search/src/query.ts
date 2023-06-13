@@ -55,4 +55,12 @@ export class Query {
     }
   }
 
+  /**
+   * Sets the actual query.
+   * @param {string} query - Query string
+   */
+  set query(query) {
+    this.params = query;
+  }
+
 }

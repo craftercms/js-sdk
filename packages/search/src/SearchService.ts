@@ -16,11 +16,10 @@
 
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { composeUrl, SearchEngines } from '@craftercms/utils';
+import { composeUrl } from '@craftercms/utils';
 import { crafterConf, SDKService } from '@craftercms/classes';
 import { CrafterConfig } from '@craftercms/models';
 import { Query } from './query';
-import { ElasticQuery } from '@craftercms/search';
 
 import uuid from 'uuid';
 import 'url-search-params-polyfill';
@@ -39,8 +38,8 @@ export function search(queryOrParams: Query | Object, config?: CrafterConfig): O
     ? queryOrParams.params
     : queryOrParams;
 
-  if (queryOrParams instanceof ElasticQuery) {
-    requestURL = composeUrl(config, config.endpoints.ELASTICSEARCH) + '?crafterSite=' + config.site;
+  if (queryOrParams instanceof Query) {
+    requestURL = composeUrl(config, config.endpoints.SEARCH) + '?crafterSite=' + config.site;
 
     return SDKService.httpPost(requestURL, params)
       .pipe(map((response: any) => {
@@ -60,7 +59,7 @@ export function createQuery<T extends Query>(params?: Object): T {
       ? params['uuid']
       : uuid();
 
-  query = new ElasticQuery();
+  query = new Query();
   Object.assign(query.params, params);
   query.uuid = queryId;
 
