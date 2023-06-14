@@ -19,7 +19,7 @@ import { SearchService } from '@craftercms/search';
 import { crafterConf } from '@craftercms/classes';
 import 'mocha';
 import 'url-search-params-polyfill';
-import { ElasticQuery } from '../src/elastic-query';
+import { Query } from "../src/query";
 
 import mock from 'xhr-mock';
 import MockRequest from "xhr-mock/lib/MockRequest";
@@ -42,13 +42,13 @@ describe('Search Client', () => {
   describe('search', () => {
 
     it('should find all documents', done => {
-      mock.post("http://localhost:8080/api/1/site/elasticsearch/search",
+      mock.post("http://localhost:8080/api/1/site/search/search.json",
       (req: MockRequest, res: MockResponse) => {
         res.body(JSON.stringify(searchResponse));
         return res;
       });
 
-      const query = SearchService.createQuery<ElasticQuery>({ 'uuid': '12345' });
+      const query = SearchService.createQuery<Query>({ 'uuid': '12345' });
       query.query = {
         "query" : {
           "match_all" : {}
@@ -63,13 +63,13 @@ describe('Search Client', () => {
     });
 
     it('should apply all filters', done => {
-      mock.post("http://localhost:8080/api/1/site/elasticsearch/search",
+      mock.post("http://localhost:8080/api/1/site/search/search.json",
         (req: MockRequest, res: MockResponse) => {
           res.body(JSON.stringify(searchResponse));
           return res;
         });
 
-      var query = SearchService.createQuery<ElasticQuery>({ 'uuid': '12345' });
+      var query = SearchService.createQuery<Query>({ 'uuid': '12345' });
       query.query = {
         "query" : {
           "bool": {

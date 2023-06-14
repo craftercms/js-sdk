@@ -39,7 +39,7 @@ All of Crafter CMS packages can be used either via npm or in plain html/javascri
     const { parseDescriptor, preParseSearchResults } = content;
 
     search(
-      createQuery('elasticsearch', {
+      createQuery({
         query: {
           bool: {
             filter: [/*...*/]

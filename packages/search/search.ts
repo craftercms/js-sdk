@@ -15,5 +15,4 @@
  */
 
 export * from './src/query';
-export * from './src/elastic-query';
 export * from './src/SearchService';
