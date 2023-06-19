@@ -38,8 +38,8 @@ export type UrlTransformers =
  * @param {string} url - URL that will be transformed
  */
 export function urlTransform(transformerName: UrlTransformers, url: string): Observable<string>;
-export function urlTransform(transformerName: UrlTransformers, url: string, config: CrafterConfig): Observable<string>;
-export function urlTransform(transformerName: UrlTransformers, url: string, config?: CrafterConfig): Observable<string> {
+export function urlTransform(transformerName: UrlTransformers, url: string, config: Partial<CrafterConfig>): Observable<string>;
+export function urlTransform(transformerName: UrlTransformers, url: string, config?: Partial<CrafterConfig>): Observable<string> {
   config = crafterConf.mix(config);
   const requestURL = composeUrl(config, config.endpoints.TRANSFORM_URL);
   return SDKService.httpGet<string>(requestURL, {

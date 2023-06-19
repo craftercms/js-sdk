@@ -25,8 +25,8 @@ import { map } from 'rxjs/operators';
  * @param {string} path - The item’s path
  */
 export function getItem(path: string): Observable<Item>;
-export function getItem(path: string, config: CrafterConfig): Observable<Item>;
-export function getItem(path: string, config?: CrafterConfig): Observable<Item> {
+export function getItem(path: string, config: Partial<CrafterConfig>): Observable<Item>;
+export function getItem(path: string, config?: Partial<CrafterConfig>): Observable<Item> {
   config = crafterConf.mix(config);
   const requestURL = composeUrl(config, config.endpoints.GET_ITEM_URL);
   return SDKService.httpGet(requestURL, { url: path, crafterSite: config.site }, config.headers);
@@ -68,8 +68,8 @@ export function getDescriptor(path: string, config?: Partial<GetDescriptorConfig
  * @param {string} path - the folder’s path
  */
 export function getChildren(path: string): Observable<Item[]>;
-export function getChildren(path: string, config: CrafterConfig): Observable<Item[]>;
-export function getChildren(path: string, config?: CrafterConfig): Observable<Item[]> {
+export function getChildren(path: string, config: Partial<CrafterConfig>): Observable<Item[]>;
+export function getChildren(path: string, config?: Partial<CrafterConfig>): Observable<Item[]> {
   config = crafterConf.mix(config);
   const requestURL = composeUrl(config, config.endpoints.GET_CHILDREN);
   return SDKService.httpGet(requestURL, { url: path, crafterSite: config.site }, config.headers);
@@ -82,9 +82,9 @@ export function getChildren(path: string, config?: CrafterConfig): Observable<It
  */
 export function getTree(path: string): Observable<Item>;
 export function getTree(path: string, depth: number): Observable<Item>;
-export function getTree(path: string, depth: number, config: CrafterConfig): Observable<Item>;
-export function getTree(path: string, config: CrafterConfig): Observable<Item>;
-export function getTree(path: string, depth: number | CrafterConfig = 1, config?: CrafterConfig): Observable<Item> {
+export function getTree(path: string, depth: number, config: Partial<CrafterConfig>): Observable<Item>;
+export function getTree(path: string, config: Partial<CrafterConfig>): Observable<Item>;
+export function getTree(path: string, depth: number | Partial<CrafterConfig> = 1, config?: Partial<CrafterConfig>): Observable<Item> {
   if (typeof depth === 'object') {
     config = depth;
     depth = 1;
