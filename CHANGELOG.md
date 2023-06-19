@@ -1,5 +1,22 @@
 # SDK Changelog
 
+## 4.1.0
+
+### @craftercms/classes
+- Update search API endpoint from `/api/1/site/search/search.json` to `api/1/site/elasticsearch/search`.
+
+### @craftercms/content
+- `urlTransform`, `getTree`, `getItem`, `getChildren` fix config argument to accept partial CrafterConfig
+- Update createQuery usage examples without SearchEngine parameter.
+
+### @craftercms/models
+- Update Endpoints interface `ELASTICSEARCH` property to `SEARCH`.
+
+### @craftercms/search
+- Remove ElasticQuery query implementation for ElasticSearch.
+- Use `Query` class instead of removed `ElasticQuery` class in `createQuery` function.
+- Update createQuery usage examples without SearchEngine parameter.
+
 ## 4.0.3
 
 ### All packages
