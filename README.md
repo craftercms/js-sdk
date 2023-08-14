@@ -1,11 +1,11 @@
-# craftercms-sdk-js
-Crafter CMS SDK for JavaScript in the browser and Node JS
+# js-sdk
+CrafterCMS SDK for JavaScript in the browser and NodeJS
 
 ## Project Structure
 
 The `packages` directory contains the different SDK packages and their respective sources (TypeScript for the most part)
 
-Please go into the distinct packages to see docs.
+Please go into the distinct packages to see the docs.
 
 - [classes](./packages/classes)
 - [content](./packages/content)
@@ -17,12 +17,12 @@ Please go into the distinct packages to see docs.
 
 ## Building & Testing
 
-You don't ever need to do this unless you're interested in collaborating. See the [packages](./packages) you're interested on for usage instructions if you just want to consume the sdk.
+You never need to build unless you're interested in collaborating on the development of this library. See the [packages](./packages) you're interested in for usage instructions if you just want to consume the SDK.
 
 ### Building
 
 - `yarn` will fetch all dependencies for development
-- `./build.sh` will use webpack to generate a production ES5 bundle under `dist` folder
+- `./build.sh` will use Webpack to generate a production ES5 bundle under `dist` folder
 
 ### Testing
 
