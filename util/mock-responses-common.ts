@@ -14,7 +14,7 @@
  * along with this program. If not, see http://www.gnu.org/licenses/.
  */
 
-import { Item, Descriptor } from "models";
+import { Item, Descriptor } from '@craftercms/models';
 
 export const descriptor:Descriptor = {
   "page": {
@@ -89,49 +89,6 @@ export const children:Array<Item> = [
     "descriptorDom": null,
     "properties": null,
     "folder": true
-  },
-  {
-    "name": "crafter-component.xml",
-    "url": "/site/website/crafter-component.xml",
-    "descriptorUrl": "/site/website/crafter-component.xml",
-    "descriptorDom": {
-      "page": {
-        "display-template": {
-          "nil": "false",
-          "text": "/templates/system/common/component.ftl"
-        },
-        "merge-strategy": "inherit-levels",
-        "content-type": "/component/level-descriptor",
-        "placeInNav": "false",
-        "file-name": "crafter-level-descriptor.level.xml",
-        "objectGroupId": "0a68",
-        "objectId": "0a68e8ad-77d8-0a58-e7bf-09a71fb3077b",
-        "folder-name": null,
-        "header": {
-          "item": {
-            "key": "/site/components/headers/header.xml",
-            "value": "Header",
-            "include": "/site/components/headers/header.xml",
-            "disableFlattening": "false"
-          }
-        },
-        "createdDate": "3/13/2017 20:26:50",
-        "createdDate_dt": "3/13/2017 20:26:50",
-        "lastModifiedDate": "5/18/2017 15:38:58",
-        "lastModifiedDate_dt": "5/18/2017 15:38:58",
-        "left-rail": {
-          "item": {
-            "key": "/site/components/left-rails/left-rail-with-no-articles.xml",
-            "value": "Left Rail with No Articles",
-            "include": "/site/components/left-rails/left-rail-with-no-articles.xml",
-            "disableFlattening": "false"
-          }
-        },
-        "hideInAuthoring": "true"
-      }
-    },
-    "properties": null,
-    "folder": false
   },
   {
     "name": "crafter-level-descriptor.level.xml",
@@ -277,15 +234,15 @@ export const children:Array<Item> = [
 ];
 
 export const tree = {
-  "name": "2017",
-  "url": "/site/website/articles/2017",
-  "descriptorUrl": "/site/website/articles/2017.meta.xml",
+  "name": "2021",
+  "url": "/site/website/articles/2021",
+  "descriptorUrl": "/site/website/articles/2021.meta.xml",
   "descriptorDom": null,
   "properties": null,
   "children": [
     {
       "name": "1",
-      "url": "/site/website/articles/2017/1",
+      "url": "/site/website/articles/2021/1",
       "descriptorUrl": "/site/website/articles/2017/1.meta.xml",
       "descriptorDom": null,
       "properties": null,
@@ -443,8 +400,8 @@ export const tree = {
     },
     {
       "name": "2",
-      "url": "/site/website/articles/2017/2",
-      "descriptorUrl": "/site/website/articles/2017/2.meta.xml",
+      "url": "/site/website/articles/2021/2",
+      "descriptorUrl": "/site/website/articles/2021/2.meta.xml",
       "descriptorDom": null,
       "properties": null,
       "children": [
@@ -614,8 +571,8 @@ export const tree = {
     },
     {
       "name": "3",
-      "url": "/site/website/articles/2017/3",
-      "descriptorUrl": "/site/website/articles/2017/3.meta.xml",
+      "url": "/site/website/articles/2021/3",
+      "descriptorUrl": "/site/website/articles/2021/3.meta.xml",
       "descriptorDom": null,
       "properties": null,
       "children": [

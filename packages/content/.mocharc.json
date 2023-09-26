@@ -1,0 +1,5 @@
+{
+  "loader": "ts-node/esm",
+  "spec": ["test/*.spec.ts"],
+  "require": ["assert", "mocha", "xhr-mock"]
+}
