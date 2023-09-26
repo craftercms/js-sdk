@@ -17,7 +17,6 @@
 import { ContentStoreService, NavigationService, UrlTransformationService } from '@craftercms/content';
 import { crafterConf } from '@craftercms/classes';
 import 'url-search-params-polyfill';
-import 'cross-fetch/polyfill';
 import { expect } from 'chai';
 
 

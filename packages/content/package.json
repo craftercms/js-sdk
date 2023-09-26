@@ -29,7 +29,6 @@
     "@craftercms/classes": "0.0.0-PLACEHOLDER",
     "@craftercms/models": "0.0.0-PLACEHOLDER",
     "@craftercms/utils": "0.0.0-PLACEHOLDER",
-    "cross-fetch": "^4.0.0",
     "rxjs": "^7.0.0"
   },
   "devDependencies": {
