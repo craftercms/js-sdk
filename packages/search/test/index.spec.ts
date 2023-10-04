@@ -14,7 +14,6 @@
  * along with this program. If not, see http://www.gnu.org/licenses/.
  */
 
-import * as assert from 'assert';
 import { SearchService } from '@craftercms/search';
 import { crafterConf } from '@craftercms/classes';
 import 'url-search-params-polyfill';
@@ -48,7 +47,10 @@ describe('Search Client', () => {
   describe('search', () => {
     it('should find all documents', done => {
       nock('http://localhost:8080')
-        .post('/api/1/site/search/search.json?crafterSite=editorial')
+        .post('/api/1/site/search/search.json')
+        .query({
+          crafterSite: 'editorial',
+        })
         .reply(200, { hits: searchResponse });
 
       const query = SearchService.createQuery<Query>({ 'uuid': '12345' });
@@ -70,7 +72,10 @@ describe('Search Client', () => {
 
     it('should apply all filters', done => {
       nock('http://localhost:8080')
-        .post('/api/1/site/search/search.json?crafterSite=editorial')
+        .post('/api/1/site/search/search.json')
+        .query({
+          crafterSite: 'editorial'
+        })
         .reply(200, { hits: searchResponse });
 
       var query = SearchService.createQuery<Query>({ 'uuid': '12345' });

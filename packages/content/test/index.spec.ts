@@ -52,7 +52,11 @@ describe('Engine Client', () => {
     describe('getItem', () => {
       it('return the index item', done => {
         nock('http://localhost:8080')
-          .get('/api/1/site/content_store/item.json?crafterSite=editorial&url=%2Fsite%2Fwebsite%2Findex.xml')
+          .get('/api/1/site/content_store/item.json')
+          .query({
+            crafterSite: 'editorial',
+            url: '/site/website/index.xml'
+          })
           .reply(200, item);
 
         ContentStoreService.getItem("/site/website/index.xml", crafterConf.getConfig())
@@ -66,7 +70,12 @@ describe('Engine Client', () => {
     describe('getDescriptor', () => {
       it('return the index descriptor', done => {
         nock('http://localhost:8080')
-          .get('/api/1/site/content_store/descriptor.json?crafterSite=editorial&flatten=false&url=%2Fsite%2Fwebsite%2Findex.xml')
+          .get('/api/1/site/content_store/descriptor.json')
+          .query({
+            crafterSite: 'editorial',
+            flatten: false,
+            url: '/site/website/index.xml'
+          })
           .reply(200, descriptor);
 
         ContentStoreService.getDescriptor("/site/website/index.xml", crafterConf.getConfig())
@@ -80,7 +89,11 @@ describe('Engine Client', () => {
     describe('getChildren', () => {
       it('return the child pages', done => {
         nock('http://localhost:8080')
-          .get('/api/1/site/content_store/children.json?crafterSite=editorial&url=%2Fsite%2Fwebsite%2F')
+          .get('/api/1/site/content_store/children.json')
+          .query({
+            crafterSite: 'editorial',
+            url: '/site/website/'
+          })
           .reply(200, children);
 
         ContentStoreService.getChildren("/site/website/", crafterConf.getConfig())
@@ -94,7 +107,12 @@ describe('Engine Client', () => {
     describe('getTree', () => {
       it('return the page tree', done => {
         nock('http://localhost:8080')
-          .get('/api/1/site/content_store/tree.json?crafterSite=editorial&depth=3&url=%2Fsite%2Fwebsite%2Farticles%2F2021')
+          .get('/api/1/site/content_store/tree.json')
+          .query({
+            crafterSite: 'editorial',
+            depth: 3,
+            url: '/site/website/articles/2021'
+          })
           .reply(200, tree);
 
         ContentStoreService.getTree("/site/website/articles/2021", 3, crafterConf.getConfig())
@@ -111,7 +129,13 @@ describe('Engine Client', () => {
     describe('getNavTree', () => {
       it('return the nav tree', done => {
         nock('http://localhost:8080')
-          .get('/api/1/site/navigation/tree.json?crafterSite=editorial&currentPageUrl&depth=3&url=%2Fsite%2Fwebsite')
+          .get('/api/1/site/navigation/tree.json')
+          .query({
+            crafterSite: 'editorial',
+            currentPageUrl: null,
+            depth: 3,
+            url: '/site/website'
+          })
           .reply(200, navTree);
 
         NavigationService.getNavTree("/site/website", 3,  null, crafterConf.getConfig())
@@ -125,7 +149,12 @@ describe('Engine Client', () => {
     describe('getNavBreadcrumb', () => {
       it('return the nav breadcrumb', done => {
         nock('http://localhost:8080')
-          .get('/api/1/site/navigation/breadcrumb.json?crafterSite=editorial&root&url=%2Fsite%2Fwebsite%2Fstyle%2Findex.xml')
+          .get('/api/1/site/navigation/breadcrumb.json')
+          .query({
+            crafterSite: 'editorial',
+            root: null,
+            url: '/site/website/style/index.xml'
+          })
           .reply(200, navBreadcrumb);
 
         NavigationService.getNavBreadcrumb("/site/website/style/index.xml", null, crafterConf.getConfig())
@@ -143,7 +172,12 @@ describe('Engine Client', () => {
     describe('transform', () => {
       it('return the render url', done => {
         nock('http://localhost:8080')
-          .get('/api/1/site/url/transform.json?crafterSite=editorial&transformerName=storeUrlToRenderUrl&url=%2Fsite%2Fwebsite%2Fstyle%2Findex.xml')
+          .get('/api/1/site/url/transform.json')
+          .query({
+            crafterSite: 'editorial',
+            transformerName: 'storeUrlToRenderUrl',
+            url: '/site/website/style/index.xml'
+          })
           .reply(200, renderUrl);
 
         UrlTransformationService.transform("storeUrlToRenderUrl", "/site/website/style/index.xml", crafterConf.getConfig())
@@ -155,7 +189,12 @@ describe('Engine Client', () => {
 
       it('return the store url', done => {
         nock('http://localhost:8080')
-          .get('/api/1/site/url/transform.json?crafterSite=editorial&transformerName=renderUrlToStoreUrl&url=%2Ftechnology')
+          .get('/api/1/site/url/transform.json')
+          .query({
+            crafterSite: 'editorial',
+            transformerName: 'renderUrlToStoreUrl',
+            url: '/technology'
+          })
           .reply(200, storeUrl);
 
         UrlTransformationService.transform("renderUrlToStoreUrl", "/technology", crafterConf.getConfig())

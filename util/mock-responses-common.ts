@@ -24,7 +24,7 @@ export const descriptor:Descriptor = {
     "placeInNav": "false",
     "file-name": "index.xml",
     "objectGroupId": "8d7f",
-    "objectId": "8d7f21fa-5e09-00aa-8340-853b7db302da",
+    "objectId": "8d7f21fa-5e09-00aa-8340-853b7db302da2",
     "folder-name": null,
     "header": {
       "item": {
