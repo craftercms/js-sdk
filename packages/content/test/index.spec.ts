@@ -30,6 +30,16 @@ import {
 } from './mock-responses';
 import * as nock from "nock";
 
+// https://github.com/nock/nock/issues/2397
+import fetch, { Headers, Request, Response } from 'node-fetch';
+
+if (!globalThis.fetch) {
+  (globalThis as any).fetch = fetch;
+  (globalThis as any).Headers = Headers;
+  (globalThis as any).Request = Request;
+  (globalThis as any).Response = Response;
+}
+
 crafterConf.configure({
   baseUrl: 'http://localhost:8080',
   site: 'editorial'
@@ -44,9 +54,7 @@ describe('Engine Client', () => {
   });
 
   // put the real XHR object back and clear the mocks after each test
-  afterEach(() => {
-    nock.cleanAll();
-  });
+  afterEach(() => nock.cleanAll());
 
   describe('Content Store Service', () => {
     describe('getItem', () => {
@@ -178,7 +186,7 @@ describe('Engine Client', () => {
             transformerName: 'storeUrlToRenderUrl',
             url: '/site/website/style/index.xml'
           })
-          .reply(200, renderUrl);
+          .reply(200, `"${renderUrl}"`);
 
         UrlTransformationService.transform("storeUrlToRenderUrl", "/site/website/style/index.xml", crafterConf.getConfig())
           .subscribe((url) => {
@@ -195,7 +203,7 @@ describe('Engine Client', () => {
             transformerName: 'renderUrlToStoreUrl',
             url: '/technology'
           })
-          .reply(200, storeUrl);
+          .reply(200, `"${storeUrl}"`);
 
         UrlTransformationService.transform("renderUrlToStoreUrl", "/technology", crafterConf.getConfig())
           .subscribe((url) => {

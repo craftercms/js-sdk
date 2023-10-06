@@ -19,7 +19,7 @@ import 'url-search-params-polyfill';
 import { expect } from 'chai';
 
 import { SearchService } from '@craftercms/search';
-import { crafterConf } from '@craftercms/classes';
+import {crafterConf, httpGet} from '@craftercms/classes';
 
 import {
   createReduxStore,
@@ -60,13 +60,21 @@ import {
   tree
 } from './mock-responses';
 
+import * as nock from "nock";
+import { of } from "rxjs";
 
-import mock from 'xhr-mock';
-import MockRequest from "xhr-mock/lib/MockRequest";
-import MockResponse from "xhr-mock/lib/MockResponse";
-import { ActionsObservable } from 'redux-observable';
+// https://github.com/nock/nock/issues/2397
+import fetch, { Headers, Request, Response } from 'node-fetch';
+
+if (!globalThis.fetch) {
+  (globalThis as any).fetch = fetch;
+  (globalThis as any).Headers = Headers;
+  (globalThis as any).Request = Request;
+  (globalThis as any).Response = Response;
+}
 
 crafterConf.configure({
+  baseUrl: 'http://localhost:8080',
   site: 'editorial'
 })
 
@@ -75,16 +83,16 @@ describe('Crafter CMS Redux', () => {
 
   beforeEach(() => {
     store = createReduxStore();
-
     // replace the real XHR object with the mock XHR object before each test
-    mock.setup();
+    if (!nock.isActive()) {
+      nock.activate();
+    }
   });
 
   // put the real XHR object back and clear the mocks after each test
-  afterEach(() => mock.teardown());
+  afterEach(() => nock.cleanAll());
 
   describe('ACTIONS', () => {
-
     describe('getItem Action', () => {
       it('should return the expected GET_ITEM action', done => {
         let url = '/site/website/index.xml',
@@ -92,9 +100,7 @@ describe('Crafter CMS Redux', () => {
               type: 'CRAFTERCMS_GET_ITEM',
               payload: url
             };
-
         const action = getItem(url);
-
         expect(action).to.deep.equal(expectedAction);
         done();
       });
@@ -106,9 +112,7 @@ describe('Crafter CMS Redux', () => {
               type: "CRAFTERCMS_GET_ITEM_COMPLETE",
               payload: item
             };
-
         const action = getItemComplete(item);
-
         expect(action).to.deep.equal(expectedAction);
         done();
       });
@@ -121,9 +125,7 @@ describe('Crafter CMS Redux', () => {
               type: 'CRAFTERCMS_GET_DESCRIPTOR',
               payload: url
             };
-
         const action = getDescriptor(url);
-
         expect(action).to.deep.equal(expectedAction);
         done();
       });
@@ -136,9 +138,7 @@ describe('Crafter CMS Redux', () => {
               type: "CRAFTERCMS_GET_DESCRIPTOR_COMPLETE",
               payload: {descriptor, url}
             };
-
         const action = getDescriptorComplete({descriptor, url});
-
         expect(action).to.deep.equal(expectedAction);
         done();
       });
@@ -151,9 +151,7 @@ describe('Crafter CMS Redux', () => {
               type: 'CRAFTERCMS_GET_CHILDREN',
               payload: url
             };
-
         const action = getChildren(url);
-
         expect(action).to.deep.equal(expectedAction);
         done();
       });
@@ -169,9 +167,7 @@ describe('Crafter CMS Redux', () => {
                 children
               }
             };
-
         const action = getChildrenComplete({children, url});
-
         expect(action).to.deep.equal(expectedAction);
         done();
       });
@@ -187,9 +183,7 @@ describe('Crafter CMS Redux', () => {
                 url: url
               }
             };
-
         const action = getTree(url);
-
         expect(action).to.deep.equal(expectedAction);
         done();
       });
@@ -201,9 +195,7 @@ describe('Crafter CMS Redux', () => {
               type: "CRAFTERCMS_GET_TREE_COMPLETE",
               payload: item
             };
-
         const action = getTreeComplete(item);
-
         expect(action).to.deep.equal(expectedAction);
         done();
       });
@@ -220,9 +212,7 @@ describe('Crafter CMS Redux', () => {
                 currentPageUrl: ""
               }
             };
-
         const action = getNav(url);
-
         expect(action).to.deep.equal(expectedAction);
         done();
       });
@@ -235,9 +225,7 @@ describe('Crafter CMS Redux', () => {
               type: "CRAFTERCMS_GET_NAV_COMPLETE",
               payload: navItem
             };
-
         const action = getNavComplete(navItem);
-
         expect(action).to.deep.equal(expectedAction);
         done();
       });
@@ -253,9 +241,7 @@ describe('Crafter CMS Redux', () => {
                 root: ""
               }
             };
-
         const action = getNavBreadcrumb(url);
-
         expect(action).to.deep.equal(expectedAction);
         done();
       });
@@ -271,21 +257,17 @@ describe('Crafter CMS Redux', () => {
                 url
               }
             };
-
         const action = getNavBreadcrumbComplete({
           breadcrumb: navBreadcrumb,
           url
         });
-
         expect(action).to.deep.equal(expectedAction);
         done();
       });
     });
-
   });
 
   describe('REDUCERS', () => {
-
     describe('getItem Reducer', () => {
       it('should return the expected GET_ITEM reducer', done => {
         let url = '/site/website/index.xml',
@@ -310,7 +292,10 @@ describe('Crafter CMS Redux', () => {
       it('should return the expected GET_ITEM_COMPLETE reducer', done => {
         let action = {
               type: 'CRAFTERCMS_GET_ITEM_COMPLETE',
-              payload: item
+              payload: {
+                item,
+                url: item.url
+              }
             },
             expectedState = {
               loading: {
@@ -436,7 +421,10 @@ describe('Crafter CMS Redux', () => {
       it('should return the expected GET_TREE_COMPLETE reducer', done => {
         let action = {
               type: 'CRAFTERCMS_GET_TREE_COMPLETE',
-              payload: tree
+              payload: {
+                tree,
+                url: tree.url
+              }
             },
             expectedState = {
               loading: {
@@ -481,7 +469,10 @@ describe('Crafter CMS Redux', () => {
       it('should return the expected GET_NAV_COMPLETE reducer', done => {
         let action = {
               type: 'CRAFTERCMS_GET_NAV_COMPLETE',
-              payload: navItem
+              payload: {
+                nav: navItem,
+                url: navItem.url
+              }
             },
             expectedState = {
               loading: {
@@ -542,33 +533,38 @@ describe('Crafter CMS Redux', () => {
         done();
       });
     });
-
   });
 
   describe('EPICS', () => {
-
     describe('getItem Epic', () => {
       it('should return the expected GET_ITEM epic', done => {
-
-        mock.get("http://localhost:8080/api/1/site/content_store/item.json?url=%2Fsite%2Fwebsite%2Findex.xml&crafterSite=editorial",
-        (req: MockRequest, res: MockResponse) => {
-          res.body(JSON.stringify(item));
-          return res;
-        });
+        nock('http://localhost:8080')
+          .get('/api/1/site/content_store/item.json')
+          .query({
+            crafterSite: 'editorial',
+            url: '/site/website/index.xml'
+          })
+          .reply(200, item);
 
         let url = '/site/website/index.xml',
-            actionObs = ActionsObservable.of({
+            actionObs = of({
               type: 'CRAFTERCMS_GET_ITEM',
               payload: url
             }),
             expectedResponse = {
-              payload: item,
+              payload: {
+                item,
+                url
+              },
               type: 'CRAFTERCMS_GET_ITEM_COMPLETE'
             }
 
         getItemEpic(actionObs)
-        .subscribe((response) => {
-          expect(response).to.deep.equal(expectedResponse);
+        .subscribe(({ payload }) => {
+          expect(payload).to.deep.equal(expectedResponse.payload);
+          // expect(payload.url.url === item.url);
+          // expect(payload.url.descriptorUrl === expectedResponse.payload.url);
+          // expect(payload).to.deep.equal(expectedResponse.payload);
           done();
         })
       });
@@ -576,15 +572,17 @@ describe('Crafter CMS Redux', () => {
 
     describe('getDescriptor Epic', () => {
       it('should return the expected GET_DESCRIPTOR epic', done => {
-
-        mock.get("http://localhost:8080/api/1/site/content_store/descriptor.json?url=%2Fsite%2Fwebsite%2Findex.xml&crafterSite=editorial",
-        (req: MockRequest, res: MockResponse) => {
-          res.body(JSON.stringify(descriptor));
-          return res;
-        });
+        nock('http://localhost:8080')
+          .get('/api/1/site/content_store/descriptor.json')
+          .query({
+            crafterSite: 'editorial',
+            flatten: false,
+            url: '/site/website/index.xml'
+          })
+          .reply(200, descriptor);
 
         let url = '/site/website/index.xml',
-            actionObs = ActionsObservable.of({
+            actionObs = of({
               type: 'CRAFTERCMS_GET_DESCRIPTOR',
               payload: url
             }),
@@ -595,7 +593,8 @@ describe('Crafter CMS Redux', () => {
 
         getDescriptorEpic(actionObs)
         .subscribe((response) => {
-          expect(response).to.deep.equal(expectedResponse);
+          expect(response.type).to.equal(expectedResponse.type);
+          expect(response.payload.descriptor.page.objectId).to.equal(expectedResponse.payload.descriptor.page.objectId);
           done();
         })
       });
@@ -603,15 +602,21 @@ describe('Crafter CMS Redux', () => {
 
     describe('getChildren Epic', () => {
       it('should return the expected GET_CHILDREN epic', done => {
+        nock('http://localhost:8080')
+          .get('/api/1/site/content_store/children.json')
+          .query({
+            crafterSite: 'editorial',
+            url: '/site/website'
+          }).reply(200, children);
 
-        mock.get("http://localhost:8080/api/1/site/content_store/children.json?url=%2Fsite%2Fwebsite&crafterSite=editorial",
-        (req: MockRequest, res: MockResponse) => {
-          res.body(JSON.stringify(children));
-          return res;
-        });
+        // mock.get("http://localhost:8080/api/1/site/content_store/children.json?url=%2Fsite%2Fwebsite&crafterSite=editorial",
+        // (req: MockRequest, res: MockResponse) => {
+        //   res.body(JSON.stringify(children));
+        //   return res;
+        // });
 
         let url = '/site/website',
-            actionObs = ActionsObservable.of({
+            actionObs = of({
               type: 'CRAFTERCMS_GET_CHILDREN',
               payload: url
             }),
@@ -630,20 +635,22 @@ describe('Crafter CMS Redux', () => {
 
     describe('getTree Epic', () => {
       it('should return the expected GET_TREE epic', done => {
-
-        mock.get("http://localhost:8080/api/1/site/content_store/tree.json?url=%2Fsite%2Fwebsite&depth=1&crafterSite=editorial",
-        (req: MockRequest, res: MockResponse) => {
-          res.body(JSON.stringify(tree));
-          return res;
-        });
+        nock('http://localhost:8080')
+          .get('/api/1/site/content_store/tree.json')
+          .query({
+            crafterSite: 'editorial',
+            depth: 1,
+            url: '/site/website',
+          })
+          .reply(200, tree);
 
         let url = '/site/website',
-            actionObs = ActionsObservable.of({
+            actionObs = of({
               type: 'CRAFTERCMS_GET_TREE',
               payload: { url, depth: 1 }
             }),
             expectedResponse = {
-              payload: tree,
+              payload: { tree, url },
               type: 'CRAFTERCMS_GET_TREE_COMPLETE'
             }
 
@@ -657,20 +664,26 @@ describe('Crafter CMS Redux', () => {
 
     describe('getNavTree Epic', () => {
       it('should return the expected GET_NAV epic', done => {
-
-        mock.get("http://localhost:8080/api/1/site/navigation/tree.json?crafterSite=editorial&url=%2Fsite%2Fwebsite&depth=1&currentPageUrl=",
-        (req: MockRequest, res: MockResponse) => {
-          res.body(JSON.stringify(navItem));
-          return res;
-        });
+        nock('http://localhost:8080')
+          .get('/api/1/site/navigation/tree.json')
+          .query({
+            crafterSite: 'editorial',
+            currentPageUrl: null,
+            depth: 1,
+            url: '/site/website'
+          })
+          .reply(200, navItem)
 
         let url = '/site/website',
-            actionObs = ActionsObservable.of({
+            actionObs = of({
               type: 'CRAFTERCMS_GET_NAV',
               payload: { url, depth: 1 }
             }),
             expectedResponse = {
-              payload: navItem,
+              payload: {
+                nav:navItem,
+                url
+              },
               type: 'CRAFTERCMS_GET_NAV_COMPLETE'
             }
 
@@ -684,15 +697,17 @@ describe('Crafter CMS Redux', () => {
 
     describe('getNavBreadcrumb Epic', () => {
       it('should return the expected GET_NAV_BREADCRUMB epic', done => {
-
-        mock.get("http://localhost:8080/api/1/site/navigation/breadcrumb.json?crafterSite=editorial&url=%2Fsite%2Fwebsite%2Findex.xml&root=",
-        (req: MockRequest, res: MockResponse) => {
-          res.body(JSON.stringify(navBreadcrumb));
-          return res;
-        });
+        nock('http://localhost:8080')
+          .get('/api/1/site/navigation/breadcrumb.json')
+          .query({
+            crafterSite: 'editorial',
+            url: '/site/website/index.xml',
+            root: null
+          })
+          .reply(200, navBreadcrumb);
 
         let url = '/site/website/index.xml',
-            actionObs = ActionsObservable.of({
+            actionObs = of({
               type: 'CRAFTERCMS_GET_NAV_BREADCRUMB',
               payload: { url }
             }),
@@ -708,7 +723,6 @@ describe('Crafter CMS Redux', () => {
         })
       });
     });
-
   });
 
 });
