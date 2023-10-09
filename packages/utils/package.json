@@ -22,11 +22,13 @@
     "rollup": "../../node_modules/rollup/bin/rollup -c rollup.config.js",
     "build:ts": "tsc -p tsconfig.build.json",
     "clean:ts": "../../node_modules/rimraf/bin.js ts-out",
-    "build": "npm run build:ts && npm run rollup && npm run clean:ts"
+    "build": "npm run build:ts && npm run rollup && npm run clean:ts",
+    "test": "mocha"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^11.0.2",
     "@rollup/plugin-node-resolve": "^7.1.1",
+    "mocha": "^10.2.0",
     "rollup": "^1.31.1",
     "rollup-plugin-sourcemaps": "^0.5.0",
     "uglify-es": "^3.3.9"

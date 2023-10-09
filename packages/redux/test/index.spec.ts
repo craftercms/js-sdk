@@ -18,8 +18,7 @@ import 'mocha';
 import 'url-search-params-polyfill';
 import { expect } from 'chai';
 
-import { SearchService } from '@craftercms/search';
-import {crafterConf, httpGet} from '@craftercms/classes';
+import {crafterConf} from '@craftercms/classes';
 
 import {
   createReduxStore,
