@@ -608,12 +608,6 @@ describe('Crafter CMS Redux', () => {
             url: '/site/website'
           }).reply(200, children);
 
-        // mock.get("http://localhost:8080/api/1/site/content_store/children.json?url=%2Fsite%2Fwebsite&crafterSite=editorial",
-        // (req: MockRequest, res: MockResponse) => {
-        //   res.body(JSON.stringify(children));
-        //   return res;
-        // });
-
         let url = '/site/website',
             actionObs = of({
               type: 'CRAFTERCMS_GET_CHILDREN',
