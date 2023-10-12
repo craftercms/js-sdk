@@ -23,7 +23,7 @@ import * as xhr2 from 'xhr2';
 import * as nock from 'nock';
 import { expect } from 'chai';
 
-// @ts-ignore
+// @ts-ignore - Setting global XMLHttpRequest for testing (not available on node)
 global.XMLHttpRequest = xhr2.XMLHttpRequest;
 
 crafterConf.configure({
