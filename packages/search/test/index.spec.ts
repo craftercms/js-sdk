@@ -17,7 +17,7 @@
 import { SearchService } from '@craftercms/search';
 import { crafterConf } from '@craftercms/classes';
 import 'url-search-params-polyfill';
-import { Query } from "../src/query";
+import { Query } from '../src/query';
 import { searchResponse } from './mock-responses';
 import * as xhr2 from 'xhr2';
 import * as nock from 'nock';
@@ -29,7 +29,7 @@ global.XMLHttpRequest = xhr2.XMLHttpRequest;
 crafterConf.configure({
   baseUrl: 'http://localhost:8080',
   site: 'editorial'
-})
+});
 
 describe('Search Client', () => {
   // replace the real XHR object with the mock XHR object before each test
@@ -45,22 +45,22 @@ describe('Search Client', () => {
   });
 
   describe('search', () => {
-    it('should find all documents', done => {
+    it('should find all documents', (done) => {
       nock('http://localhost:8080')
         .post('/api/1/site/search/search.json')
         .query({
-          crafterSite: 'editorial',
+          crafterSite: 'editorial'
         })
         .reply(200, { hits: searchResponse });
 
-      const query = SearchService.createQuery<Query>({ 'uuid': '12345' });
+      const query = SearchService.createQuery<Query>({ uuid: '12345' });
       query.query = {
-        "query" : {
-          "match_all" : {}
+        query: {
+          match_all: {}
         }
       };
       SearchService.search(query, crafterConf.getConfig()).subscribe({
-        next: result => {
+        next: (result) => {
           expect(result.total.value).to.equal(searchResponse.total.value);
           done();
         },
@@ -70,7 +70,7 @@ describe('Search Client', () => {
       });
     });
 
-    it('should apply all filters', done => {
+    it('should apply all filters', (done) => {
       nock('http://localhost:8080')
         .post('/api/1/site/search/search.json')
         .query({
@@ -78,25 +78,25 @@ describe('Search Client', () => {
         })
         .reply(200, { hits: searchResponse });
 
-      var query = SearchService.createQuery<Query>({ 'uuid': '12345' });
+      var query = SearchService.createQuery<Query>({ uuid: '12345' });
       query.query = {
-        "query" : {
-          "bool": {
-            "filter": [
+        query: {
+          bool: {
+            filter: [
               {
-                "bool": {
-                  "should": [
+                bool: {
+                  should: [
                     {
-                      "match": {
-                        "content-type": "/page/article"
+                      match: {
+                        'content-type': '/page/article'
                       }
                     }
-                  ],
+                  ]
                 }
               },
               {
-                "match": {
-                  "featured_b": true
+                match: {
+                  featured_b: true
                 }
               }
             ]
@@ -114,5 +114,4 @@ describe('Search Client', () => {
       });
     });
   });
-
 });

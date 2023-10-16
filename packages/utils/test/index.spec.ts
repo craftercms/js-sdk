@@ -25,13 +25,12 @@ import {
 } from '@craftercms/utils';
 import { expect } from 'chai';
 
-
 crafterConf.configure({
   baseUrl: 'http://localhost:8080',
   site: 'editorial'
 });
 
-describe('Utilities', () =>{
+describe('Utilities', () => {
   describe('composeUrl utility', () => {
     it('should compose a url with a base url or a crafterConfig and an endpoint', () => {
       const url = composeUrl('http://localhost:8080/', 'api/1/site');
@@ -45,7 +44,7 @@ describe('Utilities', () =>{
   describe('isPlainObject utility', () => {
     it('should return true if the object is a plain object', () => {
       expect(isPlainObject({})).to.be.true;
-      expect(isPlainObject({a: 1})).to.be.true;
+      expect(isPlainObject({ a: 1 })).to.be.true;
       expect(isPlainObject(null)).to.be.false;
       expect(isPlainObject(undefined)).to.be.false;
       expect(isPlainObject([])).to.be.false;
@@ -55,9 +54,9 @@ describe('Utilities', () =>{
 
   describe('extendDeep utility', () => {
     it('should extend the target object with the source object', () => {
-      const source = {a: 1, b: 2};
-      const target = {b: 3, c: 4};
-      expect(extendDeep(target, source)).to.deep.equal({b: 2, c: 4, a: 1});
+      const source = { a: 1, b: 2 };
+      const target = { b: 3, c: 4 };
+      expect(extendDeep(target, source)).to.deep.equal({ b: 2, c: 4, a: 1 });
     });
   });
 
@@ -80,20 +79,20 @@ describe('Utilities', () =>{
   describe('createLookupTable utility', () => {
     it('should create a lookup table from a list of objects', () => {
       const list = [
-        {id: 1, name: 'test1'},
-        {id: 2, name: 'test2'},
-        {id: 3, name: 'test3'}
+        { id: 1, name: 'test1' },
+        { id: 2, name: 'test2' },
+        { id: 3, name: 'test3' }
       ];
       const table1 = {
-        1: {id: 1, name: 'test1'},
-        2: {id: 2, name: 'test2'},
-        3: {id: 3, name: 'test3'}
+        1: { id: 1, name: 'test1' },
+        2: { id: 2, name: 'test2' },
+        3: { id: 3, name: 'test3' }
       };
       const table2 = {
-        test1: {id: 1, name: 'test1'},
-        test2: {id: 2, name: 'test2'},
-        test3: {id: 3, name: 'test3'}
-      }
+        test1: { id: 1, name: 'test1' },
+        test2: { id: 2, name: 'test2' },
+        test3: { id: 3, name: 'test3' }
+      };
 
       const lookupTableById = createLookupTable(list);
       const lookupTableByName = createLookupTable(list, 'name');

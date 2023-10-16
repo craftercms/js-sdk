@@ -14,17 +14,14 @@
  * along with this program. If not, see http://www.gnu.org/licenses/.
  */
 
-import { item,
-         descriptor,
-         children,
-         navBreadcrumb } from '../../../util/mock-responses-common';
+import { item, descriptor, children, navBreadcrumb } from '../../../util/mock-responses-common';
 
 export { item, descriptor, children, navBreadcrumb };
 
-export const tree = { ...item, children: [] }
+export const tree = { ...item, children: [] };
 
 export const navItem = {
-  url: "/",
+  url: '/',
   active: true,
   subItems: []
-}
+};

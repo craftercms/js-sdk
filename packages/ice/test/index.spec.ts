@@ -16,17 +16,17 @@
 
 import 'mocha';
 import { expect } from 'chai';
-import {crafterConf} from '@craftercms/classes';
-import {fetchIsAuthoring, getICEAttributes, getDropZoneAttributes} from '@craftercms/ice';
-import {useDropZone, useICE} from '@craftercms/ice/react';
-import {model} from "./mock-responses";
-import * as nock from "nock";
+import { crafterConf } from '@craftercms/classes';
+import { fetchIsAuthoring, getICEAttributes, getDropZoneAttributes } from '@craftercms/ice';
+import { useDropZone, useICE } from '@craftercms/ice/react';
+import { model } from './mock-responses';
+import * as nock from 'nock';
 import { renderHook } from '@testing-library/react';
 import { JSDOM } from 'jsdom';
 
 // https://github.com/nock/nock/issues/2397
 import fetch, { Headers, Request, Response } from 'node-fetch';
-import {beforeEach} from "mocha";
+import { beforeEach } from 'mocha';
 
 if (!globalThis.fetch) {
   (globalThis as any).fetch = fetch;

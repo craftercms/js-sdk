@@ -15,10 +15,10 @@
  */
 
 import 'mocha';
-import {crafterConf, httpGet, httpPost} from '@craftercms/classes';
+import { crafterConf, httpGet, httpPost } from '@craftercms/classes';
 import { expect } from 'chai';
-import {beforeEach} from "mocha";
-import * as nock from "nock";
+import { beforeEach } from 'mocha';
+import * as nock from 'nock';
 import * as xhr2 from 'xhr2';
 
 // @ts-ignore - Setting global XMLHttpRequest for testing (not available on node)
@@ -76,11 +76,8 @@ describe('CrafterCMS Classes', () => {
 
   describe('SDKService', () => {
     describe('httpGet', () => {
-      it('Should return a response from the GET request',  (done) => {
-        nock('http://localhost:8080')
-          .get('/api/1/test/getItem')
-          .query({ id: 1 })
-          .reply(200, { id: 1, name: 'test' });
+      it('Should return a response from the GET request', (done) => {
+        nock('http://localhost:8080').get('/api/1/test/getItem').query({ id: 1 }).reply(200, { id: 1, name: 'test' });
 
         httpGet('http://localhost:8080/api/1/test/getItem?id=1').subscribe((response) => {
           expect(response).to.be.an('object');
@@ -91,10 +88,8 @@ describe('CrafterCMS Classes', () => {
     });
 
     describe('httpPost', () => {
-      it('Should return a response from the POST request',  (done) => {
-        nock('http://localhost:8080')
-          .post('/api/1/test/addItem')
-          .reply(200, { result: 'success', id: 1 });
+      it('Should return a response from the POST request', (done) => {
+        nock('http://localhost:8080').post('/api/1/test/addItem').reply(200, { result: 'success', id: 1 });
 
         httpPost('http://localhost:8080/api/1/test/addItem', { id: 1, name: 'test' }).subscribe((response) => {
           expect(response).to.be.an('object');
