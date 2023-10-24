@@ -1,5 +1,9 @@
 # SDK Changelog
 
+## 4.1.2
+
+- No updates
+
 ## 4.1.1
 
 - Update dependencies to address security vulnerabilities
