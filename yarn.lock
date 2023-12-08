@@ -1038,10 +1038,10 @@ urix@^0.1.0:
   resolved "https://registry.yarnpkg.com/urix/-/urix-0.1.0.tgz#da937f7a62e21fec1fd18d49b35c2935067a6c72"
   integrity sha1-2pN/emLiH+wf0Y1Js1wpNQZ6bHI=
 
-url-search-params-polyfill@^5.0.0:
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/url-search-params-polyfill/-/url-search-params-polyfill-5.1.0.tgz#f0405dcc2e921bf7f5fdf8c4e616f1e8088ef31b"
-  integrity sha512-yjFY7uw2xRf9e8Mg4ZVkZwtp8dMCC4cbBkEIZiTDpuSY2WJ9+Quw0wRhxncv32qaMQwmBQT+P847rO8PrFhhDA==
+url-search-params-polyfill@^8.2.5:
+  version "8.2.5"
+  resolved "https://registry.yarnpkg.com/url-search-params-polyfill/-/url-search-params-polyfill-8.2.5.tgz#2d31de6a2140c9b9cf6ee036fe0be07dd2644674"
+  integrity sha512-FOEojW4XReTmtZOB7xqSHmJZhrNTmClhBriwLTmle4iA7bwuCo6ldSfbtsFSb8bTf3E0a3XpfonAdaur9vqq8A==
 
 url@^0.11.0:
   version "0.11.0"
