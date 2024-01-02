@@ -14,12 +14,7 @@
  * along with this program. If not, see http://www.gnu.org/licenses/.
  */
 
-import { item,
-         descriptor,
-         children,
-         tree,
-         navTree,
-         navBreadcrumb } from '../../../util/mock-responses-common';
+import { item, descriptor, children, tree, navTree, navBreadcrumb } from '../../../util/mock-responses-common';
 
 export { item, descriptor, children, tree, navTree, navBreadcrumb };
 

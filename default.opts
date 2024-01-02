@@ -1,5 +1,5 @@
 --require assert
 --require mocha
---requier xhr-mock
+--require xhr-mock
 --require ts-node/register
 --require tsconfig-paths/register
