@@ -35,7 +35,7 @@ export function httpGet<T extends any = any>(requestURL: string, params: Record<
 export function httpPost<T extends any = any>(requestURL: string, body: Object = {}, headers?: LookupTable): Observable<T> {
   return ajax.post(requestURL, body, { 'Content-Type': 'application/json', ...headers }).pipe(
     pluck('response')
-  );
+  ) as Observable<T>;
 }
 
 export const SDKService = {
