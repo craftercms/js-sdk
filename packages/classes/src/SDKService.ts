@@ -23,11 +23,11 @@ import { stringify } from 'query-string';
 import { crafterConf } from './config';
 
 export function httpGet<T extends any = any>(requestURL: string, params: Record<string, any> = {}, headers?: LookupTable): Observable<T> {
-  const mode = crafterConf.getConfig().cors;
+  const fetchConfig = crafterConf.getConfig().fetchConfig ?? {};
   return fromFetch(`${requestURL}?${stringify(params)}`, {
+    ...fetchConfig,
     method: 'GET',
-    headers: headers,
-    mode: typeof mode === 'boolean' ? mode ? 'cors' : 'no-cors' : mode,
+    headers: { ...fetchConfig.headers, ...headers },
     selector: response => response.json()
   });
 }
