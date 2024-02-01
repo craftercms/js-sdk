@@ -20,7 +20,6 @@ import { CrafterConfig } from '@craftercms/models';
 
 const DEFAULTS: CrafterConfig = {
   site: '',
-  cors: false,
   baseUrl: '',
   searchId: null,
   endpoints: {
@@ -33,6 +32,7 @@ const DEFAULTS: CrafterConfig = {
     TRANSFORM_URL: '/api/1/site/url/transform.json',
     SEARCH: '/api/1/site/search/search.json'
   },
+  fetchConfig: {},
   contentTypeRegistry: {},
   headers: {}
 };
@@ -98,6 +98,13 @@ class ConfigManager {
   }
 
   mix(mixin: Partial<CrafterConfig> = {}): CrafterConfig {
+    // Check if the deprecated cors property is set to true and convert into a fetchConfig object
+    if ('cors' in mixin) {
+      const { cors } = mixin;
+      mixin.fetchConfig = mixin.fetchConfig ?? {};
+      mixin.fetchConfig.mode = typeof cors === 'boolean' ? cors ? 'cors' : 'no-cors' : cors;
+      console.log('%c[CrafterCMS] The `crafterConf.cors` property is deprecated and will be removed in following versions. Use `fetchConfig.mode` instead.', 'color:red');
+    }
     return extendDeepExistingProps({ ...this.config }, mixin);
   }
 
