@@ -119,7 +119,7 @@ __metadata:
     rollup-plugin-sourcemaps: "npm:^0.5.0"
     rxjs: "npm:^7.8.1"
     uglify-es: "npm:^3.3.10"
-    uuid: "npm:^3.4.0"
+    uuid: "npm:^9.0.1"
     xhr-mock: "npm:^2.5.1"
   languageName: unknown
   linkType: soft
@@ -2691,12 +2691,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"uuid@npm:^3.4.0":
-  version: 3.4.0
-  resolution: "uuid@npm:3.4.0"
+"uuid@npm:^9.0.1":
+  version: 9.0.1
+  resolution: "uuid@npm:9.0.1"
   bin:
-    uuid: ./bin/uuid
-  checksum: 1c13950df865c4f506ebfe0a24023571fa80edf2e62364297a537c80af09c618299797bbf2dbac6b1f8ae5ad182ba474b89db61e0e85839683991f7e08795347
+    uuid: dist/bin/uuid
+  checksum: 1607dd32ac7fc22f2d8f77051e6a64845c9bce5cd3dd8aa0070c074ec73e666a1f63c7b4e0f4bf2bc8b9d59dc85a15e17807446d9d2b17c8485fbc2147b27f9b
   languageName: node
   linkType: hard
 
