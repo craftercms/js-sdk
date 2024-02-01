@@ -1,5 +1,9 @@
 # SDK Changelog
 
+## 4.1.3
+
+- Dependency updates
+
 ## 4.1.2-support.2
 
 ### @craftercms/classes
