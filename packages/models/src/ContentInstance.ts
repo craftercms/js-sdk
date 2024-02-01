@@ -7,24 +7,27 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see http://www.gnu.org/licenses/.
  */
 
-export interface ContentInstance {
-  craftercms: {
-    id: string
-    path: string
-    label: string // "Internal name"
-    dateCreated: string
-    dateModified: string
-    contentTypeId: string
-    orderInNav?: number // For pages only
-    disabled: boolean
-    sourceMap?: { [path: string]: string } // path: contentTypeId
-  }
-  [prop: string]: any
+export interface ContentInstanceSystemProps {
+  id: string;
+  path: string | null;
+  label: string; // Internal name
+  dateCreated: string;
+  dateModified: string;
+  contentTypeId: string;
+  sourceMap?: Record<string, string>; // { fieldId: path }
 }
+
+export interface ContentInstanceBase {
+  craftercms: ContentInstanceSystemProps;
+}
+
+export type ContentInstance<T extends Record<string, any> = Record<string, any>> = T & ContentInstanceBase;
+
+export default ContentInstance;
