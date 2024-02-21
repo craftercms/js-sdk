@@ -104,8 +104,7 @@ export function parseDescriptor(
       contentTypeId: null,
       dateCreated: null,
       dateModified: null,
-      disabled: false,
-      sourceMap: {}
+      disabled: false
     }
   };
   return parseProps(extractContent(data), parsed, options);
@@ -126,9 +125,9 @@ export function parseProps<Props = object, Target = object>(
     if (ignoredProps.includes(prop)) {
       return; // continue, skip prop.
     }
+    // TODO: The source attributes will no longer be coming. This can be removed on the following releases.
+    // https://github.com/craftercms/craftercms/issues/6526
     if (value?.['crafter-source-content-type-id']) {
-      // @ts-ignore
-      parsed.craftercms.sourceMap[prop] = value['crafter-source-content-type-id'];
       if (typeof value.text === 'string') {
         value = value.text;
       } else if (Object.keys(value).length === 2) {
