@@ -18,11 +18,15 @@ import { LookupTable } from '@craftercms/models';
 
 export interface CrafterConfig {
   site: string;
-  cors: boolean | RequestInit['mode'];
+  /** @deprecated Use `fetchConfig.mode` instead */
+  cors?: boolean | RequestInit['mode'];
+  fetchConfig?: RequestInit;
   baseUrl: string;
   searchId?: string;
   endpoints?: Endpoints;
+  // TODO: Remove this?
   contentTypeRegistry?: LookupTable;
+  // TODO: Remove this in favour of fetchConfig.headers? Most make all sdk service use fetch.
   headers: LookupTable;
 }
 

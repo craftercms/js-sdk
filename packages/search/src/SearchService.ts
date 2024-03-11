@@ -22,8 +22,7 @@ import { CrafterConfig } from '@craftercms/models';
 import { Query } from './query';
 
 import uuid from 'uuid';
-import 'url-search-params-polyfill';
-import { SearchResult } from "@craftercms/models/src/search";
+import { SearchResult } from '@craftercms/models/src/search';
 
 /**
  * Does a full-text search and returns a Map model.
@@ -34,17 +33,16 @@ export function search(params: Object, config?: CrafterConfig): Observable<Searc
 export function search(queryOrParams: Query | Object, config?: CrafterConfig): Observable<SearchResult> {
   config = crafterConf.mix(config);
   let requestURL;
-  const params = (queryOrParams instanceof Query)
-    ? queryOrParams.params
-    : queryOrParams;
+  const params = queryOrParams instanceof Query ? queryOrParams.params : queryOrParams;
 
   if (queryOrParams instanceof Query) {
     requestURL = composeUrl(config, config.endpoints.SEARCH) + '?crafterSite=' + config.site;
 
-    return SDKService.httpPost(requestURL, params)
-      .pipe(map((response: any) => {
+    return SDKService.httpPost(requestURL, params).pipe(
+      map((response: any) => {
         return response.hits;
-      }));
+      })
+    );
   }
 }
 
@@ -53,11 +51,8 @@ export function search(queryOrParams: Query | Object, config?: CrafterConfig): O
  */
 
 export function createQuery<T extends Query>(params?: Object): T {
-  let
-    query,
-    queryId = (params && params['uuid'])
-      ? params['uuid']
-      : uuid();
+  let query,
+    queryId = params && params['uuid'] ? params['uuid'] : uuid();
 
   query = new Query();
   Object.assign(query.params, params);

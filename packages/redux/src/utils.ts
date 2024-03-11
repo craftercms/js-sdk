@@ -65,10 +65,8 @@ export function createReduxStore(config: {
     ? [ epicMiddleware, ...config.additionalMiddleWare ]
     : [ epicMiddleware ];
 
-  const store = createStore(
-    config.reducerMixin
-      ? combineReducers({ ...reducer, ...config.reducerMixin })
-      : combineReducers(reducer),
+  const store: Store = createStore(
+    config.reducerMixin ? combineReducers({ ...reducer, ...config.reducerMixin }) : combineReducers(reducer),
     enhancers(applyMiddleware(...middlewares))
   );
 
