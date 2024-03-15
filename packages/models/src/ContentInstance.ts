@@ -16,15 +16,16 @@
 
 export interface ContentInstance {
   craftercms: {
-    id: string
-    path: string
-    label: string // "Internal name"
-    dateCreated: string
-    dateModified: string
-    contentTypeId: string
-    orderInNav?: number // For pages only
-    disabled: boolean
-    sourceMap?: { [path: string]: string } // path: contentTypeId
+    id: string;
+    path: string | null;
+    label: string; // Internal name
+    dateCreated: string;
+    dateModified: string;
+    contentTypeId: string;
+    sourceMap?: Record<string, string>; // { fieldId: path }
+    disabled: boolean;
+    orderInNav?: number;
+    placeInNav?: boolean;
   }
   [prop: string]: any
 }

@@ -137,6 +137,9 @@ export function parseProps<Props = object, Target = object>(
           // Should never happen but just in case the value is not numeric, rollback to original string
           if (isNaN(parsedValue)) parsedValue = value;
           break;
+        case 'placeInNav':
+          parsedValue = value === 'true';
+          break;
       }
       // @ts-ignore
       parsed.craftercms[propName] = parsedValue;
