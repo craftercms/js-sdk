@@ -21,7 +21,7 @@ import { crafterConf, SDKService } from '@craftercms/classes';
 import { CrafterConfig } from '@craftercms/models';
 import { Query } from './query';
 
-import uuid from 'uuid';
+import { v4 as uuid } from 'uuid';
 import { SearchResult } from '@craftercms/models/src/search';
 
 /**
