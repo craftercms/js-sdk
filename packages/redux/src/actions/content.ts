@@ -15,136 +15,28 @@
  */
 
 import { Descriptor, Item, NavigationItem } from '@craftercms/models';
+import { createAction } from "@reduxjs/toolkit";
 
-export const GET_ITEM = 'CRAFTERCMS_GET_ITEM';
-export const GET_ITEM_COMPLETE = 'CRAFTERCMS_GET_ITEM_COMPLETE';
-export const GET_DESCRIPTOR = 'CRAFTERCMS_GET_DESCRIPTOR';
-export const GET_DESCRIPTOR_COMPLETE = 'CRAFTERCMS_GET_DESCRIPTOR_COMPLETE';
-export const GET_CHILDREN = 'CRAFTERCMS_GET_CHILDREN';
-export const GET_CHILDREN_COMPLETE = 'CRAFTERCMS_GET_CHILDREN_COMPLETE';
-export const GET_TREE = 'CRAFTERCMS_GET_TREE';
-export const GET_TREE_COMPLETE = 'CRAFTERCMS_GET_TREE_COMPLETE';
+export const getItem = /*#__PURE__*/ createAction<string>('GET_ITEM');
 
-export const GET_NAV = 'CRAFTERCMS_GET_NAV';
-export const GET_NAV_COMPLETE = 'CRAFTERCMS_GET_NAV_COMPLETE';
-export const GET_NAV_BREADCRUMB = 'CRAFTERCMS_GET_NAV_BREADCRUMB';
-export const GET_NAV_BREADCRUMB_COMPLETE = 'CRAFTERCMS_GET_NAV_BREADCRUMB_COMPLETE';
+export const getItemComplete = /*#__PURE__*/ createAction<{ url: string, item?: Item }>('GET_ITEM_COMPLETE');
 
-export function getItem(itemUrl: string) {
-  return {
-    type: GET_ITEM,
-    payload: itemUrl
-  }
-}
+export const getDescriptor = /*#__PURE__*/ createAction<string>('GET_DESCRIPTOR');
 
-export function getItemComplete(itemData: {
-  url: string,
-  item?: Item
-}) {
-  return {
-    type: GET_ITEM_COMPLETE,
-    payload: itemData
-  }
-}
+export const getDescriptorComplete = /*#__PURE__*/ createAction<{ url: string, descriptor?: Descriptor }>('GET_DESCRIPTOR_COMPLETE');
 
-export function getDescriptor(url: string) {
-  return {
-    type: GET_DESCRIPTOR,
-    payload: url
-  }
-}
+export const getChildren = /*#__PURE__*/ createAction<string>('GET_CHILDREN');
 
-export function getDescriptorComplete(descriptorData: {
-  url: string,
-  descriptor?: Descriptor
-}) {
-  return {
-    type: GET_DESCRIPTOR_COMPLETE,
-    payload: descriptorData
-  }
-}
+export const getChildrenComplete = /*#__PURE__*/ createAction<{ url: string, children?: Array<Item> }>('GET_CHILDREN_COMPLETE');
 
-export function getChildren(url: string) {
-  return {
-    type: GET_CHILDREN,
-    payload: url
-  }
-}
+export const getTree = /*#__PURE__*/ createAction<{ url: string, depth?: Number }>('GET_TREE');
 
-export function getChildrenComplete(childrenData: {
-  url: string,
-  children?: Array<Item>,
-}) {
-  return {
-    type: GET_CHILDREN_COMPLETE,
-    payload: childrenData
-  }
-}
+export const getTreeComplete = /*#__PURE__*/ createAction<{ url: string, tree?: Item }>('GET_TREE_COMPLETE');
 
-export function getTree(url: string);
-export function getTree(url: string, depth: Number);
-export function getTree(url: string, depth: Number = 1) {
-  return {
-    type: GET_TREE,
-    payload: {
-      url,
-      depth
-    }
-  }
-}
+export const getNav = /*#__PURE__*/ createAction<{ url: string, depth?: Number, currentPageUrl?: string }>('GET_NAV');
 
-export function getTreeComplete(treeData: {
-  url: string,
-  tree?: Item
-}) {
-  return {
-    type: GET_TREE_COMPLETE,
-    payload: treeData
-  }
-}
+export const getNavComplete = /*#__PURE__*/ createAction<{ url: string, nav?: NavigationItem }>('GET_NAV_COMPLETE');
 
-export function getNav(url: string);
-export function getNav(url: string, depth: Number);
-export function getNav(url: string, depth: Number, currentPageUrl: string)
-export function getNav(url: string, depth: Number = 1, currentPageUrl: string = '') {
-  return {
-    type: GET_NAV,
-    payload: {
-      url,
-      depth,
-      currentPageUrl
-    }
-  }
-}
+export const getNavBreadcrumb = /*#__PURE__*/ createAction<{ url: string, root?: string }>('GET_NAV_BREADCRUMB');
 
-export function getNavComplete(navData: {
-  url: string,
-  nav?: NavigationItem
-}) {
-  return {
-    type: GET_NAV_COMPLETE,
-    payload: navData
-  }
-}
-
-export function getNavBreadcrumb(url: string);
-export function getNavBreadcrumb(url: string, root: string);
-export function getNavBreadcrumb(url: string, root: string = '') {
-  return {
-    type: GET_NAV_BREADCRUMB,
-    payload: {
-      url,
-      root
-    }
-  }
-}
-
-export function getNavBreadcrumbComplete(navBreadcrumbData: {
-  url: string,
-  breadcrumb?: Array<NavigationItem>
-}) {
-  return {
-    type: GET_NAV_BREADCRUMB_COMPLETE,
-    payload: navBreadcrumbData
-  }
-}
+export const getNavBreadcrumbComplete = /*#__PURE__*/ createAction<{ url: string, breadcrumb?: Array<NavigationItem> }>('GET_NAV_BREADCRUMB_COMPLETE');

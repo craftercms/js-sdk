@@ -14,10 +14,7 @@
  * along with this program. If not, see http://www.gnu.org/licenses/.
  */
 
-import {
-  SEARCH,
-  SEARCH_COMPLETE
-} from '../actions/search';
+import { search, searchComplete } from '../actions/search';
 
 const DEFAULT = {
   search: {
@@ -37,7 +34,7 @@ export function searchReducer(state = {
   entries: {}
 }, action) {
   switch (action.type) {
-    case SEARCH: {
+    case search.type: {
       const queryId: string = action.payload.uuid;
 
       return {
@@ -48,7 +45,7 @@ export function searchReducer(state = {
         }
       }
     }
-    case SEARCH_COMPLETE: {
+    case searchComplete.type: {
       const response = action.payload.response,
             queryId = action.payload.queryId;
 
