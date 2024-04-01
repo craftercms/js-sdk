@@ -1,5 +1,11 @@
 # SDK Changelog
 
+## 4.2.0
+* [@craftercms/redux]:
+  * getTree action payload is now an object with `url` and `depth` properties.
+  * getNav action payload is now an object with `url`, `depth` and `cyrrebtPageUrl` properties.
+  * getNavBreadcrumb action payload is now an object with `url` and `root` properties.
+
 ## 4.1.3
 
 - Dependency updates
