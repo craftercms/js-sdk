@@ -367,7 +367,7 @@ N="
 "
 TSC=$(pwd)/node_modules/.bin/tsc
 NGC="node --max-old-space-size=3000 $(pwd)/node_modules/.bin/ngc" # /dist/tools/@angular/compiler-cli/src/main
-UGLIFY=$(pwd)/node_modules/.bin/uglifyjs
+UGLIFY=$(pwd)/node_modules/.bin/terser
 TSCONFIG=./tools/tsconfig.json
 ROLLUP=$(pwd)/node_modules/.bin/rollup
 
