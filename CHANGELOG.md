@@ -1,5 +1,26 @@
 # SDK Changelog
 
+## 4.1.3
+
+- Dependency updates
+
+## 4.1.2-support.2
+
+### @craftercms/classes
+- Allow for an entire set of fetch config to be provided via crafterConf to be used in all GET requests (SdkService.httpGet)
+
+## 4.1.2-1
+
+- Update react peer dependency to correct expression (^18)
+
+## 4.1.2
+
+- No updates
+
+## 4.1.1
+
+- Update dependencies to address security vulnerabilities
+
 ## 4.1.0
 
 ### @craftercms/classes

@@ -104,8 +104,7 @@ export function parseDescriptor(
       contentTypeId: null,
       dateCreated: null,
       dateModified: null,
-      disabled: false,
-      sourceMap: {}
+      disabled: false
     }
   };
   return parseProps(extractContent(data), parsed, options);
@@ -126,16 +125,6 @@ export function parseProps<Props = object, Target = object>(
     if (ignoredProps.includes(prop)) {
       return; // continue, skip prop.
     }
-    if (value?.['crafter-source-content-type-id']) {
-      // @ts-ignore
-      parsed.craftercms.sourceMap[prop] = value['crafter-source-content-type-id'];
-      if (typeof value.text === 'string') {
-        value = value.text;
-      } else if (Object.keys(value).length === 2) {
-        // Only has `crafter-source` & `crafter-source-content-type-id`. Empty value for the actual prop.
-        value = null;
-      }
-    }
     if (systemProps.includes(prop)) {
       let propName = systemPropMap[prop] ?? prop;
       let parsedValue = value;
@@ -147,6 +136,9 @@ export function parseProps<Props = object, Target = object>(
           parsedValue = parseFloat(value);
           // Should never happen but just in case the value is not numeric, rollback to original string
           if (isNaN(parsedValue)) parsedValue = value;
+          break;
+        case 'placeInNav':
+          parsedValue = value === 'true';
           break;
       }
       // @ts-ignore
