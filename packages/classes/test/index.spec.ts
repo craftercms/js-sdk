@@ -98,6 +98,7 @@ describe('CrafterCMS Classes', () => {
 
   describe('SDKService', () => {
     describe('httpGet', () => {
+      // Test the httpGet method with a mocked GET request.
       it('Should return a response from the GET request', (done) => {
         nock('http://localhost:8080').get('/api/1/test/getItem').query({ id: 1 }).reply(200, { id: 1, name: 'test' });
 
@@ -111,6 +112,7 @@ describe('CrafterCMS Classes', () => {
     });
 
     describe('httpPost', () => {
+      // Test the httpPost method with a mocked POST request.
       it('Should return a response from the POST request', (done) => {
         nock('http://localhost:8080').post('/api/1/test/addItem').reply(200, { result: 'success', id: 1 });
 

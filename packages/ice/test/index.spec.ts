@@ -55,6 +55,7 @@ describe('Crafter CMS ICE', () => {
   afterEach(() => nock.cleanAll());
 
   describe('getICEAttributes', () => {
+    // Test the getICEAttributes function, given a model, check that the correct ICE attributes are returned
     it('should return the correct ICE attributes for a model', () => {
       const attributes = getICEAttributes({ model });
       expect(attributes).to.include.keys('data-studio-ice');
@@ -67,6 +68,8 @@ describe('Crafter CMS ICE', () => {
   });
 
   describe('getDropZoneAttributes', () => {
+    // Test the getDropZoneAttributes function, given a model and zone name, check that the correct drop zone attributes
+    // are returned. If isAuthoring is false, the function should return an empty object
     it('should return the correct drop zone attributes', () => {
       const attributesAuthoring = getDropZoneAttributes({
         model,
@@ -85,6 +88,7 @@ describe('Crafter CMS ICE', () => {
   });
 
   describe('fetchIsAuthoring', () => {
+    // Test the fetchIsAuthoring function to return the preview value, given a CrafterCMS configuration with a mocked GET request.
     it('should return true if the site is in authoring mode', (done) => {
       nock('http://localhost:8080')
         .get('/api/1/config/preview.json')
@@ -101,6 +105,7 @@ describe('Crafter CMS ICE', () => {
   });
 
   describe('useICE', () => {
+    // Test the useICE hook, given a model, check that the correct ICE attributes are returned
     it('should return the ICE attributes for a model using the useICE hook', () => {
       const { result } = renderHook(() => useICE({ model }));
       expect(result.current.props).to.include.keys('data-studio-ice');
@@ -113,6 +118,7 @@ describe('Crafter CMS ICE', () => {
   });
 
   describe('useDropZone', () => {
+    // Test the useDropZone hook, given a model and zone name, check that the correct drop zone attributes are returned
     it('should return the drop zone attributes for a model using the useDropZone hook', () => {
       const { result } = renderHook(() => useDropZone({ model, zoneName: 'testZone' }));
       expect(result.current.props['data-studio-components-target']).to.equal('testZone');
