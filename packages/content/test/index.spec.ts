@@ -59,7 +59,10 @@ describe('Engine Client', () => {
           .reply(200, item);
 
         ContentStoreService.getItem('/site/website/index.xml', crafterConf.getConfig()).subscribe((respItem) => {
+          expect(respItem).to.not.be.null;
+          expect(respItem.url).to.equal(item.url);
           expect(respItem.descriptorDom.page.objectId).to.equal(item.descriptorDom.page.objectId);
+          expect(respItem.descriptorDom.page['internal-name']).to.equal(item.descriptorDom.page['internal-name']);
           done();
         });
       });
@@ -78,6 +81,7 @@ describe('Engine Client', () => {
 
         ContentStoreService.getDescriptor('/site/website/index.xml', crafterConf.getConfig()).subscribe(
           (respDescriptor) => {
+            expect(respDescriptor).to.not.be.null;
             expect(respDescriptor.page.objectId).to.equal(descriptor.page.objectId);
             done();
           }

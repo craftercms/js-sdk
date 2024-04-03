@@ -35,9 +35,11 @@ describe('Utilities', () => {
     it('should compose a url with a base url or a crafterConfig and an endpoint', () => {
       const url = composeUrl('http://localhost:8080/', 'api/1/site');
       const url2 = composeUrl(crafterConf.getConfig(), 'api/1/site');
+      const url3 = composeUrl('http://localhost:9090', 'api/2/site');
       const expectedUrl = 'http://localhost:8080/api/1/site';
       expect(url).to.equal(expectedUrl);
       expect(url2).to.equal(expectedUrl);
+      expect(url3).to.not.equal(expectedUrl);
     });
   });
 

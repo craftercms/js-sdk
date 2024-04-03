@@ -26,8 +26,7 @@ export const model = {
     sourceMap: {
       siteLogo: '/component/level-descriptor'
     },
-    fileName: 'index.xml',
-    placeInNav: 'false',
+    placeInNav: false,
     orderInNav: -1
   },
   siteLogo: '/static-assets/images/crafer-video-logo-dark.svg',

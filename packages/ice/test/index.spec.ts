@@ -19,7 +19,7 @@ import { expect } from 'chai';
 import { crafterConf } from '@craftercms/classes';
 import { fetchIsAuthoring, getICEAttributes, getDropZoneAttributes } from '@craftercms/ice';
 import { useDropZone, useICE } from '@craftercms/ice/react';
-import { model } from './mock-responses';
+import { iCEAttributes, model } from './mock-responses';
 import * as nock from 'nock';
 import { renderHook } from '@testing-library/react';
 import { JSDOM } from 'jsdom';
@@ -62,6 +62,7 @@ describe('Crafter CMS ICE', () => {
       expect(attributes).to.include.keys('data-studio-ice-label');
       expect(attributes).to.include.keys('data-studio-component');
       expect(attributes).to.include.keys('data-studio-component-path');
+      expect(attributes).to.deep.equal(iCEAttributes);
     });
   });
 
@@ -107,6 +108,7 @@ describe('Crafter CMS ICE', () => {
       expect(result.current.props).to.include.keys('data-studio-ice-label');
       expect(result.current.props).to.include.keys('data-studio-component');
       expect(result.current.props).to.include.keys('data-studio-component-path');
+      expect(result.current.props).to.deep.equal(iCEAttributes);
     });
   });
 

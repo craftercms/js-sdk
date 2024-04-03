@@ -45,32 +45,54 @@ describe('CrafterCMS Classes', () => {
   afterEach(() => nock.cleanAll());
 
   describe('ConfigManager', () => {
+    // Tests that crafterConfig returns a default configuration when no configuration is set.
+    // Values from the default configuration are mostly empty. Actual values are tested in next test.
     it('Should have a default configuration', () => {
       const defaultConfig = crafterConf.getConfig();
       expect(defaultConfig).to.be.an('object');
       expect(defaultConfig).to.have.property('site');
-      expect(defaultConfig).to.have.property('cors');
       expect(defaultConfig).to.have.property('baseUrl');
       expect(defaultConfig).to.have.property('endpoints');
       expect(defaultConfig).to.have.property('contentTypeRegistry');
       expect(defaultConfig).to.have.property('headers');
     });
+    // Tests that after setting a new configuration, the provided values are set.
+    // e.g. an endpoint value should be different from the default value.
     it('Should be able to set a new configuration', () => {
-      crafterConf.configure({
+      const newConfig = {
         baseUrl: 'http://localhost:8080',
-        site: 'editorial'
-      });
-      const newConfig = crafterConf.getConfig();
-      expect(newConfig.site).to.equal('editorial');
-      expect(newConfig.baseUrl).to.equal('http://localhost:8080');
+        site: 'editorial',
+        searchId: 'test_search_id',
+        endpoints: {
+          GET_ITEM_URL: '/new_api/content_store/item.json',
+          GET_DESCRIPTOR: '/new_api/content_store/descriptor.json',
+          GET_CHILDREN: '/new_api/content_store/children.json',
+          GET_TREE: '/new_api/content_store/tree.json',
+          GET_NAV_TREE: '/new_api/navigation/tree.json',
+          GET_BREADCRUMB: '/new_api/navigation/breadcrumb.json',
+          TRANSFORM_URL: '/new_api/url/transform.json',
+          SEARCH: '/new_api/search/search.json'
+        }
+      };
+      crafterConf.configure(newConfig);
+      const updatedConfig = crafterConf.getConfig();
+      expect(updatedConfig.site).to.equal(newConfig.site);
+      expect(updatedConfig.baseUrl).to.equal(newConfig.baseUrl);
+      expect(updatedConfig.endpoints.GET_ITEM_URL).to.equal(newConfig.endpoints.GET_ITEM_URL);
+      expect(updatedConfig.endpoints.GET_DESCRIPTOR).to.not.equal('/api/1/content_store/descriptor.json');
     });
+    // Tests that the mix method returns a mix of the current configuration (set at the previous tes) and the new values
+    // set at this test.
     it('Should return a mix of the current config and the provided config', () => {
       const mixConfig = crafterConf.mix({
         baseUrl: 'http://localhost:3000',
         site: 'test_site'
       });
       expect(mixConfig.site).to.equal('test_site');
+      expect(mixConfig.site).to.not.equal('editorial');
       expect(mixConfig.baseUrl).to.equal('http://localhost:3000');
+      expect(mixConfig.endpoints.GET_DESCRIPTOR).to.equal('/new_api/content_store/descriptor.json');
+      expect(mixConfig.endpoints.GET_DESCRIPTOR).to.not.equal('/api/1/content_store/descriptor.json');
     });
   });
 
@@ -80,6 +102,7 @@ describe('CrafterCMS Classes', () => {
         nock('http://localhost:8080').get('/api/1/test/getItem').query({ id: 1 }).reply(200, { id: 1, name: 'test' });
 
         httpGet('http://localhost:8080/api/1/test/getItem?id=1').subscribe((response) => {
+          expect(response).to.not.be.null;
           expect(response).to.be.an('object');
           expect(response).to.deep.equal({ id: 1, name: 'test' });
           done();

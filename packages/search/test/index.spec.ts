@@ -62,6 +62,7 @@ describe('Search Client', () => {
       SearchService.search(query, crafterConf.getConfig()).subscribe({
         next: (result) => {
           expect(result.total.value).to.equal(searchResponse.total.value);
+          expect(result.hits[0]._source.objectId).to.equal('cb760193-06a0-e1d9-6653-0f0dd1e2650e');
           done();
         },
         error: (error) => {
