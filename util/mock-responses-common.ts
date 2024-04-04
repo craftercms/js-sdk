@@ -68,7 +68,8 @@ export const descriptor:Descriptor = {
       ]
     },
     "hero_image": "/static-assets/images/strawberries.jpg",
-    "features_title": "Erat lacinia"
+    "features_title": "Erat lacinia",
+    "selected_b": "true"
   }
 };
 
@@ -80,6 +81,106 @@ export const item:Item = {
   "properties": null,
   "folder": false
 };
+
+export const item2:Item = {
+  "name": "index.xml",
+  "url": "/site/website/style/index.xml",
+  "descriptorUrl": "/site/website/style/index.xml",
+  "descriptorDom": {
+    "page": {
+      "content-type": "/page/category-landing",
+      "display-template": "/templates/web/pages/category-landing.ftl",
+      "merge-strategy": "inherit-levels",
+      "file-name": "index.xml",
+      "objectGroupId": "102f",
+      "objectId": "102fb288-0dd8-806c-7651-2dd8838ca016",
+      "folder-name": "style",
+      "createdDate": "2017-03-13T22:26:52.000Z",
+      "createdDate_dt": "2017-03-13T22:26:52.000Z",
+      "lastModifiedDate": "2017-03-21T18:15:50.000Z",
+      "lastModifiedDate_dt": "2017-03-21T18:15:50.000Z",
+      "header_o": {
+        "item": {
+          "key": "/site/components/headers/header.xml",
+          "value": "Header",
+          "include": "/site/components/headers/header.xml",
+          "disableFlattening": "false"
+        }
+      },
+      "left_rail_o": {
+        "item": {
+          "key": "/site/components/left-rails/left-rail-with-no-articles.xml",
+          "value": "Left Rail with No Articles",
+          "include": "/site/components/left-rails/left-rail-with-no-articles.xml",
+          "disableFlattening": "false"
+        }
+      },
+      "internal-name": "Style",
+      "title_t": "Style",
+      "placeInNav": "true",
+      "navLabel": "Style",
+      "orderDefault_f": "8000",
+      "category_s": "style",
+      "max_articles_i": "10",
+      "articles_title_t": "Style"
+    }
+  },
+  "properties": null,
+  "folder": false
+};
+
+export const parsedItem = {
+  "craftercms": {
+    "id": "8d7f21fa-5e09-00aa-8340-853b7db302da",
+    "path": "/site/website/index.xml",
+    "label": "Home",
+    "contentTypeId": "/page/home",
+    "dateCreated": "1/31/2017 16:18:14",
+    "dateModified": "5/18/2017 15:52:21",
+    "disabled": false,
+    "placeInNav": false,
+    "fileName": "index.xml",
+    "orderInNav": -1
+  },
+  "header": {
+    "item": {
+      "key": "/site/components/headers/header.xml",
+      "value": "Header",
+      "include": "/site/components/headers/header.xml",
+      "disableFlattening": "false"
+    }
+  },
+  "left-rail": {
+    "item": {
+      "key": "/site/components/left-rails/left-rail-with-latest-articles.xml",
+      "value": "Left Rail with Latest Articles",
+      "include": "/site/components/left-rails/left-rail-with-latest-articles.xml",
+      "disableFlattening": "false"
+    }
+  },
+  "title": "Editorial",
+  "hero_text": "<p>Aenean ornare velit lacus, ac varius enim ullamcorper eu. Proin aliquam facilisis ante interdum congue. Integer mollis, nisl amet convallis, porttitor magna ullamcorper, amet egestas mauris. Ut magna finibus nisi nec lacinia. Nam maximus erat id euismod egestas. Pellentesque sapien ac quam. Lorem ipsum dolor sit nullam.</p>",
+  "hero_title": "<h1><span>Hi, I&rsquo;m Editorial</span></h1>\n<h3><span style=\"font-size: 1.5em;\">by HTML5 UP</span></h3>",
+  "features": {
+    "item": [
+      {
+        "value": "Quam lorem ipsum",
+        "key": "/site/components/features/quam-lorem-ipsum.xml",
+        "include": "/site/components/features/quam-lorem-ipsum.xml",
+        "disableFlattening": "false"
+      },
+      {
+        "key": "/site/components/features/sapien-veroeros.xml",
+        "value": "Sapien Veroeros",
+        "include": "/site/components/features/sapien-veroeros.xml",
+        "disableFlattening": "false"
+      }
+    ]
+  },
+  "hero_image": "/static-assets/images/strawberries.jpg",
+  "features_title": "Erat lacinia",
+  "selected_b": true
+}
 
 export const children:Array<Item> = [
   {
@@ -790,3 +891,400 @@ export const navBreadcrumb = [
     "attributes": null
   }
 ];
+
+export const unparsedSearchHit = {
+  "_index": "editorial-sdk-test-preview_v1",
+  "_id": "0aeafcd1aa14a24ad059f0b45388946f",
+  "_score": 0,
+  "_source": {
+    "categories_o": {
+      "item": [
+        {
+          "key": "style",
+          "value_smv": "Style"
+        }
+      ]
+    },
+    "internal-name": "Men Styles For Winter",
+    "date_dt": "2021-01-05T05:00:00.000Z",
+    "subject_t": "Men Styles For Winter",
+    "objectGroupId": "f1f9",
+    "localId": "/site/website/articles/2021/1/men-styles-for-winter/index.xml",
+    "author_s": "John Doe",
+    "featured_b": "true",
+    "title_t": "Men Styles For Winter",
+    "content-type": "/page/article",
+    "display-template": "/templates/web/pages/article.ftl",
+    "id": "editorial-sdk-test:/site/website/articles/2021/1/men-styles-for-winter/index.xml",
+    "folder-name": "men-styles-for-winter",
+    "objectId": "f1f9c488-67e1-7ec0-d3ca-560b194e64d1",
+    "summary_t": "Nulla sed enim ipsum. Sed ac neque a ligula malesuada volutpat. Donec et ligula rutrum, mattis mauris eget, vestibulum metus. Maecenas non vehicula neque. Nunc ac mauris id ipsum commodo tempus. Integer at dolor consequat, dignissim eros in, imperdiet dui.",
+    "createdDate_dt": "2017-03-03T20:57:07.000Z",
+    "lastModifiedDate": "2017-03-13T20:33:5.000Z",
+    "segments_o": {
+      "item": [
+        {
+          "key": "guy",
+          "value_smv": "Guy"
+        }
+      ]
+    },
+    "createdDate": "2017-03-3T20:57:7.000Z",
+    "lastModifiedDate_dt": "2017-03-13T20:33:05.000Z",
+    "merge-strategy": "inherit-levels",
+    "left_rail_o": {
+      "item": [
+        {
+          "include": "/site/components/left-rails/left-rail-with-related-articles.xml",
+          "component": {
+            "createdDate_dt": "2017-03-17T18:23:52.000Z",
+            "createdDate": "2017-03-17T18:23:52.000Z",
+            "lastModifiedDate": "2017-05-18T15:53:17.000Z",
+            "lastModifiedDate_dt": "2017-05-18T15:53:17.000Z",
+            "internal-name": "Left Rail with Related Articles",
+            "merge-strategy": "inherit-levels",
+            "content-type": "/component/left-rail",
+            "display-template": "/templates/web/components/left-rail.ftl",
+            "objectGroupId": "9ed4",
+            "file-name": "left-rail-with-related-articles.xml",
+            "widgets_o": {
+              "item": [
+                {
+                  "include": "/site/components/articles-widget/related-articles-widget.xml",
+                  "component": {
+                    "createdDate_dt": "2017-03-28T22:28:21.000Z",
+                    "lastModifiedDate": "2017-03-28T22:28:21.000Z",
+                    "internal-name": "Related Articles Widget",
+                    "objectGroupId": "a0b9",
+                    "max_articles_i": "3",
+                    "createdDate": "2017-03-28T22:28:21.000Z",
+                    "lastModifiedDate_dt": "2017-03-28T22:28:21.000Z",
+                    "merge-strategy": "inherit-levels",
+                    "title_t": "Related Articles",
+                    "content-type": "/component/articles-widget",
+                    "display-template": "/templates/web/components/articles-widget.ftl",
+                    "file-name": "related-articles-widget.xml",
+                    "objectId": "a0b98d8a-b7d3-4e72-0064-d778ceff406e",
+                    "scripts_o": {
+                      "item": [
+                        {
+                          "value": "related-articles.groovy",
+                          "key": "/scripts/components/related-articles.groovy"
+                        }
+                      ]
+                    }
+                  },
+                  "value": "Related Articles Widget",
+                  "disableFlattening": "false",
+                  "key": "/site/components/articles-widget/related-articles-widget.xml"
+                },
+                {
+                  "include": "/site/components/contacts/contact-widget.xml",
+                  "component": {
+                    "createdDate_dt": "2017-03-28T21:12:05.000Z",
+                    "phone_s": "(999) 999-9999",
+                    "lastModifiedDate": "2017-03-28T21:22:31.000Z",
+                    "internal-name": "Contact Widget",
+                    "text_html_raw": "<p><span>Sed varius enim lorem ullamcorper dolore aliquam aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin sed aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</span></p>",
+                    "address_html_raw": "<p>5321 Somewhere Road #789<br />Reston, Virginia</p>",
+                    "objectGroupId": "3756",
+                    "email_s": "info@example.com",
+                    "address_html": "5321 Somewhere Road #789Reston, Virginia",
+                    "createdDate": "2017-03-28T21:12:5.000Z",
+                    "lastModifiedDate_dt": "2017-03-28T21:22:31.000Z",
+                    "merge-strategy": "inherit-levels",
+                    "title_t": "Contact Us",
+                    "content-type": "/component/contact-widget",
+                    "display-template": "/templates/web/components/contact-widget.ftl",
+                    "file-name": "contact-widget.xml",
+                    "objectId": "37562d94-04ad-289b-eb35-d76b91b86431",
+                    "text_html": "Sed varius enim lorem ullamcorper dolore aliquam aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin sed aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam."
+                  },
+                  "value": "Contact Widget",
+                  "disableFlattening": "false",
+                  "key": "/site/components/contacts/contact-widget.xml"
+                }
+              ]
+            },
+            "objectId": "9ed49b50-6681-92e4-1221-9d067df058d0"
+          },
+          "value": "Left Rail with Related Articles",
+          "disableFlattening": "false",
+          "key": "/site/components/left-rails/left-rail-with-related-articles.xml"
+        }
+      ]
+    },
+    "image_s": "/static-assets/images/winter-man-pic.jpg",
+    "file-name": "index.xml",
+    "header_o": {
+      "item": [
+        {
+          "include": "/site/components/headers/header.xml",
+          "component": {
+            "createdDate_dt": "2017-02-03T23:27:50.000Z",
+            "lastModifiedDate": "2019-12-20T13:47:32.168Z",
+            "internal-name": "Header",
+            "logo_s": "/static-assets/images/1-gear.png",
+            "objectGroupId": "af02",
+            "socialMediaWidget_o": {
+              "item": [
+                {
+                  "component": {
+                    "iconsWidth_i": "24",
+                    "createdDate_dt": "2022-02-22T19:04:47.646Z",
+                    "lastModifiedDate": "2022-03-14T22:41:09.371Z",
+                    "internal-name": "Social Media Networks",
+                    "accounts_o": {
+                      "item": [
+                        {
+                          "network_s": "facebook",
+                          "url_s": "#"
+                        },
+                        {
+                          "network_s": "twitter",
+                          "url_s": "#"
+                        },
+                        {
+                          "network_s": "github",
+                          "url_s": "#"
+                        }
+                      ]
+                    },
+                    "objectGroupId": "c646",
+                    "showItemsInline_b": "true",
+                    "iconsHeight_i": "24",
+                    "createdDate": "2022-02-22T19:04:47.646Z",
+                    "lastModifiedDate_dt": "2022-03-14T22:41:09.371Z",
+                    "merge-strategy": "inherit-levels",
+                    "content-type": "/component/social-media-widget",
+                    "display-template": "/templates/web/components/social-media-widget.ftl",
+                    "file-name": "c646ba89-a4c3-308f-3492-93be61429fec.xml",
+                    "objectId": "c646ba89-a4c3-308f-3492-93be61429fec"
+                  },
+                  "value": "Social Media Networks",
+                  "key": "c646ba89-a4c3-308f-3492-93be61429fec"
+                }
+              ]
+            },
+            "createdDate": "2017-02-3T23:27:50.000Z",
+            "lastModifiedDate_dt": "2020-02-05T18:03:58.518Z",
+            "merge-strategy": "inherit-levels",
+            "business_name_s": "Editorial",
+            "content-type": "/component/header",
+            "display-template": "/templates/web/components/header.ftl",
+            "disabled": "false",
+            "file-name": "header.xml",
+            "objectId": "af023d71-d5ea-f8e5-2ec9-07a8b239d0c5"
+          },
+          "value": "Header",
+          "disableFlattening": "false",
+          "key": "/site/components/headers/header.xml"
+        }
+      ]
+    },
+    "sections_o": {
+      "item": [
+        {
+          "section_html": "Nulla sed enim ipsum. Sed ac neque a ligula malesuada volutpat. Donec et ligula rutrum, mattis mauris eget, vestibulum metus. Maecenas non vehicula neque. Nunc ac mauris id ipsum commodo tempus. Integer at dolor consequat, dignissim eros in, imperdiet dui. Aliquam condimentum turpis eget tellus ultrices tincidunt. Pellentesque id varius purus, ac tristique augue. Etiam ut pharetra purus. Vestibulum quis vehicula eros. Mauris laoreet purus nec felis ullamcorper convallis. Quisque urna purus, posuere nec urna sed, ornare aliquet mauris. In faucibus vitae tellus id iaculis. Donec porttitor, elit eu elementum pulvinar, sapien ex cursus lacus, non ornare ex lectus ut elit. Donec eros ligula, suscipit eu tellus ut, tristique hendrerit tortor. Fusce sollicitudin mollis risus, ut rhoncus magna volutpat vel. Cras auctor, elit id pellentesque semper, neque nibh fermentum ante, sit amet malesuada felis magna nec enim. Vivamus sollicitudin placerat felis, vel blandit dolor sollicitudin a. Nunc vitae volutpat augue. Nunc tristique placerat tortor condimentum sagittis. Sed eu egestas ex, quis auctor neque. Nam eget tellus suscipit, vestibulum augue nec, consequat erat. Mauris malesuada nec ligula non posuere. Proin vitae posuere tortor. Phasellus vulputate quam ut dictum vulputate. Integer ac lectus metus. Ut aliquam ipsum ligula, quis molestie ex pretium sit amet. Morbi porttitor neque vel luctus laoreet. Mauris varius lacus a eros aliquam, in maximus nibh aliquam. Integer sodales consequat metus eget accumsan. Integer viverra mi erat, in hendrerit massa vestibulum placerat. Sed ut gravida nisl, ut cursus neque. Vestibulum tristique rutrum augue vel aliquet. Ut quis faucibus diam. Aliquam dolor metus, laoreet vitae lacinia a, aliquam a tellus. Vivamus sed commodo ipsum, in lacinia nisl. Sed metus diam, porta eget tortor et, vehicula hendrerit sapien. Vestibulum vehicula urna felis, id elementum libero pellentesque id. Vivamus in massa velit. Suspendisse vitae turpis fermentum lectus pellentesque laoreet. Curabitur viverra pretium turpis, eget feugiat mi blandit a. Quisque nisl urna, porta ut urna eget, mattis fringilla nisi. Ut lacus ligula, dapibus ac fermentum ac, rhoncus eget metus. Donec scelerisque, felis vitae viverra iaculis, diam sem gravida tellus, non sodales urna urna sit amet enim. Duis id justo vitae justo suscipit porta placerat vel ligula. Morbi justo nunc, rhoncus laoreet ipsum a, aliquet eleifend dui. In a quam tortor. Pellentesque eget eros ut dui tincidunt convallis. Pellentesque tincidunt rutrum tellus, non rhoncus dui finibus eu. Integer eu sem maximus, blandit neque eu, congue leo. Ut pretium efficitur turpis, id dapibus turpis bibendum vel. Suspendisse a nibh dictum, imperdiet est et, interdum odio. Morbi urna magna, eleifend vitae luctus ac, scelerisque sit amet nisi. Quisque maximus placerat ante et fermentum. Nulla eu aliquet arcu, vel maximus massa. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam posuere arcu ex, in sagittis orci rhoncus eu. Suspendisse potenti. Curabitur facilisis sapien et ligula tristique lacinia. Aliquam a mauris bibendum, placerat augue sit amet, hendrerit arcu. Nam in bibendum sapien. Pellentesque laoreet nisi vel metus dapibus dictum. Integer semper, velit laoreet ornare maximus, nulla orci maximus ante, a tincidunt eros risus blandit eros.",
+          "section_html_raw": "<p>Nulla sed enim ipsum. Sed ac neque a ligula malesuada volutpat. Donec et ligula rutrum, mattis mauris eget, vestibulum metus. Maecenas non vehicula neque. Nunc ac mauris id ipsum commodo tempus. Integer at dolor consequat, dignissim eros in, imperdiet dui. Aliquam condimentum turpis eget tellus ultrices tincidunt. Pellentesque id varius purus, ac tristique augue. Etiam ut pharetra purus. Vestibulum quis vehicula eros. Mauris laoreet purus nec felis ullamcorper convallis.</p> <p>Quisque urna purus, posuere nec urna sed, ornare aliquet mauris. In faucibus vitae tellus id iaculis. Donec porttitor, elit eu elementum pulvinar, sapien ex cursus lacus, non ornare ex lectus ut elit. Donec eros ligula, suscipit eu tellus ut, tristique hendrerit tortor. Fusce sollicitudin mollis risus, ut rhoncus magna volutpat vel. Cras auctor, elit id pellentesque semper, neque nibh fermentum ante, sit amet malesuada felis magna nec enim. Vivamus sollicitudin placerat felis, vel blandit dolor sollicitudin a. Nunc vitae volutpat augue. Nunc tristique placerat tortor condimentum sagittis. Sed eu egestas ex, quis auctor neque. Nam eget tellus suscipit, vestibulum augue nec, consequat erat. Mauris malesuada nec ligula non posuere. Proin vitae posuere tortor. Phasellus vulputate quam ut dictum vulputate.</p> <p>Integer ac lectus metus. Ut aliquam ipsum ligula, quis molestie ex pretium sit amet. Morbi porttitor neque vel luctus laoreet. Mauris varius lacus a eros aliquam, in maximus nibh aliquam. Integer sodales consequat metus eget accumsan. Integer viverra mi erat, in hendrerit massa vestibulum placerat. Sed ut gravida nisl, ut cursus neque. Vestibulum tristique rutrum augue vel aliquet.</p> <p>Ut quis faucibus diam. Aliquam dolor metus, laoreet vitae lacinia a, aliquam a tellus. Vivamus sed commodo ipsum, in lacinia nisl. Sed metus diam, porta eget tortor et, vehicula hendrerit sapien. Vestibulum vehicula urna felis, id elementum libero pellentesque id. Vivamus in massa velit. Suspendisse vitae turpis fermentum lectus pellentesque laoreet. Curabitur viverra pretium turpis, eget feugiat mi blandit a. Quisque nisl urna, porta ut urna eget, mattis fringilla nisi. Ut lacus ligula, dapibus ac fermentum ac, rhoncus eget metus. Donec scelerisque, felis vitae viverra iaculis, diam sem gravida tellus, non sodales urna urna sit amet enim. Duis id justo vitae justo suscipit porta placerat vel ligula. Morbi justo nunc, rhoncus laoreet ipsum a, aliquet eleifend dui. In a quam tortor.</p> <p>Pellentesque eget eros ut dui tincidunt convallis. Pellentesque tincidunt rutrum tellus, non rhoncus dui finibus eu. Integer eu sem maximus, blandit neque eu, congue leo. Ut pretium efficitur turpis, id dapibus turpis bibendum vel. Suspendisse a nibh dictum, imperdiet est et, interdum odio. Morbi urna magna, eleifend vitae luctus ac, scelerisque sit amet nisi. Quisque maximus placerat ante et fermentum. Nulla eu aliquet arcu, vel maximus massa. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam posuere arcu ex, in sagittis orci rhoncus eu. Suspendisse potenti. Curabitur facilisis sapien et ligula tristique lacinia. Aliquam a mauris bibendum, placerat augue sit amet, hendrerit arcu. Nam in bibendum sapien. Pellentesque laoreet nisi vel metus dapibus dictum. Integer semper, velit laoreet ornare maximus, nulla orci maximus ante, a tincidunt eros risus blandit eros.</p>"
+        }
+      ]
+    }
+  }
+};
+
+export const parsedSearchHit = {
+  "categories_o": {
+    "item": [
+      {
+        "key": "style",
+        "value_smv": "Style"
+      }
+    ]
+  },
+  "internal-name": "Men Styles For Winter",
+  "date_dt": "2021-01-05T05:00:00.000Z",
+  "subject_t": "Men Styles For Winter",
+  "objectGroupId": "f1f9",
+  "localId": "/site/website/articles/2021/1/men-styles-for-winter/index.xml",
+  "author_s": "John Doe",
+  "featured_b": "true",
+  "title_t": "Men Styles For Winter",
+  "content-type": "/page/article",
+  "display-template": "/templates/web/pages/article.ftl",
+  "id": "editorial-sdk-test:/site/website/articles/2021/1/men-styles-for-winter/index.xml",
+  "folder-name": "men-styles-for-winter",
+  "objectId": "f1f9c488-67e1-7ec0-d3ca-560b194e64d1",
+  "summary_t": "Nulla sed enim ipsum. Sed ac neque a ligula malesuada volutpat. Donec et ligula rutrum, mattis mauris eget, vestibulum metus. Maecenas non vehicula neque. Nunc ac mauris id ipsum commodo tempus. Integer at dolor consequat, dignissim eros in, imperdiet dui.",
+  "createdDate_dt": "2017-03-03T20:57:07.000Z",
+  "lastModifiedDate": "2017-03-13T20:33:5.000Z",
+  "segments_o": {
+    "item": [
+      {
+        "key": "guy",
+        "value_smv": "Guy"
+      }
+    ]
+  },
+  "createdDate": "2017-03-3T20:57:7.000Z",
+  "lastModifiedDate_dt": "2017-03-13T20:33:05.000Z",
+  "merge-strategy": "inherit-levels",
+  "left_rail_o": {
+    "item": [
+      {
+        "include": "/site/components/left-rails/left-rail-with-related-articles.xml",
+        "component": {
+          "createdDate_dt": "2017-03-17T18:23:52.000Z",
+          "createdDate": "2017-03-17T18:23:52.000Z",
+          "lastModifiedDate": "2017-05-18T15:53:17.000Z",
+          "lastModifiedDate_dt": "2017-05-18T15:53:17.000Z",
+          "internal-name": "Left Rail with Related Articles",
+          "merge-strategy": "inherit-levels",
+          "content-type": "/component/left-rail",
+          "display-template": "/templates/web/components/left-rail.ftl",
+          "objectGroupId": "9ed4",
+          "file-name": "left-rail-with-related-articles.xml",
+          "widgets_o": {
+            "item": [
+              {
+                "include": "/site/components/articles-widget/related-articles-widget.xml",
+                "component": {
+                  "createdDate_dt": "2017-03-28T22:28:21.000Z",
+                  "lastModifiedDate": "2017-03-28T22:28:21.000Z",
+                  "internal-name": "Related Articles Widget",
+                  "objectGroupId": "a0b9",
+                  "max_articles_i": "3",
+                  "createdDate": "2017-03-28T22:28:21.000Z",
+                  "lastModifiedDate_dt": "2017-03-28T22:28:21.000Z",
+                  "merge-strategy": "inherit-levels",
+                  "title_t": "Related Articles",
+                  "content-type": "/component/articles-widget",
+                  "display-template": "/templates/web/components/articles-widget.ftl",
+                  "file-name": "related-articles-widget.xml",
+                  "objectId": "a0b98d8a-b7d3-4e72-0064-d778ceff406e",
+                  "scripts_o": {
+                    "item": [
+                      {
+                        "value": "related-articles.groovy",
+                        "key": "/scripts/components/related-articles.groovy"
+                      }
+                    ]
+                  }
+                },
+                "value": "Related Articles Widget",
+                "disableFlattening": "false",
+                "key": "/site/components/articles-widget/related-articles-widget.xml"
+              },
+              {
+                "include": "/site/components/contacts/contact-widget.xml",
+                "component": {
+                  "createdDate_dt": "2017-03-28T21:12:05.000Z",
+                  "phone_s": "(999) 999-9999",
+                  "lastModifiedDate": "2017-03-28T21:22:31.000Z",
+                  "internal-name": "Contact Widget",
+                  "text_html_raw": "<p><span>Sed varius enim lorem ullamcorper dolore aliquam aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin sed aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</span></p>",
+                  "address_html_raw": "<p>5321 Somewhere Road #789<br />Reston, Virginia</p>",
+                  "objectGroupId": "3756",
+                  "email_s": "info@example.com",
+                  "address_html": "5321 Somewhere Road #789Reston, Virginia",
+                  "createdDate": "2017-03-28T21:12:5.000Z",
+                  "lastModifiedDate_dt": "2017-03-28T21:22:31.000Z",
+                  "merge-strategy": "inherit-levels",
+                  "title_t": "Contact Us",
+                  "content-type": "/component/contact-widget",
+                  "display-template": "/templates/web/components/contact-widget.ftl",
+                  "file-name": "contact-widget.xml",
+                  "objectId": "37562d94-04ad-289b-eb35-d76b91b86431",
+                  "text_html": "Sed varius enim lorem ullamcorper dolore aliquam aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin sed aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam."
+                },
+                "value": "Contact Widget",
+                "disableFlattening": "false",
+                "key": "/site/components/contacts/contact-widget.xml"
+              }
+            ]
+          },
+          "objectId": "9ed49b50-6681-92e4-1221-9d067df058d0"
+        },
+        "value": "Left Rail with Related Articles",
+        "disableFlattening": "false",
+        "key": "/site/components/left-rails/left-rail-with-related-articles.xml"
+      }
+    ]
+  },
+  "image_s": "/static-assets/images/winter-man-pic.jpg",
+  "file-name": "index.xml",
+  "header_o": {
+    "item": [
+      {
+        "include": "/site/components/headers/header.xml",
+        "component": {
+          "createdDate_dt": "2017-02-03T23:27:50.000Z",
+          "lastModifiedDate": "2019-12-20T13:47:32.168Z",
+          "internal-name": "Header",
+          "logo_s": "/static-assets/images/1-gear.png",
+          "objectGroupId": "af02",
+          "socialMediaWidget_o": {
+            "item": [
+              {
+                "component": {
+                  "iconsWidth_i": "24",
+                  "createdDate_dt": "2022-02-22T19:04:47.646Z",
+                  "lastModifiedDate": "2022-03-14T22:41:09.371Z",
+                  "internal-name": "Social Media Networks",
+                  "accounts_o": {
+                    "item": [
+                      {
+                        "network_s": "facebook",
+                        "url_s": "#"
+                      },
+                      {
+                        "network_s": "twitter",
+                        "url_s": "#"
+                      },
+                      {
+                        "network_s": "github",
+                        "url_s": "#"
+                      }
+                    ]
+                  },
+                  "objectGroupId": "c646",
+                  "showItemsInline_b": "true",
+                  "iconsHeight_i": "24",
+                  "createdDate": "2022-02-22T19:04:47.646Z",
+                  "lastModifiedDate_dt": "2022-03-14T22:41:09.371Z",
+                  "merge-strategy": "inherit-levels",
+                  "content-type": "/component/social-media-widget",
+                  "display-template": "/templates/web/components/social-media-widget.ftl",
+                  "file-name": "c646ba89-a4c3-308f-3492-93be61429fec.xml",
+                  "objectId": "c646ba89-a4c3-308f-3492-93be61429fec"
+                },
+                "value": "Social Media Networks",
+                "key": "c646ba89-a4c3-308f-3492-93be61429fec"
+              }
+            ]
+          },
+          "createdDate": "2017-02-3T23:27:50.000Z",
+          "lastModifiedDate_dt": "2020-02-05T18:03:58.518Z",
+          "merge-strategy": "inherit-levels",
+          "business_name_s": "Editorial",
+          "content-type": "/component/header",
+          "display-template": "/templates/web/components/header.ftl",
+          "disabled": "false",
+          "file-name": "header.xml",
+          "objectId": "af023d71-d5ea-f8e5-2ec9-07a8b239d0c5"
+        },
+        "value": "Header",
+        "disableFlattening": "false",
+        "key": "/site/components/headers/header.xml"
+      }
+    ]
+  },
+  "sections_o": {
+    "item": [
+      {
+        "section_html": "Nulla sed enim ipsum. Sed ac neque a ligula malesuada volutpat. Donec et ligula rutrum, mattis mauris eget, vestibulum metus. Maecenas non vehicula neque. Nunc ac mauris id ipsum commodo tempus. Integer at dolor consequat, dignissim eros in, imperdiet dui. Aliquam condimentum turpis eget tellus ultrices tincidunt. Pellentesque id varius purus, ac tristique augue. Etiam ut pharetra purus. Vestibulum quis vehicula eros. Mauris laoreet purus nec felis ullamcorper convallis. Quisque urna purus, posuere nec urna sed, ornare aliquet mauris. In faucibus vitae tellus id iaculis. Donec porttitor, elit eu elementum pulvinar, sapien ex cursus lacus, non ornare ex lectus ut elit. Donec eros ligula, suscipit eu tellus ut, tristique hendrerit tortor. Fusce sollicitudin mollis risus, ut rhoncus magna volutpat vel. Cras auctor, elit id pellentesque semper, neque nibh fermentum ante, sit amet malesuada felis magna nec enim. Vivamus sollicitudin placerat felis, vel blandit dolor sollicitudin a. Nunc vitae volutpat augue. Nunc tristique placerat tortor condimentum sagittis. Sed eu egestas ex, quis auctor neque. Nam eget tellus suscipit, vestibulum augue nec, consequat erat. Mauris malesuada nec ligula non posuere. Proin vitae posuere tortor. Phasellus vulputate quam ut dictum vulputate. Integer ac lectus metus. Ut aliquam ipsum ligula, quis molestie ex pretium sit amet. Morbi porttitor neque vel luctus laoreet. Mauris varius lacus a eros aliquam, in maximus nibh aliquam. Integer sodales consequat metus eget accumsan. Integer viverra mi erat, in hendrerit massa vestibulum placerat. Sed ut gravida nisl, ut cursus neque. Vestibulum tristique rutrum augue vel aliquet. Ut quis faucibus diam. Aliquam dolor metus, laoreet vitae lacinia a, aliquam a tellus. Vivamus sed commodo ipsum, in lacinia nisl. Sed metus diam, porta eget tortor et, vehicula hendrerit sapien. Vestibulum vehicula urna felis, id elementum libero pellentesque id. Vivamus in massa velit. Suspendisse vitae turpis fermentum lectus pellentesque laoreet. Curabitur viverra pretium turpis, eget feugiat mi blandit a. Quisque nisl urna, porta ut urna eget, mattis fringilla nisi. Ut lacus ligula, dapibus ac fermentum ac, rhoncus eget metus. Donec scelerisque, felis vitae viverra iaculis, diam sem gravida tellus, non sodales urna urna sit amet enim. Duis id justo vitae justo suscipit porta placerat vel ligula. Morbi justo nunc, rhoncus laoreet ipsum a, aliquet eleifend dui. In a quam tortor. Pellentesque eget eros ut dui tincidunt convallis. Pellentesque tincidunt rutrum tellus, non rhoncus dui finibus eu. Integer eu sem maximus, blandit neque eu, congue leo. Ut pretium efficitur turpis, id dapibus turpis bibendum vel. Suspendisse a nibh dictum, imperdiet est et, interdum odio. Morbi urna magna, eleifend vitae luctus ac, scelerisque sit amet nisi. Quisque maximus placerat ante et fermentum. Nulla eu aliquet arcu, vel maximus massa. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam posuere arcu ex, in sagittis orci rhoncus eu. Suspendisse potenti. Curabitur facilisis sapien et ligula tristique lacinia. Aliquam a mauris bibendum, placerat augue sit amet, hendrerit arcu. Nam in bibendum sapien. Pellentesque laoreet nisi vel metus dapibus dictum. Integer semper, velit laoreet ornare maximus, nulla orci maximus ante, a tincidunt eros risus blandit eros.",
+        "section_html_raw": "<p>Nulla sed enim ipsum. Sed ac neque a ligula malesuada volutpat. Donec et ligula rutrum, mattis mauris eget, vestibulum metus. Maecenas non vehicula neque. Nunc ac mauris id ipsum commodo tempus. Integer at dolor consequat, dignissim eros in, imperdiet dui. Aliquam condimentum turpis eget tellus ultrices tincidunt. Pellentesque id varius purus, ac tristique augue. Etiam ut pharetra purus. Vestibulum quis vehicula eros. Mauris laoreet purus nec felis ullamcorper convallis.</p> <p>Quisque urna purus, posuere nec urna sed, ornare aliquet mauris. In faucibus vitae tellus id iaculis. Donec porttitor, elit eu elementum pulvinar, sapien ex cursus lacus, non ornare ex lectus ut elit. Donec eros ligula, suscipit eu tellus ut, tristique hendrerit tortor. Fusce sollicitudin mollis risus, ut rhoncus magna volutpat vel. Cras auctor, elit id pellentesque semper, neque nibh fermentum ante, sit amet malesuada felis magna nec enim. Vivamus sollicitudin placerat felis, vel blandit dolor sollicitudin a. Nunc vitae volutpat augue. Nunc tristique placerat tortor condimentum sagittis. Sed eu egestas ex, quis auctor neque. Nam eget tellus suscipit, vestibulum augue nec, consequat erat. Mauris malesuada nec ligula non posuere. Proin vitae posuere tortor. Phasellus vulputate quam ut dictum vulputate.</p> <p>Integer ac lectus metus. Ut aliquam ipsum ligula, quis molestie ex pretium sit amet. Morbi porttitor neque vel luctus laoreet. Mauris varius lacus a eros aliquam, in maximus nibh aliquam. Integer sodales consequat metus eget accumsan. Integer viverra mi erat, in hendrerit massa vestibulum placerat. Sed ut gravida nisl, ut cursus neque. Vestibulum tristique rutrum augue vel aliquet.</p> <p>Ut quis faucibus diam. Aliquam dolor metus, laoreet vitae lacinia a, aliquam a tellus. Vivamus sed commodo ipsum, in lacinia nisl. Sed metus diam, porta eget tortor et, vehicula hendrerit sapien. Vestibulum vehicula urna felis, id elementum libero pellentesque id. Vivamus in massa velit. Suspendisse vitae turpis fermentum lectus pellentesque laoreet. Curabitur viverra pretium turpis, eget feugiat mi blandit a. Quisque nisl urna, porta ut urna eget, mattis fringilla nisi. Ut lacus ligula, dapibus ac fermentum ac, rhoncus eget metus. Donec scelerisque, felis vitae viverra iaculis, diam sem gravida tellus, non sodales urna urna sit amet enim. Duis id justo vitae justo suscipit porta placerat vel ligula. Morbi justo nunc, rhoncus laoreet ipsum a, aliquet eleifend dui. In a quam tortor.</p> <p>Pellentesque eget eros ut dui tincidunt convallis. Pellentesque tincidunt rutrum tellus, non rhoncus dui finibus eu. Integer eu sem maximus, blandit neque eu, congue leo. Ut pretium efficitur turpis, id dapibus turpis bibendum vel. Suspendisse a nibh dictum, imperdiet est et, interdum odio. Morbi urna magna, eleifend vitae luctus ac, scelerisque sit amet nisi. Quisque maximus placerat ante et fermentum. Nulla eu aliquet arcu, vel maximus massa. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam posuere arcu ex, in sagittis orci rhoncus eu. Suspendisse potenti. Curabitur facilisis sapien et ligula tristique lacinia. Aliquam a mauris bibendum, placerat augue sit amet, hendrerit arcu. Nam in bibendum sapien. Pellentesque laoreet nisi vel metus dapibus dictum. Integer semper, velit laoreet ornare maximus, nulla orci maximus ante, a tincidunt eros risus blandit eros.</p>"
+      }
+    ]
+  }
+}

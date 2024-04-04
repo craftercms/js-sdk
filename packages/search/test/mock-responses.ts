@@ -64,3 +64,11 @@ export const searchResponse = {
   ]
 };
 
+export const noResultsResponse = {
+  total: {
+    value: 0,
+    relation: "eq"
+  },
+  max_score: null,
+  hits: []
+};

@@ -18,7 +18,7 @@ import { SearchService } from '@craftercms/search';
 import { crafterConf } from '@craftercms/classes';
 import 'url-search-params-polyfill';
 import { Query } from '../src/query';
-import { searchResponse } from './mock-responses';
+import {noResultsResponse, searchResponse} from './mock-responses';
 import * as xhr2 from 'xhr2';
 import * as nock from 'nock';
 import { expect } from 'chai';
@@ -79,7 +79,7 @@ describe('Search Client', () => {
         })
         .reply(200, { hits: searchResponse });
 
-      var query = SearchService.createQuery<Query>({ uuid: '12345' });
+      const query = SearchService.createQuery<Query>({ uuid: '12345' });
       query.query = {
         query: {
           bool: {
@@ -113,6 +113,46 @@ describe('Search Client', () => {
           done(error);
         }
       });
+    });
+
+    it('should return no results with a query that doesn\'t match any items', (done) => {
+      nock('http://localhost:8080')
+        .post('/api/1/site/search/search.json')
+        .query({
+          crafterSite: 'editorial'
+        })
+        .reply(200, { hits: noResultsResponse });
+
+      const query = SearchService.createQuery<Query>({
+        uuid: '23456',
+        query: {
+          bool: {
+            filter: [
+              {
+                bool: {
+                  should: [
+                    {
+                      match: {
+                        'content-type': '/page/non-existing'
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      });
+
+      SearchService.search(query).subscribe({
+        next: (result) => {
+          expect(result.total.value).to.equal(noResultsResponse.total.value);
+          done();
+        },
+        error: (error) => {
+          done(error);
+        }
+      })
     });
   });
 });

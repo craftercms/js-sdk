@@ -65,6 +65,21 @@ describe('Crafter CMS ICE', () => {
       expect(attributes).to.include.keys('data-studio-component-path');
       expect(attributes).to.deep.equal(iCEAttributes);
     });
+    it('should return an empty object if the model is not complete', () => {
+      const incompleteModel = {
+        craftercms: {
+          id: null,
+          path: null,
+          label: null,
+          dateCreated: null,
+          dateModified: null,
+          contentTypeId: null,
+          disabled: null
+        }
+      }
+      const attributes = getICEAttributes({ model: incompleteModel });
+      expect(attributes).to.be.empty;
+    });
   });
 
   describe('getDropZoneAttributes', () => {
