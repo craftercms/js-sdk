@@ -21,15 +21,12 @@ import { ofType } from 'redux-observable';
 
 import { crafterConf } from '@craftercms/classes';
 import { SearchService } from '@craftercms/search';
-import {
-  SEARCH,
-  searchComplete
-} from '../actions/search';
+import { search, searchComplete } from '../actions/search';
 import { SearchResult } from "@craftercms/models";
 
 export const searchEpic =
   (action$: Observable<AnyAction>) => action$.pipe(
-    ofType(SEARCH),
+    ofType(search.type),
     mergeMap(({ payload }) =>
       SearchService.search(payload, crafterConf.getConfig())
         .pipe(

@@ -21,24 +21,24 @@ import { ofType } from 'redux-observable';
 
 import { ContentStoreService, NavigationService } from '@craftercms/content';
 import {
-  GET_ITEM,
+  getItem,
   getItemComplete,
-  GET_DESCRIPTOR,
+  getDescriptor,
   getDescriptorComplete,
-  GET_CHILDREN,
+  getChildren,
   getChildrenComplete,
-  GET_TREE,
+  getTree,
   getTreeComplete,
-  GET_NAV,
+  getNav,
   getNavComplete,
-  GET_NAV_BREADCRUMB,
-  getNavBreadcrumbComplete
+  getNavBreadcrumb,
+  getNavBreadcrumbComplete,
 } from '../actions/content';
 import { Item, NavigationItem } from "@craftercms/models";
 
 export const getItemEpic =
   (action$: Observable<AnyAction>) => action$.pipe(
-    ofType(GET_ITEM),
+    ofType(getItem.type),
     mergeMap(({ payload }) =>
       ContentStoreService.getItem(payload)
         .pipe(
@@ -54,7 +54,7 @@ export const getItemEpic =
 
 export const getDescriptorEpic =
   (action$: Observable<AnyAction>) => action$.pipe(
-      ofType(GET_DESCRIPTOR),
+      ofType(getDescriptor.type),
       mergeMap(({ payload }) =>
         ContentStoreService.getDescriptor(payload)
           .pipe(
@@ -71,7 +71,7 @@ export const getDescriptorEpic =
 
 export const getChildrenEpic =
   (action$: Observable<AnyAction>) => action$.pipe(
-      ofType(GET_CHILDREN),
+      ofType(getChildren.type),
       mergeMap(({ payload }) =>
       ContentStoreService.getChildren(payload)
           .pipe(
@@ -87,7 +87,7 @@ export const getChildrenEpic =
 
 export const getTreeEpic =
   (action$: Observable<AnyAction>) => action$.pipe(
-      ofType(GET_TREE),
+      ofType(getTree.type),
       mergeMap(({ payload }) =>
       ContentStoreService.getTree(payload.url, payload.depth)
           .pipe(
@@ -103,7 +103,7 @@ export const getTreeEpic =
 
 export const getNavEpic =
   (action$: Observable<AnyAction>) => action$.pipe(
-      ofType(GET_NAV),
+      ofType(getNav.type),
       mergeMap(({ payload }) =>
       NavigationService.getNavTree(payload.url, payload.depth, payload.currentPageUrl)
           .pipe(
@@ -119,7 +119,7 @@ export const getNavEpic =
 
 export const getNavBreadcrumbEpic =
   (action$: Observable<AnyAction>) => action$.pipe(
-      ofType(GET_NAV_BREADCRUMB),
+      ofType(getNavBreadcrumb.type),
       mergeMap(({ payload }) =>
       NavigationService.getNavBreadcrumb(payload.url, payload.root)
           .pipe(

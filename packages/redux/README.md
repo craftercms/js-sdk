@@ -161,7 +161,7 @@ Creates an action to get the list of Items directly under a folder into your sto
 ### getTree
 Creates an action to get the complete Item hierarchy under the specified folder in the content store.
 
-`getTree(path: string, depth: int)`
+`getTree({ path: string, depth: int })`
 
 | Parameters    |                |
 | ------------- |:--------------:|
@@ -177,13 +177,13 @@ Creates an action to get the complete Item hierarchy under the specified folder 
 
   const path = '/site/website';
 
-  store.dispatch(getTree(path, 2));
+  store.dispatch(getTree({ path, depth: 2 }));
 ```
 
 ### getNav
 Creates an action to return the navigation tree with the specified depth for the specified store URL.
 
-`getNav(path: string, depth: int, currentPageUrl: string)`
+`getNav({ path: string, depth: int, currentPageUrl: string })`
 
 | Parameters     |                |
 | -------------- |:--------------:|
@@ -200,13 +200,13 @@ Creates an action to return the navigation tree with the specified depth for the
 
   const path = '/site/website';
 
-  store.dispatch(getNav(path, 2));
+  store.dispatch(getNav({ path, depth: 2 }));
 ```
 
 ### getNavBreadcrumb
 Creates an action to return the navigation items that form the breadcrumb for the specified store URL.
 
-`getNavBreadcrumb(path: string, root: string)`
+`getNavBreadcrumb({ path: string, root: string })`
 
 | Parameters     |                |
 | -------------- |:--------------:|
@@ -222,7 +222,7 @@ Creates an action to return the navigation items that form the breadcrumb for th
 
   const path = '/site/website/health';
 
-  store.dispatch(getNavBreadcrumb(path));
+  store.dispatch(getNavBreadcrumb({ path }));
 ```
 
 ### search
@@ -290,7 +290,7 @@ Resulting store state
 
   const path = '/site/website';
 
-  store.dispatch(getTree(path));
+  store.dispatch(getTree({ path }));
 ```
 
 Store state while loading tree
