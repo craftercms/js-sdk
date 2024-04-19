@@ -36,6 +36,7 @@ if (!globalThis.fetch) {
 }
 
 const dom = new JSDOM('<!doctype html><html><body></body></html>');
+declare var global: any;
 (global as any).document = dom.window.document;
 (global as any).window = dom.window;
 
@@ -112,7 +113,7 @@ describe('Crafter CMS ICE', () => {
         })
         .reply(200, { preview: true });
 
-      fetchIsAuthoring(crafterConf.getConfig()).then((isAuthoring) => {
+      fetchIsAuthoring().then((isAuthoring) => {
         expect(isAuthoring).to.be.true;
         done();
       });

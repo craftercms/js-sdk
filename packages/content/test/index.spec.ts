@@ -67,7 +67,7 @@ describe('Engine Client', () => {
           })
           .reply(200, item);
 
-        ContentStoreService.getItem('/site/website/index.xml', crafterConf.getConfig()).subscribe((respItem) => {
+        ContentStoreService.getItem('/site/website/index.xml').subscribe((respItem) => {
           expect(respItem).to.not.be.null;
           expect(respItem.url).to.equal(item.url);
           expect(respItem.url).to.not.equal(item2.url);
@@ -92,7 +92,7 @@ describe('Engine Client', () => {
           })
           .reply(200, descriptor);
 
-        ContentStoreService.getDescriptor('/site/website/index.xml', crafterConf.getConfig()).subscribe(
+        ContentStoreService.getDescriptor('/site/website/index.xml').subscribe(
           (respDescriptor) => {
             expect(respDescriptor).to.not.be.null;
             expect(respDescriptor.page.objectId).to.equal(descriptor.page.objectId);
@@ -114,11 +114,11 @@ describe('Engine Client', () => {
           })
           .reply(200, children);
 
-        ContentStoreService.getChildren('/site/website/', crafterConf.getConfig()).subscribe((respChildren) => {
+        ContentStoreService.getChildren('/site/website/').subscribe((respChildren) => {
           const childrenNames = ['articles', 'crafter-level-descriptor.level.xml', 'entertainment', 'health', 'index.xml', 'search-results', 'style', 'technology'];
           const allChildrenExist = childrenNames.every((name) => respChildren.find((child) => child.name === name));
           expect(respChildren, `index should have ${children.length} child pages`).to.have.lengthOf(children.length);
-          expect(allChildrenExist, 'all children from response should match the children child').to.be.true;
+          expect(allChildrenExist, 'all children from response should match the expected children from mock response').to.be.true;
           done();
         });
       });
@@ -136,7 +136,7 @@ describe('Engine Client', () => {
           })
           .reply(200, tree);
 
-        ContentStoreService.getTree('/site/website/articles/2021', 3, crafterConf.getConfig()).subscribe((respTree) => {
+        ContentStoreService.getTree('/site/website/articles/2021', 3).subscribe((respTree) => {
           expect(respTree.name).to.equal(tree.name);
           expect(respTree.children, `tree should have ${tree.children.length} child pages`).to.have.lengthOf(
             tree.children.length
@@ -163,7 +163,7 @@ describe('Engine Client', () => {
           })
           .reply(200, navTree);
 
-        NavigationService.getNavTree('/site/website', 3, null, crafterConf.getConfig()).subscribe((respTree) => {
+        NavigationService.getNavTree('/site/website', 3).subscribe((respTree) => {
           expect(respTree.label, 'tree should start at the index').to.equal(navTree.label);
           expect(respTree.subItems, 'tree should have subItems').to.exist;
           expect(respTree.subItems).to.deep.equal(navTree.subItems);
@@ -184,7 +184,7 @@ describe('Engine Client', () => {
           })
           .reply(200, navBreadcrumb);
 
-        NavigationService.getNavBreadcrumb('/site/website/style/index.xml', null, crafterConf.getConfig()).subscribe(
+        NavigationService.getNavBreadcrumb('/site/website/style/index.xml').subscribe(
           (respNavBreadcrumb) => {
             expect(respNavBreadcrumb, `breadcrumb should have ${navBreadcrumb.length} items`).to.have.lengthOf(
               navBreadcrumb.length
@@ -218,8 +218,7 @@ describe('Engine Client', () => {
 
         UrlTransformationService.transform(
           'storeUrlToRenderUrl',
-          '/site/website/style/index.xml',
-          crafterConf.getConfig()
+          '/site/website/style/index.xml'
         ).subscribe((url) => {
           expect(url).to.equal(renderUrl);
           done();
@@ -238,7 +237,7 @@ describe('Engine Client', () => {
           })
           .reply(200, `"${storeUrl}"`);
 
-        UrlTransformationService.transform('renderUrlToStoreUrl', '/technology', crafterConf.getConfig()).subscribe(
+        UrlTransformationService.transform('renderUrlToStoreUrl', '/technology').subscribe(
           (url) => {
             expect(url).to.equal(storeUrl);
             done();
