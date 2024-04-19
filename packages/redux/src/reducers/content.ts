@@ -18,18 +18,18 @@ import { AnyAction } from 'redux';
 import { flattenEntries } from '../utils';
 
 import {
-  GET_ITEM,
-  GET_ITEM_COMPLETE,
-  GET_DESCRIPTOR,
-  GET_DESCRIPTOR_COMPLETE,
-  GET_CHILDREN,
-  GET_CHILDREN_COMPLETE,
-  GET_TREE,
-  GET_TREE_COMPLETE,
-  GET_NAV_BREADCRUMB,
-  GET_NAV_BREADCRUMB_COMPLETE,
-  GET_NAV,
-  GET_NAV_COMPLETE
+  getItem,
+  getItemComplete,
+  getDescriptor,
+  getDescriptorComplete,
+  getChildren,
+  getChildrenComplete,
+  getTree,
+  getTreeComplete,
+  getNav,
+  getNavComplete,
+  getNavBreadcrumb,
+  getNavBreadcrumbComplete
 } from '../actions/content';
 import { StateContainer, Item, Descriptor } from '@craftercms/models';
 
@@ -38,7 +38,7 @@ export function itemsReducer(state = {
   entries: {}
 }, action: AnyAction): StateContainer<Item> {
   switch (action.type) {
-    case GET_ITEM: {
+    case getItem.type: {
       return {
         ...state,
         loading: {
@@ -47,7 +47,7 @@ export function itemsReducer(state = {
         }
       }
     }
-    case GET_ITEM_COMPLETE: {
+    case getItemComplete.type: {
       const { item, url } = action.payload;
       return {
         ...state,
@@ -71,7 +71,7 @@ export function descriptorsReducer(state = {
   entries: {}
 }, action: AnyAction): StateContainer<Item> {
   switch (action.type) {
-    case GET_DESCRIPTOR: {
+    case getDescriptor.type: {
       return {
         ...state,
         loading: {
@@ -80,7 +80,7 @@ export function descriptorsReducer(state = {
         }
       }
     }
-    case GET_DESCRIPTOR_COMPLETE: {
+    case getDescriptorComplete.type: {
       const { descriptor, url } = action.payload;
       return {
         ...state,
@@ -104,7 +104,7 @@ export function childrenReducer(state = {
   entries: {}
 }, action: AnyAction): StateContainer<Item> {
   switch (action.type) {
-    case GET_CHILDREN: {
+    case getChildren.type: {
       const url = action.payload;
       return {
         ...state,
@@ -114,7 +114,7 @@ export function childrenReducer(state = {
         }
       }
     }
-    case GET_CHILDREN_COMPLETE: {
+    case getChildrenComplete.type: {
       const { children, url } = action.payload;
       return {
         ...state,
@@ -139,7 +139,7 @@ export function treeReducer(state = {
   childIds: {}
 }, action: AnyAction): StateContainer<any> {
   switch (action.type) {
-    case GET_TREE: {
+    case getTree.type: {
       const { url } = action.payload;
       return {
         ...state,
@@ -149,7 +149,7 @@ export function treeReducer(state = {
         }
       }
     }
-    case GET_TREE_COMPLETE: {
+    case getTreeComplete.type: {
       const { tree, url } = action.payload;
       const flatEntries = typeof(tree) === "undefined" ? null : flattenEntries(tree);
 
@@ -173,7 +173,7 @@ export function breadcrumbsReducer(state = {
   entries: {}
 }, action: AnyAction): StateContainer<Item> {
   switch (action.type) {
-    case GET_NAV_BREADCRUMB: {
+    case getNavBreadcrumb.type: {
       const { url } = action.payload;
 
       return {
@@ -184,7 +184,7 @@ export function breadcrumbsReducer(state = {
         }
       }
     }
-    case GET_NAV_BREADCRUMB_COMPLETE: {
+    case getNavBreadcrumbComplete.type: {
       const { breadcrumb, url } = action.payload;
       return {
         ...state,
@@ -209,7 +209,7 @@ export function navigationReducer(state = {
   childIds: {}
 }, action: AnyAction): StateContainer<any> {
   switch (action.type) {
-    case GET_NAV: {
+    case getNav.type: {
       return {
         ...state,
         loading: {
@@ -218,7 +218,7 @@ export function navigationReducer(state = {
         }
       }
     }
-    case GET_NAV_COMPLETE: {
+    case getNavComplete.type: {
       const { nav, url } = action.payload;
       const flatEntries = typeof(nav) === "undefined" ? null : flattenEntries(nav, 'subItems');
 
