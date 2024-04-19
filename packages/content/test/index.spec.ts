@@ -293,8 +293,8 @@ describe('Object Utils', () => {
       expect(parsedProps).to.not.be.null;
       expect(parsedProps.selected_b).to.equal(true);
       expect(parsedProps.craftercms.label).to.equal(parsedItem.craftercms.label);
-      expect(parsedProps.hero_image).to.not.be.undefined;
-      expect(parsedProps.craftercms.dateCreated).to.not.be.null;
+      expect(parsedProps.hero_image).to.equal(parsedItem.hero_image);
+      expect(parsedProps.craftercms.dateCreated).to.equal(parsedItem.craftercms.dateCreated);
 
       const parsedPropsWOptions = parseProps(descriptor.page, parsed, {
         parseFieldValueTypes: false,
