@@ -44,12 +44,14 @@ describe('Search Client', () => {
     nock.cleanAll();
   });
 
+  const { baseUrl, site: crafterSite, endpoints } = crafterConf.getConfig();
+
   describe('search', () => {
     it('should find all documents', (done) => {
-      nock('http://localhost:8080')
-        .post('/api/1/site/search/search.json')
+      nock(baseUrl)
+        .post(endpoints.SEARCH)
         .query({
-          crafterSite: 'editorial'
+          crafterSite
         })
         .reply(200, { hits: searchResponse });
 
@@ -72,10 +74,10 @@ describe('Search Client', () => {
     });
 
     it('should apply all filters', (done) => {
-      nock('http://localhost:8080')
-        .post('/api/1/site/search/search.json')
+      nock(baseUrl)
+        .post(endpoints.SEARCH)
         .query({
-          crafterSite: 'editorial'
+          crafterSite
         })
         .reply(200, { hits: searchResponse });
 
@@ -116,10 +118,10 @@ describe('Search Client', () => {
     });
 
     it('should return no results with a query that doesn\'t match any items', (done) => {
-      nock('http://localhost:8080')
-        .post('/api/1/site/search/search.json')
+      nock(baseUrl)
+        .post(endpoints.SEARCH)
         .query({
-          crafterSite: 'editorial'
+          crafterSite
         })
         .reply(200, { hits: noResultsResponse });
 
