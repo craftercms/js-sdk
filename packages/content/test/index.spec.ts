@@ -54,15 +54,16 @@ describe('Engine Client', () => {
 
   // put the real XHR object back and clear the mocks after each test
   afterEach(() => nock.cleanAll());
+  const { baseUrl, site: crafterSite, endpoints } = crafterConf.getConfig();
 
   describe('Content Store Service', () => {
     describe('getItem', () => {
       // Tests the contentStore getItem method. Checks that it returns the index item of the site editorial.
       it('return the index item', (done) => {
-        nock('http://localhost:8080')
-          .get('/api/1/site/content_store/item.json')
+        nock(baseUrl)
+          .get(endpoints.GET_ITEM_URL)
           .query({
-            crafterSite: 'editorial',
+            crafterSite,
             url: '/site/website/index.xml'
           })
           .reply(200, item);
@@ -83,10 +84,10 @@ describe('Engine Client', () => {
     describe('getDescriptor', () => {
       // Tests the contentStore getDescriptor method. Checks that it returns the index descriptor of the site editorial.
       it('return the index descriptor', (done) => {
-        nock('http://localhost:8080')
-          .get('/api/1/site/content_store/descriptor.json')
+        nock(baseUrl)
+          .get(endpoints.GET_DESCRIPTOR)
           .query({
-            crafterSite: 'editorial',
+            crafterSite,
             flatten: false,
             url: '/site/website/index.xml'
           })
@@ -106,10 +107,10 @@ describe('Engine Client', () => {
       // Tests the contentStore getChildren method. Checks that it returns the children of the index page of the site editorial.
       // The children length at its ids should match the expected values.
       it('return the child pages', (done) => {
-        nock('http://localhost:8080')
-          .get('/api/1/site/content_store/children.json')
+        nock(baseUrl)
+          .get(endpoints.GET_CHILDREN)
           .query({
-            crafterSite: 'editorial',
+            crafterSite,
             url: '/site/website/'
           })
           .reply(200, children);
@@ -118,7 +119,7 @@ describe('Engine Client', () => {
           const childrenNames = ['articles', 'crafter-level-descriptor.level.xml', 'entertainment', 'health', 'index.xml', 'search-results', 'style', 'technology'];
           const allChildrenExist = childrenNames.every((name) => respChildren.find((child) => child.name === name));
           expect(respChildren, `index should have ${children.length} child pages`).to.have.lengthOf(children.length);
-          expect(allChildrenExist, 'all children from response should match the expected children from mock response').to.be.true;
+          expect(allChildrenExist, 'all children from getChildren response should match the expected children from mock response').to.be.true;
           done();
         });
       });
@@ -127,10 +128,10 @@ describe('Engine Client', () => {
     describe('getTree', () => {
       // Tests the contentStore getTree method. Checks that it returns the tree of `/articles/2021` folder of the site editorial.
       it('return the page tree', (done) => {
-        nock('http://localhost:8080')
-          .get('/api/1/site/content_store/tree.json')
+        nock(baseUrl)
+          .get(endpoints.GET_TREE)
           .query({
-            crafterSite: 'editorial',
+            crafterSite,
             depth: 3,
             url: '/site/website/articles/2021'
           })
@@ -153,10 +154,10 @@ describe('Engine Client', () => {
     describe('getNavTree', () => {
       // Tests the navigation getNavTree method. Checks that it returns the correct navigation tree of the site editorial.
       it('return the nav tree', (done) => {
-        nock('http://localhost:8080')
-          .get('/api/1/site/navigation/tree.json')
+        nock(baseUrl)
+          .get(endpoints.GET_NAV_TREE)
           .query({
-            crafterSite: 'editorial',
+            crafterSite,
             currentPageUrl: null,
             depth: 3,
             url: '/site/website'
@@ -175,10 +176,10 @@ describe('Engine Client', () => {
       // Tests the navigation getNavBreadcrumb method. Checks that it returns the correct items for the navigation
       // breadcrumb of the site editorial.
       it('return the nav breadcrumb', (done) => {
-        nock('http://localhost:8080')
-          .get('/api/1/site/navigation/breadcrumb.json')
+        nock(baseUrl)
+          .get(endpoints.GET_BREADCRUMB)
           .query({
-            crafterSite: 'editorial',
+            crafterSite,
             root: null,
             url: '/site/website/style/index.xml'
           })
@@ -207,10 +208,10 @@ describe('Engine Client', () => {
       // Tests the urlTransformation transform method. Checks that the response is the expected render url
       // (/site/website/style/index.xml => /style).
       it('return the render url', (done) => {
-        nock('http://localhost:8080')
-          .get('/api/1/site/url/transform.json')
+        nock(baseUrl)
+          .get(endpoints.TRANSFORM_URL)
           .query({
-            crafterSite: 'editorial',
+            crafterSite,
             transformerName: 'storeUrlToRenderUrl',
             url: '/site/website/style/index.xml'
           })
@@ -228,10 +229,10 @@ describe('Engine Client', () => {
       it('return the store url', (done) => {
         // Tests the urlTransformation transform method. Checks that the response is the expected render url
         // (/technology => /site/website/technology/index.xml).
-        nock('http://localhost:8080')
-          .get('/api/1/site/url/transform.json')
+        nock(baseUrl)
+          .get(endpoints.TRANSFORM_URL)
           .query({
-            crafterSite: 'editorial',
+            crafterSite,
             transformerName: 'renderUrlToStoreUrl',
             url: '/technology'
           })
