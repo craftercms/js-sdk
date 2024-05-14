@@ -7,7 +7,10 @@
   ],
   "description": "Crafter CMS SDK for JavaScript",
   "scripts": {
-    "build": "./build.sh"
+    "build": "./build.sh",
+    "prettier:all": "prettier -w packages/*/src/**/*.ts prettier -w packages/*/test/**/*.ts",
+    "prettier:packages": "prettier -w packages/*/src/**/*.ts",
+    "prettier:tests": "prettier -w packages/*/test/**/*.ts"
   },
   "repository": {
     "type": "git",
@@ -26,6 +29,7 @@
   },
   "homepage": "https://github.com/craftercms/craftercms-sdk-js#readme",
   "devDependencies": {
+    "prettier": "^3.0.3",
     "react": "^18.2.0",
     "typescript": "^5.3.3"
   },

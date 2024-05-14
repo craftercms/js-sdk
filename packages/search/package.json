@@ -22,7 +22,7 @@
     "build:ts": "tsc -p tsconfig.build.json",
     "clean:ts": "../../node_modules/rimraf/bin.js ts-out",
     "build": "npm run build:ts && npm run rollup && npm run clean:ts",
-    "test": "../../node_modules/mocha/bin/mocha --opts ../../default.opts \"test/*.spec.ts\""
+    "test": "mocha"
   },
   "dependencies": {
     "@craftercms/classes": "0.0.0-PLACEHOLDER",
@@ -34,11 +34,15 @@
   "devDependencies": {
     "@rollup/plugin-commonjs": "^25.0.7",
     "@rollup/plugin-node-resolve": "^15.2.3",
-    "@types/mocha": "^7.0.2",
-    "mocha": "^7.2.0",
+    "@types/mocha": "^10.0.6",
+    "chai": "^4.3.8",
+    "mocha": "^10.2.0",
+    "nock": "^13.3.3",
     "rollup": "^2.79.1",
     "rollup-plugin-sourcemaps": "^0.5.0",
+    "ts-node": "^10.9.1",
     "terser": "^5.30.1",
-    "xhr-mock": "^2.5.1"
+    "xhr-mock": "^2.5.1",
+    "xhr2": "^0.2.1"
   }
 }
