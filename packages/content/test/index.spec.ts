@@ -18,6 +18,7 @@ import * as assert from 'assert';
 import { ContentStoreService, NavigationService, UrlTransformationService } from '@craftercms/content';
 import { crafterConf } from '@craftercms/classes';
 import 'url-search-params-polyfill';
+import 'isomorphic-fetch';
 
 import mock from 'xhr-mock';
 import MockRequest from "xhr-mock/lib/MockRequest";
