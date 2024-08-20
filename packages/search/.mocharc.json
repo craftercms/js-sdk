@@ -3,4 +3,3 @@
   "spec": ["test/*.spec.ts"],
   "require": ["assert", "mocha", "ts-node/register"]
 }
-
