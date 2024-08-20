@@ -8,7 +8,7 @@
   "typings": "./search.d.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/craftercms/craftercms-sdk-js.git"
+    "url": "git+https://github.com/craftercms/craftercms-sdk-js.git"
   },
   "keywords": [
     "content management",
@@ -29,7 +29,7 @@
     "@craftercms/models": "0.0.0-PLACEHOLDER",
     "@craftercms/utils": "0.0.0-PLACEHOLDER",
     "rxjs": "^7.8.1",
-    "uuid": "^3.4.0"
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^11.1.0",

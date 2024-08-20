@@ -21,7 +21,7 @@ import { crafterConf, SDKService } from '@craftercms/classes';
 import { CrafterConfig } from '@craftercms/models';
 import { Query } from './query';
 
-import uuid from 'uuid';
+import { v4 as uuid } from 'uuid';
 import { SearchResult } from '@craftercms/models/src/search';
 
 /**
@@ -49,15 +49,11 @@ export function search(queryOrParams: Query | Object, config?: CrafterConfig): O
 /**
  * Returns a new Query object
  */
-
-export function createQuery<T extends Query>(params?: Object): T {
-  let query,
-    queryId = params && params['uuid'] ? params['uuid'] : uuid();
-
-  query = new Query();
+export function createQuery(params?: Object): Query {
+  let query = new Query();
+  const queryId = params && params['uuid'] ? params['uuid'] : uuid();
   Object.assign(query.params, params);
   query.uuid = queryId;
-
   return query;
 }
 

@@ -21,6 +21,8 @@
  */
 export class Query {
 
+  uuid: string;
+
   /**
    * Creates an empty query
    * @constructor
