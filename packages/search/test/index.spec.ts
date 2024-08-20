@@ -55,7 +55,7 @@ describe('Search Client', () => {
         })
         .reply(200, { hits: searchResponse });
 
-      const query = SearchService.createQuery<Query>({ uuid: '12345' });
+      const query = SearchService.createQuery({ uuid: '12345' });
       query.query = {
         query: {
           match_all: {}
@@ -81,7 +81,7 @@ describe('Search Client', () => {
         })
         .reply(200, { hits: searchResponse });
 
-      const query = SearchService.createQuery<Query>({ uuid: '12345' });
+      const query = SearchService.createQuery({ uuid: '12345' });
       query.query = {
         query: {
           bool: {
@@ -125,7 +125,7 @@ describe('Search Client', () => {
         })
         .reply(200, { hits: noResultsResponse });
 
-      const query = SearchService.createQuery<Query>({
+      const query = SearchService.createQuery({
         uuid: '23456',
         query: {
           bool: {
