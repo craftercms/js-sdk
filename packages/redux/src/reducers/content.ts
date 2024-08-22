@@ -26,12 +26,11 @@ import {
   getChildrenComplete,
   getTree,
   getTreeComplete,
-  getNav,
   getNavComplete,
-  getNavBreadcrumb,
   getNavBreadcrumbComplete
 } from '../actions/content';
-import { StateContainer, Item, Descriptor } from '@craftercms/models';
+import { StateContainer, Item } from '@craftercms/models';
+import { internal_getNav, internal_getNavBreadcrumb } from "../actions/content_internal";
 
 export function itemsReducer(state = {
   loading: {}, // { all: boolean, [id: string]: boolean }
@@ -173,7 +172,7 @@ export function breadcrumbsReducer(state = {
   entries: {}
 }, action: AnyAction): StateContainer<Item> {
   switch (action.type) {
-    case getNavBreadcrumb.type: {
+    case internal_getNavBreadcrumb.type: {
       const { url } = action.payload;
 
       return {
@@ -209,7 +208,7 @@ export function navigationReducer(state = {
   childIds: {}
 }, action: AnyAction): StateContainer<any> {
   switch (action.type) {
-    case getNav.type: {
+    case internal_getNav.type: {
       return {
         ...state,
         loading: {

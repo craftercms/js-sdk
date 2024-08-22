@@ -29,12 +29,11 @@ import {
   getChildrenComplete,
   getTree,
   getTreeComplete,
-  getNav,
   getNavComplete,
-  getNavBreadcrumb,
-  getNavBreadcrumbComplete,
+  getNavBreadcrumbComplete
 } from '../actions/content';
 import { Item, NavigationItem } from "@craftercms/models";
+import { internal_getNav, internal_getNavBreadcrumb } from "../actions/content_internal";
 
 export const getItemEpic =
   (action$: Observable<AnyAction>) => action$.pipe(
@@ -103,7 +102,7 @@ export const getTreeEpic =
 
 export const getNavEpic =
   (action$: Observable<AnyAction>) => action$.pipe(
-      ofType(getNav.type),
+      ofType(internal_getNav.type),
       mergeMap(({ payload }) =>
       NavigationService.getNavTree(payload.url, payload.depth, payload.currentPageUrl)
           .pipe(
@@ -119,7 +118,7 @@ export const getNavEpic =
 
 export const getNavBreadcrumbEpic =
   (action$: Observable<AnyAction>) => action$.pipe(
-      ofType(getNavBreadcrumb.type),
+      ofType(internal_getNavBreadcrumb.type),
       mergeMap(({ payload }) =>
       NavigationService.getNavBreadcrumb(payload.url, payload.root)
           .pipe(
