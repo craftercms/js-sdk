@@ -49,7 +49,7 @@ export function getNav(url: string, depth: Number, currentPageUrl: string): GetN
 export function getNav(payload: { url: string; depth?: Number; currentPageUrl?: string }): GetNavAction;
 export function getNav(payloadOrUrl: string | { url: string; depth?: Number; currentPageUrl?: string }, depth: Number = 1, currentPageUrl: string = ''): GetNavAction {
   if (typeof payloadOrUrl === 'string') {
-    console.warn('Warning: This signature is deprecated, adjust to use the object signature instead ({ url, depth?, currentPageUrl? }).')
+    console.warn('Warning: This signature is deprecated, adjust to use the object signature instead ({ url, depth?, currentPageUrl? }).');
     return internal_getNav({ url: payloadOrUrl, depth, currentPageUrl });
   } else {
     return internal_getNav(payloadOrUrl);
@@ -71,7 +71,7 @@ export function getNavBreadcrumb(url: string, root: string): GetNavBreadcrumbAct
 export function getNavBreadcrumb(payload: { url: string, root?: string }): GetNavBreadcrumbAction;
 export function getNavBreadcrumb(payloadOrUrl: string | { url: string, root?: string }, root: string = ''): GetNavBreadcrumbAction {
   if (typeof payloadOrUrl === 'string') {
-    console.warn('Warning: This signature is deprecated, adjust to use the object signature instead ({ url, root? }).')
+    console.warn('Warning: This signature is deprecated, adjust to use the object signature instead ({ url, root? }).');
     return internal_getNavBreadcrumb({ url: payloadOrUrl, root });
   } else {
     return internal_getNavBreadcrumb(payloadOrUrl);
