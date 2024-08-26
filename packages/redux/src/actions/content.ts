@@ -34,7 +34,7 @@ export const getTree = /*#__PURE__*/ createAction<{ url: string, depth?: Number 
 
 export const getTreeComplete = /*#__PURE__*/ createAction<{ url: string, tree?: Item }>('GET_TREE_COMPLETE');
 
-interface GetNavPayload {
+interface GetNavAction {
   type: string;
   payload: {
     url: string;
@@ -43,11 +43,11 @@ interface GetNavPayload {
   }
 }
 
-export function getNav(url: string): GetNavPayload;
-export function getNav(url: string, depth: Number): GetNavPayload;
-export function getNav(url: string, depth: Number, currentPageUrl: string): GetNavPayload;
-export function getNav(payload: { url: string; depth?: Number; currentPageUrl?: string }): GetNavPayload;
-export function getNav(payloadOrUrl: string | { url: string; depth?: Number; currentPageUrl?: string }, depth: Number = 1, currentPageUrl: string = ''): GetNavPayload {
+export function getNav(url: string): GetNavAction;
+export function getNav(url: string, depth: Number): GetNavAction;
+export function getNav(url: string, depth: Number, currentPageUrl: string): GetNavAction;
+export function getNav(payload: { url: string; depth?: Number; currentPageUrl?: string }): GetNavAction;
+export function getNav(payloadOrUrl: string | { url: string; depth?: Number; currentPageUrl?: string }, depth: Number = 1, currentPageUrl: string = ''): GetNavAction {
   if (typeof payloadOrUrl === 'string') {
     console.warn('Warning: This signature is deprecated, adjust to use the object signature instead ({ url, depth?, currentPageUrl? }).')
     return internal_getNav({ url: payloadOrUrl, depth, currentPageUrl });
@@ -58,7 +58,7 @@ export function getNav(payloadOrUrl: string | { url: string; depth?: Number; cur
 
 export const getNavComplete = /*#__PURE__*/ createAction<{ url: string, nav?: NavigationItem }>('GET_NAV_COMPLETE');
 
-export interface GetNavBreadcrumbPayload {
+export interface GetNavBreadcrumbAction {
   type: string;
   payload: {
     url: string;
@@ -66,10 +66,10 @@ export interface GetNavBreadcrumbPayload {
   }
 }
 
-export function getNavBreadcrumb(url: string): GetNavBreadcrumbPayload;
-export function getNavBreadcrumb(url: string, root: string): GetNavBreadcrumbPayload;
-export function getNavBreadcrumb(payload: { url: string, root?: string }): GetNavBreadcrumbPayload;
-export function getNavBreadcrumb(payloadOrUrl: string | { url: string, root?: string }, root: string = ''): GetNavBreadcrumbPayload {
+export function getNavBreadcrumb(url: string): GetNavBreadcrumbAction;
+export function getNavBreadcrumb(url: string, root: string): GetNavBreadcrumbAction;
+export function getNavBreadcrumb(payload: { url: string, root?: string }): GetNavBreadcrumbAction;
+export function getNavBreadcrumb(payloadOrUrl: string | { url: string, root?: string }, root: string = ''): GetNavBreadcrumbAction {
   if (typeof payloadOrUrl === 'string') {
     console.warn('Warning: This signature is deprecated, adjust to use the object signature instead. ({ url, depth?, currentPageUrl? }).\')')
     return internal_getNavBreadcrumb({ url: payloadOrUrl, root });
