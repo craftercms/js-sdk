@@ -9,6 +9,7 @@
 ## 4.1.3
 
 - Dependency updates
+- Sync ContentInstance with the one on @craftercms/studio-ui
 
 ## 4.1.2-support.2
 
