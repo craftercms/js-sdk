@@ -71,7 +71,7 @@ export function getNavBreadcrumb(url: string, root: string): GetNavBreadcrumbAct
 export function getNavBreadcrumb(payload: { url: string, root?: string }): GetNavBreadcrumbAction;
 export function getNavBreadcrumb(payloadOrUrl: string | { url: string, root?: string }, root: string = ''): GetNavBreadcrumbAction {
   if (typeof payloadOrUrl === 'string') {
-    console.warn('Warning: This signature is deprecated, adjust to use the object signature instead. ({ url, depth?, currentPageUrl? }).\')')
+    console.warn('Warning: This signature is deprecated, adjust to use the object signature instead. ({ url, root? }).\')')
     return internal_getNavBreadcrumb({ url: payloadOrUrl, root });
   } else {
     return internal_getNavBreadcrumb(payloadOrUrl);
