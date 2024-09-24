@@ -20,7 +20,7 @@ __metadata:
   dependencies:
     "@craftercms/models": "npm:0.0.0-PLACEHOLDER"
     "@craftercms/utils": "npm:0.0.0-PLACEHOLDER"
-    "@rollup/plugin-commonjs": "npm:^25.0.7"
+    "@rollup/plugin-commonjs": "npm:^28.0.0"
     "@rollup/plugin-node-resolve": "npm:^15.2.3"
     chai: "npm:^5.1.1"
     mocha: "npm:^10.2.0"
@@ -42,7 +42,7 @@ __metadata:
     "@craftercms/classes": "npm:0.0.0-PLACEHOLDER"
     "@craftercms/models": "npm:0.0.0-PLACEHOLDER"
     "@craftercms/utils": "npm:0.0.0-PLACEHOLDER"
-    "@rollup/plugin-commonjs": "npm:^25.0.7"
+    "@rollup/plugin-commonjs": "npm:^28.0.0"
     "@rollup/plugin-node-resolve": "npm:^15.2.3"
     "@types/mocha": "npm:^10.0.7"
     chai: "npm:^5.1.1"
@@ -64,7 +64,7 @@ __metadata:
   resolution: "@craftercms/ice@workspace:packages/ice"
   dependencies:
     "@craftercms/models": "npm:0.0.0-PLACEHOLDER"
-    "@rollup/plugin-commonjs": "npm:^25.0.7"
+    "@rollup/plugin-commonjs": "npm:^28.0.0"
     "@rollup/plugin-node-resolve": "npm:^15.2.3"
     "@testing-library/react": "npm:^16.0.0"
     enzyme: "npm:^3.11.0"
@@ -84,7 +84,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@craftercms/models@workspace:packages/models"
   dependencies:
-    "@rollup/plugin-commonjs": "npm:^25.0.7"
+    "@rollup/plugin-commonjs": "npm:^28.0.0"
     "@rollup/plugin-node-resolve": "npm:^15.2.3"
     rollup: "npm:^2.79.1"
     rollup-plugin-sourcemaps: "npm:^0.6.3"
@@ -98,7 +98,7 @@ __metadata:
   dependencies:
     "@craftercms/content": "npm:0.0.0-PLACEHOLDER"
     "@reduxjs/toolkit": "npm:^2.2.2"
-    "@rollup/plugin-commonjs": "npm:^25.0.7"
+    "@rollup/plugin-commonjs": "npm:^28.0.0"
     "@rollup/plugin-node-resolve": "npm:^15.2.3"
     "@types/mocha": "npm:^10.0.7"
     chai: "npm:^5.1.1"
@@ -134,7 +134,7 @@ __metadata:
     "@craftercms/classes": "npm:0.0.0-PLACEHOLDER"
     "@craftercms/models": "npm:0.0.0-PLACEHOLDER"
     "@craftercms/utils": "npm:0.0.0-PLACEHOLDER"
-    "@rollup/plugin-commonjs": "npm:^25.0.7"
+    "@rollup/plugin-commonjs": "npm:^28.0.0"
     "@rollup/plugin-node-resolve": "npm:^15.2.3"
     "@types/mocha": "npm:^10.0.7"
     chai: "npm:^5.1.1"
@@ -155,7 +155,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@craftercms/utils@workspace:packages/utils"
   dependencies:
-    "@rollup/plugin-commonjs": "npm:^25.0.7"
+    "@rollup/plugin-commonjs": "npm:^28.0.0"
     "@rollup/plugin-node-resolve": "npm:^15.2.3"
     mocha: "npm:^10.2.0"
     rollup: "npm:^2.79.1"
@@ -298,22 +298,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rollup/plugin-commonjs@npm:^25.0.7":
-  version: 25.0.7
-  resolution: "@rollup/plugin-commonjs@npm:25.0.7"
+"@rollup/plugin-commonjs@npm:^28.0.0":
+  version: 28.0.0
+  resolution: "@rollup/plugin-commonjs@npm:28.0.0"
   dependencies:
     "@rollup/pluginutils": "npm:^5.0.1"
     commondir: "npm:^1.0.1"
     estree-walker: "npm:^2.0.2"
-    glob: "npm:^8.0.3"
+    fdir: "npm:^6.1.1"
     is-reference: "npm:1.2.1"
     magic-string: "npm:^0.30.3"
+    picomatch: "npm:^2.3.1"
   peerDependencies:
     rollup: ^2.68.0||^3.0.0||^4.0.0
   peerDependenciesMeta:
     rollup:
       optional: true
-  checksum: d096af5aedd55c19ac528daa84a4cacdf21a69c9c9b20c23e04f27a64966cb383f5e2b01b9c903d40318e35dcaa74dc7b5292a844c6cbc66c252f5447eac05b4
+  checksum: 2dd5e56bb61b097697965e48f7bcccab2c6a453a783d1a0c6a599c1bdf9bb07ce8952b9ba88ae190a07c8819f774d72173a633f9f4a914727f2fd28f670fd649
   languageName: node
   linkType: hard
 
@@ -1397,6 +1398,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"fdir@npm:^6.1.1":
+  version: 6.3.0
+  resolution: "fdir@npm:6.3.0"
+  peerDependencies:
+    picomatch: ^3 || ^4
+  peerDependenciesMeta:
+    picomatch:
+      optional: true
+  checksum: be91cd6ab2edbc6df457a69b79672ee9345996986821918ef01908ce9619b8cbecd9c6c13d4ca5d0aeb548b162050d68c599f45bb3fbff194a91e16f25e646b5
+  languageName: node
+  linkType: hard
+
 "fill-range@npm:^7.1.1":
   version: 7.1.1
   resolution: "fill-range@npm:7.1.1"
@@ -1579,7 +1592,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"glob@npm:8.1.0, glob@npm:^8.0.3, glob@npm:^8.1.0":
+"glob@npm:8.1.0, glob@npm:^8.1.0":
   version: 8.1.0
   resolution: "glob@npm:8.1.0"
   dependencies:
