@@ -19,12 +19,12 @@ import { fromFetch } from 'rxjs/fetch';
 import { pluck } from 'rxjs/operators';
 import { ajax } from 'rxjs/ajax';
 import { LookupTable } from '@craftercms/models';
-import { stringify } from 'query-string';
+import qs from 'query-string';
 import { crafterConf } from './config';
 
 export function httpGet<T extends any = any>(requestURL: string, params: Record<string, any> = {}, headers?: LookupTable): Observable<T> {
   const fetchConfig = crafterConf.getConfig().fetchConfig ?? {};
-  return fromFetch(`${requestURL}?${stringify(params)}`, {
+  return fromFetch(`${requestURL}?${qs.stringify(params)}`, {
     ...fetchConfig,
     method: 'GET',
     headers: { ...fetchConfig.headers, ...headers },
