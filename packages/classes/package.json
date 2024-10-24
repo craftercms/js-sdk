@@ -33,7 +33,7 @@
     "@rollup/plugin-commonjs": "^25.0.7",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "chai": "^5.1.1",
-    "mocha": "^10.2.0",
+    "mocha": "^10.7.3",
     "nock": "^13.3.4",
     "node-fetch": "2",
     "rollup": "^2.79.1",
