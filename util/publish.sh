@@ -25,8 +25,8 @@ for P in ${PACKAGES[@]}; do
   echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
   echo "Publihsing '$P' package"
   echo "--------------------------------------------"
-  echo "Running command: 'npm publish --access public'"
-  npm publish --access public
+  echo "Running command: 'npm publish --tag support-4.1.x'"
+  npm publish --tag support-4.1.x
   echo "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
   echo ""
   cd ../
