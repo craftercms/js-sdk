@@ -25,8 +25,8 @@
     "test": "mocha"
   },
   "dependencies": {
-    "@craftercms/models": "0.0.0-PLACEHOLDER",
-    "@craftercms/utils": "0.0.0-PLACEHOLDER",
+    "@craftercms/models": "^0.0.0-PLACEHOLDER",
+    "@craftercms/utils": "^0.0.0-PLACEHOLDER",
     "query-string": "^9.1.0"
   },
   "devDependencies": {
