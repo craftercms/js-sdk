@@ -23,8 +23,6 @@ import { ContentStoreService, NavigationService } from '@craftercms/content';
 import {
   getItem,
   getItemComplete,
-  getDescriptor,
-  getDescriptorComplete,
   getChildren,
   getChildrenComplete,
   getTree,
@@ -49,23 +47,6 @@ export const getItemEpic =
             url: payload
           })))
         ))
-  );
-
-export const getDescriptorEpic =
-  (action$: Observable<AnyAction>) => action$.pipe(
-      ofType(getDescriptor.type),
-      mergeMap(({ payload }) =>
-        ContentStoreService.getDescriptor(payload)
-          .pipe(
-              map(descriptor => getDescriptorComplete({
-                descriptor,
-                url: payload
-              })),
-              catchError(() => of(getDescriptorComplete({
-                url: payload
-              })))
-          ))
-
   );
 
 export const getChildrenEpic =
@@ -134,7 +115,6 @@ export const getNavBreadcrumbEpic =
 
   export const allContentEpics = [
     getItemEpic,
-    getDescriptorEpic,
     getChildrenEpic,
     getTreeEpic,
     getNavEpic,
