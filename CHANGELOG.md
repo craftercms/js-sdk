@@ -1,5 +1,8 @@
 # SDK Changelog
 
+## 5.0.0
+* Remove `getDescriptor` from `@craftercms/content` package and usages/references from `@craftercms/classes` and `@craftercms/redux`.
+
 ## 4.2.0
 * [@craftercms/redux]:
   * getTree action payload is now an object with `url` and `depth` properties.
@@ -48,7 +51,7 @@
 ## 4.0.3
 
 ### All packages
-- Switching SDK versioning to follow the CrafterCMS release version 
+- Switching SDK versioning to follow the CrafterCMS release version
 
 ### @craftercms/content
 - Update `parseProps` (internally used by `parseDescriptor`) to include `orderDefault_f` (parsed as `orderInNav`) in the resulting ContentInstance.
@@ -186,18 +189,18 @@
 ### @craftercms/ice
 - First published
 - Publishing generic Crafter CMS In Context Editing (ICE) attribute retrieval functions for pencils and drop zones (drag and drop)
-    - getIceAttributes, 
+    - getIceAttributes,
     - getDropZoneAttributes
-    - import/use in code by doing 
+    - import/use in code by doing
         - `import { getIceAttributes } from '@craftercms/ice';`
         - `import { getDropZoneAttributes } from '@craftercms/ice';`
 - Publishing generic util functions
-    - repaintPencils: Repaints/repositions Crafter CMS In Context Editing pencils 
+    - repaintPencils: Repaints/repositions Crafter CMS In Context Editing pencils
     - fetchIsAuthoring: Interrogates the current origin server to determine if the site/app is running in Crafter CMS authoring or delivery environments
     - addAuthoringSupport: Includes the necessary scripts to enable Crafter CMS authoring support
     - `import { repaintPencils, fetchIsAuthoring, addAuthoringSupport } from '@craftercms/ice';` as needed
 - Publishing React specific bindings via custom hooks:
-    - useICE, 
+    - useICE,
     - useDropZone
     - Import/use in code by doing
         - `import { useICE } from '@craftercms/ice/esm5/react';`
