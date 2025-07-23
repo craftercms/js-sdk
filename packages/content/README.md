@@ -186,7 +186,7 @@ Get an Item from the content store.
   });
 ```
 
-### Get Descriptor
+### Get Descriptor ⛔️ DEPRECATED 
 Get the descriptor data of an Item in the content store.
 
 `getDescriptor(path: string, config?: CrafterConfig)` 

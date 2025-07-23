@@ -29,7 +29,7 @@ export function getItem(path: string, config: Partial<CrafterConfig>): Observabl
 export function getItem(path: string, config?: Partial<CrafterConfig>): Observable<Item> {
   config = crafterConf.mix(config);
   const requestURL = composeUrl(config, config.endpoints.GET_ITEM_URL);
-  return SDKService.httpGet(requestURL, { url: path, crafterSite: config.site }, config.headers);
+  return SDKService.httpGet(requestURL, { url: path, crafterSite: config.site, flatten: Boolean(config?.flatten) }, config.headers);
 }
 
 export interface GetDescriptorConfig extends CrafterConfig {
@@ -41,8 +41,17 @@ export interface GetDescriptorConfig extends CrafterConfig {
  * @param {string} path - The item’s path
  * @param {CrafterConfig & GetDescriptorConfig} config? - The config override options to use
  */
+/**
+ * @deprecated Use getItem instead. This method will be removed in future releases.
+ */
 export function getDescriptor(path: string): Observable<Descriptor>;
+/**
+ * @deprecated Use getItem instead. This method will be removed in future releases.
+ */
 export function getDescriptor(path: string, config: Partial<GetDescriptorConfig>): Observable<Descriptor>;
+/**
+ * @deprecated Use getItem instead. This method will be removed in future releases.
+ */
 export function getDescriptor(path: string, config?: Partial<GetDescriptorConfig>): Observable<Descriptor> {
   let cfg = crafterConf.mix(config);
   return SDKService.httpGet<Descriptor>(composeUrl(cfg, cfg.endpoints.GET_DESCRIPTOR), {
@@ -72,7 +81,7 @@ export function getChildren(path: string, config: Partial<CrafterConfig>): Obser
 export function getChildren(path: string, config?: Partial<CrafterConfig>): Observable<Item[]> {
   config = crafterConf.mix(config);
   const requestURL = composeUrl(config, config.endpoints.GET_CHILDREN);
-  return SDKService.httpGet(requestURL, { url: path, crafterSite: config.site }, config.headers);
+  return SDKService.httpGet(requestURL, { url: path, crafterSite: config.site, flatten: Boolean(config?.flatten) }, config.headers);
 }
 
 /**
@@ -91,7 +100,7 @@ export function getTree(path: string, depth: number | Partial<CrafterConfig> = 1
   }
   config = crafterConf.mix(config);
   const requestURL = composeUrl(config, config.endpoints.GET_TREE);
-  return SDKService.httpGet(requestURL, { url: path, depth, crafterSite: config.site }, config.headers);
+  return SDKService.httpGet(requestURL, { url: path, depth, crafterSite: config.site, flatten: Boolean(config?.flatten) }, config.headers);
 }
 
 export const ContentStoreService = {

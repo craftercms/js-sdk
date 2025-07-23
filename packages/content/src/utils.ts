@@ -14,9 +14,9 @@
  * along with this program. If not, see http://www.gnu.org/licenses/.
  */
 
-import { ContentInstance, Descriptor, DescriptorResponse, Item } from '@craftercms/models';
+import {ContentInstance, type CrafterConfig, Descriptor, DescriptorResponse, Item} from '@craftercms/models';
 import { urlTransform } from './UrlTransformationService';
-import { getDescriptor, GetDescriptorConfig } from './ContentStoreService';
+import { getItem } from './ContentStoreService';
 import { map, switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
@@ -210,27 +210,27 @@ export function parseFieldValue(propName: string, propValue: any): number | stri
 }
 
 export function fetchModelByPath(path: string): Observable<ContentInstance>;
-export function fetchModelByPath(path: string, options: Partial<GetDescriptorConfig & ParseDescriptorOptions>): Observable<ContentInstance>;
+export function fetchModelByPath(path: string, options: Partial<CrafterConfig & ParseDescriptorOptions>): Observable<ContentInstance>;
 export function fetchModelByPath(
   path: string,
-  options?: Partial<GetDescriptorConfig & ParseDescriptorOptions>
+  options?: Partial<CrafterConfig & ParseDescriptorOptions>
 ): Observable<ContentInstance> {
   let pdo = mixParseDescriptorOptions({ parseFieldValueTypes: true, ...options });
-  return getDescriptor(path, { flatten: true, ...options }).pipe(
-    map((descriptor) => parseDescriptor(descriptor, pdo))
+  return getItem(path, { flatten: true, ...options }).pipe(
+    map(({ descriptorDom }) => parseDescriptor(descriptorDom, pdo))
   );
 }
 
 export function fetchModelByUrl(webUrl: string): Observable<ContentInstance>;
-export function fetchModelByUrl(webUrl: string, options: Partial<GetDescriptorConfig & ParseDescriptorOptions>): Observable<ContentInstance>;
+export function fetchModelByUrl(webUrl: string, options: Partial<CrafterConfig & ParseDescriptorOptions>): Observable<ContentInstance>;
 export function fetchModelByUrl(
   webUrl: string,
-  options?: Partial<GetDescriptorConfig & ParseDescriptorOptions>
+  options?: Partial<CrafterConfig & ParseDescriptorOptions>
 ): Observable<ContentInstance> {
   let pdo = mixParseDescriptorOptions({ parseFieldValueTypes: true, ...options });
   return urlTransform('renderUrlToStoreUrl', webUrl).pipe(
-    switchMap((path) => getDescriptor(path as string, { flatten: true, ...options })),
-    map((descriptor) => parseDescriptor(descriptor, pdo))
+    switchMap((path) => getItem(path as string, { flatten: true, ...options })),
+    map(({ descriptorDom }) => parseDescriptor(descriptorDom, pdo))
   );
 }
 

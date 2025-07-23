@@ -1,5 +1,13 @@
 # SDK Changelog
 
+## 4.4.3
+* Deprecations:
+  * [@craftercms/content] 
+    * `ContentStoreService/getDescriptor` - Use `getItem` instead.
+  * [@craftercms/redux]
+    * `actions/getDescriptor` - Use `getItem` instead.
+    * `actions/getDescriptorComplete` - Use `getItemComplete` instead.
+
 ## 4.2.0
 * [@craftercms/redux]:
   * getTree action payload is now an object with `url` and `depth` properties.

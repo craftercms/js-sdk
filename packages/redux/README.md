@@ -116,7 +116,7 @@ path           | The item’s path in the content store |
   store.dispatch(getItem(itemUrl));
 ```
 
-### getDescriptor
+### getDescriptor ⛔️ DEPRECATED
 Creates an action to get the descriptor data of an Item in the content store.
 
 `getDescriptor(path: string)`

@@ -22,8 +22,14 @@ export const getItem = /*#__PURE__*/ createAction<string>('GET_ITEM');
 
 export const getItemComplete = /*#__PURE__*/ createAction<{ url: string, item?: Item }>('GET_ITEM_COMPLETE');
 
+/**
+ * @deprecated Use getItem instead. This action will be removed in future releases.
+ */
 export const getDescriptor = /*#__PURE__*/ createAction<string>('GET_DESCRIPTOR');
 
+/**
+ * @deprecated Use getItemComplete instead. This action will be removed in future releases.
+ */
 export const getDescriptorComplete = /*#__PURE__*/ createAction<{ url: string, descriptor?: Descriptor }>('GET_DESCRIPTOR_COMPLETE');
 
 export const getChildren = /*#__PURE__*/ createAction<string>('GET_CHILDREN');
