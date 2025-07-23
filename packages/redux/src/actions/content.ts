@@ -22,6 +22,10 @@ export const getItem = /*#__PURE__*/ createAction<string>('GET_ITEM');
 
 export const getItemComplete = /*#__PURE__*/ createAction<{ url: string, item?: Item }>('GET_ITEM_COMPLETE');
 
+export const getDescriptor = /*#__PURE__*/ createAction<string>('GET_DESCRIPTOR');
+
+export const getDescriptorComplete = /*#__PURE__*/ createAction<{ url: string, descriptor?: Descriptor }>('GET_DESCRIPTOR_COMPLETE');
+
 export const getChildren = /*#__PURE__*/ createAction<string>('GET_CHILDREN');
 
 export const getChildrenComplete = /*#__PURE__*/ createAction<{ url: string, children?: Array<Item> }>('GET_CHILDREN_COMPLETE');

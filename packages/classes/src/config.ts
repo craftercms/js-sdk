@@ -34,8 +34,7 @@ const DEFAULTS: CrafterConfig = {
   },
   fetchConfig: {},
   contentTypeRegistry: {},
-  headers: {},
-  flatten: false
+  headers: {}
 };
 
 class ConfigManager {

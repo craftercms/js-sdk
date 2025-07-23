@@ -1,8 +1,5 @@
 # SDK Changelog
 
-## 4.4.3
-* Remove `getDescriptor` from `@craftercms/content` package and usages/references from `@craftercms/classes` and `@craftercms/redux`.
-
 ## 4.2.0
 * [@craftercms/redux]:
   * getTree action payload is now an object with `url` and `depth` properties.
