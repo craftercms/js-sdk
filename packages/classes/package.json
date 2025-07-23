@@ -1,6 +1,6 @@
 {
   "name": "@craftercms/classes",
-  "version": "0.0.0-PLACEHOLDER",
+  "version": "4.4.3",
   "description": "Crafter CMS utility classes for developing sites and applications",
   "main": "./bundles/classes.umd.js",
   "module": "./esm5/classes.js",

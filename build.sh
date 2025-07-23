@@ -331,16 +331,6 @@ addNgcPackageJson() {
   done
 }
 
-updateVersionReferences() {
-  NPM_DIR="$1"
-  (
-    echo "======      VERSION: Updating version references in ${NPM_DIR}"
-    cd ${NPM_DIR}
-    echo "======       EXECUTE: perl -p -i -e \"s/0\.0\.0\-PLACEHOLDER/${VERSION}/g\" $""(grep -ril 0\.0\.0\-PLACEHOLDER .)"
-    perl -p -i -e "s/0\.0\.0\-PLACEHOLDER/${VERSION}/g" $(grep -ril 0\.0\.0\-PLACEHOLDER .) </dev/null 2>/dev/null
-  )
-}
-
 #######################################
 # Drops the last entry of a path. Similar to normalizing a path such as
 # /parent/child/.. to /parent.
@@ -535,10 +525,6 @@ for PACKAGE in ${PACKAGES[@]}; do
     perl -p -i -e "s/\"NG_UPDATE_PACKAGE_GROUP\"/${NG_UPDATE_PACKAGE_GROUP}/g" ${NPM_DIR}/package.json </dev/null
 
     cp ${ROOT_DIR}/${PACKAGE}/README.md ${NPM_DIR}/
-  fi
-
-  if [[ -d ${NPM_DIR} ]]; then
-    updateVersionReferences ${NPM_DIR}
   fi
 
   travisFoldEnd "build package: ${PACKAGE}"
