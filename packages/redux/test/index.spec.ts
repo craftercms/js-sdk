@@ -110,32 +110,6 @@ describe('Crafter CMS Redux', () => {
       });
     });
 
-    describe('getDescriptor Action', () => {
-      it('should return the expected GET_DESCRIPTOR action', (done) => {
-        let url = '/site/website/index.xml',
-          expectedAction = {
-            type: 'GET_DESCRIPTOR',
-            payload: url
-          };
-        const action = getDescriptor(url);
-        expect(action).to.deep.equal(expectedAction);
-        done();
-      });
-    });
-
-    describe('getDescriptorComplete Action', () => {
-      it('should return the expected GET_DESCRIPTOR_COMPLETE action', (done) => {
-        let url: '/site/website/index.xml',
-          expectedAction = {
-            type: 'GET_DESCRIPTOR_COMPLETE',
-            payload: { descriptor, url }
-          };
-        const action = getDescriptorComplete({ descriptor, url });
-        expect(action).to.deep.equal(expectedAction);
-        done();
-      });
-    });
-
     describe('getChildren Action', () => {
       it('should return the expected GET_CHILDREN action', (done) => {
         let url = '/site/website/',
@@ -295,48 +269,6 @@ describe('Crafter CMS Redux', () => {
           };
 
         let newState = itemsReducer(undefined, action);
-        expect(newState).to.deep.equal(expectedState);
-        done();
-      });
-    });
-
-    describe('getDescriptor Reducer', () => {
-      it('should return the expected GET_DESCRIPTOR reducer', (done) => {
-        let url = '/site/website/index.xml',
-          action = {
-            type: 'GET_DESCRIPTOR',
-            payload: url
-          },
-          expectedState = {
-            loading: {
-              [url]: true
-            },
-            entries: {}
-          };
-
-        let newState = descriptorsReducer(undefined, action);
-        expect(newState).to.deep.equal(expectedState);
-        done();
-      });
-    });
-
-    describe('getDescriptorComplete Reducer', () => {
-      it('should return the expected GET_DESCRIPTOR_COMPLETE reducer', (done) => {
-        let url = '/site/website',
-          action = {
-            type: 'GET_DESCRIPTOR_COMPLETE',
-            payload: { descriptor, url }
-          },
-          expectedState = {
-            loading: {
-              [url]: false
-            },
-            entries: {
-              [url]: descriptor
-            }
-          };
-
-        let newState = descriptorsReducer(undefined, action);
         expect(newState).to.deep.equal(expectedState);
         done();
       });
@@ -552,35 +484,6 @@ describe('Crafter CMS Redux', () => {
           // expect(payload.url.url === item.url);
           // expect(payload.url.descriptorUrl === expectedResponse.payload.url);
           // expect(payload).to.deep.equal(expectedResponse.payload);
-          done();
-        });
-      });
-    });
-
-    describe('getDescriptor Epic', () => {
-      it('should return the expected GET_DESCRIPTOR epic', (done) => {
-        nock('http://localhost:8080')
-          .get('/api/1/site/content_store/descriptor.json')
-          .query({
-            crafterSite: 'editorial',
-            flatten: false,
-            url: '/site/website/index.xml'
-          })
-          .reply(200, descriptor);
-
-        let url = '/site/website/index.xml',
-          actionObs = of({
-            type: 'GET_DESCRIPTOR',
-            payload: url
-          }),
-          expectedResponse = {
-            payload: { descriptor, url },
-            type: 'GET_DESCRIPTOR_COMPLETE'
-          };
-
-        getDescriptorEpic(actionObs).subscribe((response) => {
-          expect(response.type).to.equal(expectedResponse.type);
-          expect(response.payload.descriptor.page.objectId).to.equal(expectedResponse.payload.descriptor.page.objectId);
           done();
         });
       });

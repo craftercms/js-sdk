@@ -1,6 +1,6 @@
 {
   "name": "@craftercms/search",
-  "version": "0.0.0-PLACEHOLDER",
+  "version": "4.3.0",
   "description": "Crafter CMS search service and associated tools",
   "main": "./bundles/search.umd.js",
   "module": "./esm5/search.js",

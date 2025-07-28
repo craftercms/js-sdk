@@ -1,5 +1,15 @@
 # SDK Changelog
 
+## @craftercms/content@4.4.0
+- "Get Descriptor" API is deprecated and will be removed (use getItem instead)
+- New `crafterConf.flatten` property which controls the `flatten` parameter of content services to recursively include linked content items
+
+## @craftercms/redux@4.4.0
+- "Get Descriptor" API is deprecated (use getItem instead)
+
+## @craftercms/classes@4.4.0
+- New `crafterConf.flatten` property which controls the `flatten` parameter of content services to recursively include linked content items
+
 ## 4.2.0
 * [@craftercms/redux]:
   * getTree action payload is now an object with `url` and `depth` properties.
