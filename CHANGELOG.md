@@ -1,5 +1,8 @@
 # SDK Changelog
 
+## @craftercms/content@4.4.1
+- Fix the published README for links to work on npmjs.com
+
 ## @craftercms/content@4.4.0
 - "Get Descriptor" API is deprecated and will be removed (use getItem instead)
 - New `crafterConf.flatten` property which controls the `flatten` parameter of content services to recursively include linked content items
