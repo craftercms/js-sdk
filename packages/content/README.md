@@ -187,7 +187,7 @@ Get an Item from the content store.
 ```
 
 ### Get Descriptor
-Get the descriptor API is deprecated and will be removed in an upcoming release. Please use getItem instead.
+The Get Descriptor API is deprecated and will be removed in an upcoming release. Please use getItem instead.
 
 ### Get Children
 Get the list of Items directly under a folder in the content store.
