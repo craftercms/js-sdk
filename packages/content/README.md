@@ -150,14 +150,14 @@ Get an Item from the content store.
 
 `getItem(path: string, config?: CrafterConfig)`
 
-| Parameters    |                |
-| ------------- |:--------------:|
-| path          | The item’s path in the content store |
-| config        | Crafter configuration. Optional. Default value in [here](../models/README.md#CrafterConfig). |
+| Parameters    |                                                                                        |
+| ------------- |:--------------------------------------------------------------------------------------:|
+| path          |                          The item’s path in the content store                          |
+| config        | Crafter configuration. Optional. Default value in [here](../models/src/CrafterConfig.ts). |
 
 #### Returns
 
-[Item](../models/README.md#Item) - from the content store
+[Item](../models/src/item.ts) - from the content store
 
 #### Examples
 
@@ -194,14 +194,14 @@ Get the list of Items directly under a folder in the content store.
 
 `getChildren(path: string, config?: CrafterConfig)` 
 
-| Parameters    |                |
-| ------------- |:--------------:|
-| path          | The folder’s path |
-| config        | Crafter configuration. Optional. Default value in [here](../models/README.md#CrafterConfig). |
+| Parameters    |                                                                                           |
+| ------------- |:-----------------------------------------------------------------------------------------:|
+| path          |                                     The folder’s path                                     |
+| config        | Crafter configuration. Optional. Default value in [here](../models/src/CrafterConfig.ts). |
 
 #### Returns
 
-[Item](../models/README.md#Item)[] - List of Items from the content store
+[Item](../models/src/item.ts)[] - List of Items from the content store
 
 #### Examples
 
@@ -226,15 +226,15 @@ Get the complete Item hierarchy under the specified folder in the content store.
 
 `getTree(path: string, depth: number, config: CrafterConfig)` 
 
-| Parameters    |                |
-| ------------- |:--------------:|
-| path          | The folder’s path |
-| depth         | Amount of levels to include. Optional. Default is `1` |
-| config        | Crafter configuration. Optional. Default value in [here](../models/README.md#CrafterConfig). |
+| Parameters    |                                                                                           |
+| ------------- |:-----------------------------------------------------------------------------------------:|
+| path          |                                     The folder’s path                                     |
+| depth         |                   Amount of levels to include. Optional. Default is `1`                   |
+| config        | Crafter configuration. Optional. Default value in [here](../models/src/CrafterConfig.ts). |
 
 #### Returns
 
-[Item](../models/README.md#Item) - from the content store
+[Item](../models/src/item.ts) - from the content store
 
 #### Examples
 
@@ -261,16 +261,16 @@ Returns the navigation tree with the specified depth for the specified store URL
 
 `getNavTree(path: string, depth: number, currentPageUrl: string, config: CrafterConfig)`
 
-| Parameters     |                |
-| -------------- |:--------------:|
-| path           | The folder’s path |
-| depth          | Amount of levels to include. Optional. Default is `1` |
-| currentPageUrl | The URL of the current page. Optional. Default is `''` |
-| config         | Crafter configuration. Optional. Default value in [here](../models/README.md#CrafterConfig). |
+| Parameters     |                                                                                           |
+| -------------- |:-----------------------------------------------------------------------------------------:|
+| path           |                                     The folder’s path                                     |
+| depth          |                   Amount of levels to include. Optional. Default is `1`                   |
+| currentPageUrl |                  The URL of the current page. Optional. Default is `''`                   |
+| config         | Crafter configuration. Optional. Default value in [here](../models/src/CrafterConfig.ts). |
 
 #### Returns
 
-[NavigationItem](../models/README.md#NavigationItem) - from the content store
+[NavigationItem](../models/src/NavigationItem.ts) - from the content store
 
 #### Examples
 
@@ -295,15 +295,15 @@ Returns the navigation items that form the breadcrumb for the specified store UR
 
 `getNavBreadcrumb(path: string, root: string, config: CrafterConfig)`
 
-| Parameters     |                |
-| -------------- |:--------------:|
-| path            | The folder’s path |
-| root           | the root URL, basically the starting point of the breadcrumb. Optional. Default is `''` |
-| config        | Crafter configuration. Optional. Default value in [here](../models/README.md#CrafterConfig). |
+| Parameters     |                                                                                           |
+| -------------- |:-----------------------------------------------------------------------------------------:|
+| path            |                                     The folder’s path                                     |
+| root           |  the root URL, basically the starting point of the breadcrumb. Optional. Default is `''`  |
+| config        | Crafter configuration. Optional. Default value in [here](../models/src/CrafterConfig.ts). |
 
 #### Returns
 
-[NavigationItem](../models/README.md#NavigationItem)[] - List of NavigationItem from the content store
+[NavigationItem](../models/src/NavigationItem.ts)[] - List of NavigationItem from the content store
 
 #### Examples
 
@@ -328,11 +328,11 @@ Transforms a URL, based on the current site’s configuration.
 
 - `transform(transformerName: string, path: string, config: CrafterConfig)` 
 
-| Parameters      |                |
-| --------------- |:--------------:|
-| transformerName | Name of the transformer to apply |
-| path             | URL that will be transformed |
-| config        | Crafter configuration. Optional. Default value in [here](../models/README.md#CrafterConfig). |
+| Parameters      |                                                                                           |
+| --------------- |:-----------------------------------------------------------------------------------------:|
+| transformerName |                             Name of the transformer to apply                              |
+| path             |                               URL that will be transformed                                |
+| config        | Crafter configuration. Optional. Default value in [here](../models/src/CrafterConfig.ts). |
 
 #### Returns
 
