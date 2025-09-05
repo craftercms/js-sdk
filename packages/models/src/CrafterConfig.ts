@@ -28,6 +28,7 @@ export interface CrafterConfig {
   contentTypeRegistry?: LookupTable;
   // TODO: Remove this in favour of fetchConfig.headers? Most make all sdk service use fetch.
   headers: LookupTable;
+  /** Controls whether to recursively include linked content items. Defaults to false. */
   flatten: boolean;
 }
 
