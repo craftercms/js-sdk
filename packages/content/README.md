@@ -277,15 +277,15 @@ Returns the navigation tree with the specified depth for the specified store URL
 - Get the navigation tree of the root folder from the site (depth = 3):
 
 ```typescript
-  import { getTree } from '@craftercms/content';
+  import { getNavTree } from '@craftercms/content';
 
   // Example 1: Config supplied inline
-  getTree('/site/website', 3, { site: 'editorial' }).subscribe((tree) => {
+  getNavTree('/site/website', 3, { site: 'editorial' }).subscribe((tree) => {
     console.log(tree);
   });
 
   // Example 2: Services pre-configured (see "Usage" section above), config param omitted.
-  getTree('/site/website', 3).subscribe((tree) => {
+  getNavTree('/site/website', 3).subscribe((tree) => {
     console.log(tree);
   });
 ```
@@ -313,7 +313,7 @@ Returns the navigation items that form the breadcrumb for the specified store UR
   import { getNavBreadcrumb } from '@craftercms/content';
 
   // Example 1: Config supplied inline
-  getNavBreadcrumb('/site/website').subscribe((navBreadcrumb) => {
+  getNavBreadcrumb('/site/website', '/', { site: 'editorial' }).subscribe((navBreadcrumb) => {
     console.log(navBreadcrumb);
   });
 
