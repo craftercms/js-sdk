@@ -259,7 +259,7 @@ Get the complete Item hierarchy under the specified folder in the content store.
 ### Get Navigation Tree
 Returns the navigation tree with the specified depth for the specified store URL.
 
-`getNavTree(path: string, depth: number, currentPageUrl: string, config: CrafterConfig)`
+`getNavTree(path: string, depth?: number, currentPageUrl?: string, config?: CrafterConfig)`
 
 | Parameters     |                                                                                           |
 | -------------- |:-----------------------------------------------------------------------------------------:|
@@ -280,11 +280,11 @@ Returns the navigation tree with the specified depth for the specified store URL
   import { getNavTree } from '@craftercms/content';
 
   // Example 1: Config supplied inline
-  getNavTree('/site/website', 3, { site: 'editorial' }).subscribe((tree) => {
+  getNavTree('/site/website', 3, '', { site: 'editorial' }).subscribe((tree) => {
     console.log(tree);
   });
 
-  // Example 2: Services pre-configured (see "Usage" section above), config param omitted.
+  // Example 2: Services pre-configured (see "Usage" section above); currentPageUrl omitted (defaults to '').
   getNavTree('/site/website', 3).subscribe((tree) => {
     console.log(tree);
   });
