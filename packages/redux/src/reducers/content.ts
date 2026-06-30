@@ -42,7 +42,7 @@ export function itemsReducer(state = {
         ...state,
         loading: {
           ...state.loading,
-          [action.payload]: true
+          [action.payload.url]: true
         }
       }
     }

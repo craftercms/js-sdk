@@ -39,14 +39,14 @@ export const getItemEpic =
   (action$: Observable<AnyAction>) => action$.pipe(
     ofType(getItem.type),
     mergeMap(({ payload }) =>
-      ContentStoreService.getItem(payload)
+      ContentStoreService.getItem(payload.url, payload.config)
         .pipe(
           map((item: Item) => getItemComplete({
             item,
-            url: payload
+            url: payload.url
           })),
           catchError(() => of(getItemComplete({
-            url: payload
+            url: payload.url
           })))
         ))
   );
