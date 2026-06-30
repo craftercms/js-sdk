@@ -20,8 +20,6 @@ import { flattenEntries } from '../utils';
 import {
   getItem,
   getItemComplete,
-  getDescriptor,
-  getDescriptorComplete,
   getChildren,
   getChildrenComplete,
   getTree,
@@ -42,7 +40,7 @@ export function itemsReducer(state = {
         ...state,
         loading: {
           ...state.loading,
-          [action.payload]: true
+          [action.payload.url]: true
         }
       }
     }
@@ -57,39 +55,6 @@ export function itemsReducer(state = {
         entries: {
           ...state.entries,
           [url]: item
-        }
-      }
-    }
-    default:
-      return state
-  }
-}
-
-export function descriptorsReducer(state = {
-  loading: {}, // { all: boolean, [id: string]: boolean }
-  entries: {}
-}, action: AnyAction): StateContainer<Item> {
-  switch (action.type) {
-    case getDescriptor.type: {
-      return {
-        ...state,
-        loading: {
-          ...state.loading,
-          [action.payload]: true
-        }
-      }
-    }
-    case getDescriptorComplete.type: {
-      const { descriptor, url } = action.payload;
-      return {
-        ...state,
-        loading: {
-          ...state.loading,
-          [url]: false
-        },
-        entries: {
-          ...state.entries,
-          [url]: descriptor
         }
       }
     }

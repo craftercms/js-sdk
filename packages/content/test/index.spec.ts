@@ -81,28 +81,6 @@ describe('Engine Client', () => {
       });
     });
 
-    describe('getDescriptor', () => {
-      // Tests the contentStore getDescriptor method. Checks that it returns the index descriptor of the site editorial.
-      it('return the index descriptor', (done) => {
-        nock(baseUrl)
-          .get(endpoints.GET_DESCRIPTOR)
-          .query({
-            crafterSite,
-            flatten: false,
-            url: '/site/website/index.xml'
-          })
-          .reply(200, descriptor);
-
-        ContentStoreService.getDescriptor('/site/website/index.xml').subscribe(
-          (respDescriptor) => {
-            expect(respDescriptor).to.not.be.null;
-            expect(respDescriptor.page.objectId).to.equal(descriptor.page.objectId);
-            done();
-          }
-        );
-      });
-    });
-
     describe('getChildren', () => {
       // Tests the contentStore getChildren method. Checks that it returns the children of the index page of the site editorial.
       // The children length at its ids should match the expected values.
