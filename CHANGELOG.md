@@ -9,6 +9,7 @@
 
 ## @craftercms/redux@4.4.0
 - "Get Descriptor" API is deprecated (use getItem instead)
+- `getItem` action payload is now an object with `url` and optional `config` properties (previously a string URL)
 
 ## @craftercms/classes@4.4.0
 - New `crafterConf.flatten` property which controls the `flatten` parameter of content services to recursively include linked content items
