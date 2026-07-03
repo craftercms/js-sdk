@@ -64,7 +64,8 @@ describe('Engine Client', () => {
           .get(endpoints.GET_ITEM_URL)
           .query({
             crafterSite,
-            url: '/site/website/index.xml'
+            url: '/site/website/index.xml',
+            flatten: false
           })
           .reply(200, item);
 
@@ -89,7 +90,8 @@ describe('Engine Client', () => {
           .get(endpoints.GET_CHILDREN)
           .query({
             crafterSite,
-            url: '/site/website/'
+            url: '/site/website/',
+            flatten: false
           })
           .reply(200, children);
 
@@ -111,7 +113,8 @@ describe('Engine Client', () => {
           .query({
             crafterSite,
             depth: 3,
-            url: '/site/website/articles/2021'
+            url: '/site/website/articles/2021',
+            flatten: false
           })
           .reply(200, tree);
 
