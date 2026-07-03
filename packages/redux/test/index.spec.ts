@@ -26,8 +26,6 @@ import {
   getItemComplete,
   itemsReducer,
   getItemEpic,
-  descriptorsReducer,
-  getDescriptorEpic,
   getChildren,
   getChildrenComplete,
   childrenReducer,

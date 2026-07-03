@@ -9,7 +9,7 @@
 - "Get Descriptor" API removed (use getItem instead)
 - `getItem` action payload is now an object with `url` and optional `config` properties (previously a string URL)
 
-## @craftercms/classes@5.0.0
+## @craftercms/classes4.4.1
 - New `crafterConf.flatten` property which controls the `flatten` parameter of content services to recursively include linked content items
 
 ## 4.2.0
@@ -53,6 +53,7 @@
 - Update Endpoints interface `ELASTICSEARCH` property to `SEARCH`.
 
 ### @craftercms/search
+
 - Remove ElasticQuery query implementation for ElasticSearch.
 - Use `Query` class instead of removed `ElasticQuery` class in `createQuery` function.
 - Update createQuery usage examples without SearchEngine parameter.
@@ -165,6 +166,7 @@
 - Adds `reportNavigation` util for SPAs to report the current URL as the app navigates.
 
 ### misc
+
 - [internal] Bumps acorn version
 
 ## 1.2.1
