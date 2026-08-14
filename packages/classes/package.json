@@ -27,7 +27,7 @@
   "dependencies": {
     "@craftercms/models": "0.0.0-PLACEHOLDER",
     "@craftercms/utils": "0.0.0-PLACEHOLDER",
-    "query-string": "^9.1.0"
+    "query-string": "^9.5.0"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^25.0.7",
