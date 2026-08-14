@@ -121,7 +121,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@craftercms/sdk@workspace:."
   dependencies:
-    prettier: "npm:^3.0.3"
+    prettier: "npm:^3.9.6"
     react: "npm:^18.2.0"
     typescript: "npm:^5.5.4"
   languageName: unknown
@@ -2786,12 +2786,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:^3.0.3":
-  version: 3.2.5
-  resolution: "prettier@npm:3.2.5"
+"prettier@npm:^3.9.6":
+  version: 3.9.6
+  resolution: "prettier@npm:3.9.6"
   bin:
     prettier: bin/prettier.cjs
-  checksum: ea327f37a7d46f2324a34ad35292af2ad4c4c3c3355da07313339d7e554320f66f65f91e856add8530157a733c6c4a897dc41b577056be5c24c40f739f5ee8c6
+  checksum: 9f7ddae234035868f3daab3dc34e6de7e54622185afb017378029f0c09a9c023248ccf6f34def0b17a0538e18c47aa1b3188bab72965d1bf735919baa0747e99
   languageName: node
   linkType: hard
 
